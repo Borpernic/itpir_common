@@ -1,26 +1,26 @@
 package ru.lab729.itpir.ddl;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import ru.lab729.itpir.View;
+import ru.lab729.itpir.model.AbstractBaseEntity;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status_rd", schema = "public", catalog = "itpirdb")
-public class StatusRdEntity {
-    private int id;
-    private String status;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+@Table(name = "status_rd", uniqueConstraints = {@UniqueConstraint(columnNames = "status", name = "status_rd_status_idx")})
+public class StatusRdEntity extends AbstractBaseEntity {
 
     @Basic
     @Column(name = "status", nullable = false, length = 20)
+    @NotBlank
+    @Size(min = 2, max = 50)
+    @SafeHtml(groups = {View.Web.class})
+    private String status;
+
+
     public String getStatus() {
         return status;
     }

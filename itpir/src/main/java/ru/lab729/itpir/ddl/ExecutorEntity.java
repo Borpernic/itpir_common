@@ -1,31 +1,70 @@
 package ru.lab729.itpir.ddl;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.SafeHtml;
+import ru.lab729.itpir.View;
+import ru.lab729.itpir.model.AbstractBaseEntity;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "executor", schema = "public", catalog = "itpirdb")
-public class ExecutorEntity {
-    private int id;
-    private String name;
-    private String phone;
-    private String email;
-    private String comments;
-    private Integer rating;
-    private int statusId;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+@Table(name = "executor", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "executor_name_idx")})
+public class ExecutorEntity extends AbstractBaseEntity {
 
     @Basic
     @Column(name = "name", nullable = false, length = -1)
+    @NotBlank
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String name;
+
+    @Basic
+    @Column(name = "phone", nullable = true, length = -1)
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String phone;
+
+    @Basic
+    @Column(name = "email", nullable = true, length = -1)
+    @Email
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String email;
+
+    @Basic
+    @Column(name = "comments", nullable = true, length = -1)
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String comments;
+
+    public ExecutorEntity() {
+    }
+
+    @Basic
+    @Column(name = "rating", nullable = true)
+    private Integer rating;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(groups = View.Persist.class)
+    private StatusExecutorEntity status;
+
+    public StatusExecutorEntity getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusExecutorEntity status) {
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,8 +73,7 @@ public class ExecutorEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = true, length = -1)
+
     public String getPhone() {
         return phone;
     }
@@ -44,8 +82,7 @@ public class ExecutorEntity {
         this.phone = phone;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = -1)
+
     public String getEmail() {
         return email;
     }
@@ -54,8 +91,7 @@ public class ExecutorEntity {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "comments", nullable = true, length = -1)
+
     public String getComments() {
         return comments;
     }
@@ -64,8 +100,7 @@ public class ExecutorEntity {
         this.comments = comments;
     }
 
-    @Basic
-    @Column(name = "rating", nullable = true)
+
     public Integer getRating() {
         return rating;
     }
@@ -74,15 +109,6 @@ public class ExecutorEntity {
         this.rating = rating;
     }
 
-    @Basic
-    @Column(name = "status_id", nullable = false)
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,7 +116,7 @@ public class ExecutorEntity {
         if (o == null || getClass() != o.getClass()) return false;
         ExecutorEntity that = (ExecutorEntity) o;
         return id == that.id &&
-                statusId == that.statusId &&
+                //status == that.status &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(phone, that.phone) &&
                 Objects.equals(email, that.email) &&
@@ -101,6 +127,6 @@ public class ExecutorEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, phone, email, comments, rating, statusId);
+        return Objects.hash(id, name, phone, email, comments, rating /*, statusId*/);
     }
 }

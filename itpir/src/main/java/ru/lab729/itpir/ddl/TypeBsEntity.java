@@ -1,26 +1,26 @@
 package ru.lab729.itpir.ddl;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import ru.lab729.itpir.View;
+import ru.lab729.itpir.model.AbstractBaseEntity;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "type_BS", schema = "public", catalog = "itpirdb")
-public class TypeBsEntity {
-    private int id;
-    private String bsType;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+@Table(name = "type_BS", uniqueConstraints = {@UniqueConstraint(columnNames = "BS_Type", name = "type_BS_bsType_idx")})
+public class TypeBsEntity  extends AbstractBaseEntity {
 
     @Basic
-    @Column(name = "BS_type", nullable = false, length = -1)
+    @Column(name = "BS_Type", nullable = false, length = -1)
+    @NotBlank
+    @Size(min = 2, max = 50)
+    @SafeHtml(groups = {View.Web.class})
+    private String bsType;
+
+
     public String getBsType() {
         return bsType;
     }

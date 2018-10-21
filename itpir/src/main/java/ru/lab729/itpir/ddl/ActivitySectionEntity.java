@@ -10,51 +10,32 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
+@Table(name = "activity_section",  uniqueConstraints = {@UniqueConstraint(columnNames = {"section"}, name = "activity_section_section_idx")})
+public class ActivitySectionEntity extends AbstractBaseEntity {
 
-@Table(name = "operator", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "operator_name_idx")})
-public class OperatorEntity extends AbstractBaseEntity {
 
     @Basic
-    @Column(name = "name", nullable = false, length = -1)
+    @Column(name = "section", nullable = false)
     @NotBlank
     @Size(min = 2, max = 120)
     @SafeHtml(groups = {View.Web.class})
-    private String name;
+    private String section;
 
     @Basic
-    @Column(name = "comments", nullable = true, length = -1)
-
-    @NotBlank
+    @Column(name = "comments", nullable = false)
     @Size(min = 2, max = 120)
     @SafeHtml(groups = {View.Web.class})
     private String comments;
 
-    public OperatorEntity() {
+
+    public String getSection() {
+        return section;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OperatorEntity that = (OperatorEntity) o;
-        return id == that.id &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(comments, that.comments);
+    public void setSection(String activity) {
+        this.section = activity;
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, name, comments);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getComments() {
         return comments;
@@ -62,5 +43,21 @@ public class OperatorEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActivitySectionEntity that = (ActivitySectionEntity) o;
+        return id == that.id &&
+                Objects.equals(section, that.section) &&
+                Objects.equals(comments, that.comments);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, section, comments);
     }
 }

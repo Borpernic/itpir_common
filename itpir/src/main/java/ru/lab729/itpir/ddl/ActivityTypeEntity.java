@@ -1,27 +1,33 @@
 package ru.lab729.itpir.ddl;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import ru.lab729.itpir.View;
+import ru.lab729.itpir.model.AbstractBaseEntity;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "activity_type", schema = "public", catalog = "itpirdb")
-public class ActivityTypeEntity {
-    private int id;
-    private String activity;
-    private String comments;
+@Table(name = "activity_type",  uniqueConstraints = {@UniqueConstraint(columnNames = {"activity"}, name = "activity_type_activity_idx")})
+public class ActivityTypeEntity extends AbstractBaseEntity {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Basic
-    @Column(name = "activity", nullable = false, length = 40)
+    @Column(name = "activity", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String activity;
+
+    @Basic
+    @Column(name = "comments", nullable = false)
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String comments;
+
+
     public String getActivity() {
         return activity;
     }
@@ -30,8 +36,7 @@ public class ActivityTypeEntity {
         this.activity = activity;
     }
 
-    @Basic
-    @Column(name = "comments", nullable = false, length = 40)
+
     public String getComments() {
         return comments;
     }

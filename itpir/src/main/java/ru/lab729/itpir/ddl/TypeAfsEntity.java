@@ -10,38 +10,37 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status_os", uniqueConstraints = {@UniqueConstraint(columnNames = "status", name = "status_os_status_idx")})
-public class StatusOsEntity extends AbstractBaseEntity {
-
+@Table(name = "type_AFS", uniqueConstraints = {@UniqueConstraint(columnNames = "AFS_Type", name = "type_AFS_afsType_idx")})
+public class TypeAfsEntity extends AbstractBaseEntity {
 
     @Basic
-    @Column(name = "status", nullable = false, length = 20)
+    @Column(name = "AFS_Type", nullable = false, length = -1)
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
-    private String status;
+    private String afsType;
 
 
-    public String getStatus() {
-        return status;
+    public String getAfsType() {
+        return afsType;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAfsType(String afsType) {
+        this.afsType = afsType;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StatusOsEntity that = (StatusOsEntity) o;
+        TypeAfsEntity that = (TypeAfsEntity) o;
         return id == that.id &&
-                Objects.equals(status, that.status);
+                Objects.equals(afsType, that.afsType);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, status);
+        return Objects.hash(id, afsType);
     }
 }

@@ -1,28 +1,42 @@
 package ru.lab729.itpir.ddl;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.SafeHtml;
+import ru.lab729.itpir.View;
+import ru.lab729.itpir.model.AbstractBaseEntity;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ad", schema = "public", catalog = "itpirdb")
-public class AdEntity {
-    private int id;
-    private String name;
-    private String address;
-    private Integer status;
-
-    @Id
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+@Table(name = "ad", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "ad_name_idx")})
+public class AdEntity extends AbstractBaseEntity {
 
     @Basic
     @Column(name = "name", nullable = true, length = -1)
+    @NotBlank
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String name;
+
+    @Basic
+    @Column(name = "address", nullable = true, length = -1)
+
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
+    private String address;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "statusAd_Id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(groups = View.Persist.class)
+    private StatusAdEntity status;
+
+
     public String getName() {
         return name;
     }
@@ -31,8 +45,7 @@ public class AdEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "adress", nullable = true, length = -1)
+
     public String getAddress() {
         return address;
     }
@@ -41,13 +54,11 @@ public class AdEntity {
         this.address = adress;
     }
 
-    @Basic
-    @Column(name = "status", nullable = true)
-    public Integer getStatus() {
+    public StatusAdEntity getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(StatusAdEntity status) {
         this.status = status;
     }
 

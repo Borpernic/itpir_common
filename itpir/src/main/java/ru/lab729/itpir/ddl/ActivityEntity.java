@@ -1,43 +1,52 @@
 package ru.lab729.itpir.ddl;
 
+import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.lab729.itpir.View;
 import ru.lab729.itpir.model.AbstractBaseEntity;
-
+import ru.lab729.itpir.util.DateTimeUtil;
 import javax.persistence.*;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
-@Table(name = "activity", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
-public class ActivityEntity extends AbstractBaseEntity {
-    //private int id;
 
-    @Basic
-    @Column(name = "os_id", nullable = true)
+@Table(name = "activity", uniqueConstraints = {@UniqueConstraint(columnNames = {"os_id", "activity_type_id"}, name = "meals_unique_user_datetime_idx")})
+public class ActivityEntity extends AbstractBaseEntity {
+
+
+    @Column(name = "section_id", nullable = false)
+    private Integer sectionId;
+
+    @Column(name = "os_id", nullable = false)
     private Integer osId;
 
-    @Basic
-    @Column(name = "implementer_id", nullable = true)
-    private Integer implementerId;
+    @Column(name = "executor_id", nullable = false)
+    private Integer executorId;
+
+    @Column(name = "date", nullable = false)
+    @NotNull
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDateTime date = LocalDateTime.now();
 
     @Basic
-    @Column(name = "date", nullable = true)
-    private Date date;
+    @Column(name = "plane_date", nullable = false)
+    @NotNull
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDateTime planeDate;
 
     @Basic
-    @Column(name = "plane_date", nullable = true)
-    private Date planeDate;
-
-    @Basic
-    @Column(name = "activity_type_id", nullable = true)
+    @Column(name = "activity_type_id", nullable = false)
     private Integer activityTypeId;
 
     @Basic
-    @Column(name = "activity_status_id", nullable = true)
+    @Column(name = "activity_status_id", nullable = false)
     private Integer activityStatusId;
 
     @Basic
     @Column(name = "comments", nullable = true, length = -1)
+    @SafeHtml(groups = {View.Web.class})
     private String comments;
 
 /*    @Id
@@ -47,7 +56,6 @@ public class ActivityEntity extends AbstractBaseEntity {
     }*/
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,7 +63,7 @@ public class ActivityEntity extends AbstractBaseEntity {
         ActivityEntity that = (ActivityEntity) o;
         return id == that.id &&
                 Objects.equals(osId, that.osId) &&
-                Objects.equals(implementerId, that.implementerId) &&
+                Objects.equals(executorId, that.executorId) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(planeDate, that.planeDate) &&
                 Objects.equals(activityTypeId, that.activityTypeId) &&
@@ -66,6 +74,6 @@ public class ActivityEntity extends AbstractBaseEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, osId, implementerId, date, planeDate, activityTypeId, activityStatusId, comments);
+        return Objects.hash(id, osId, executorId, date, planeDate, activityTypeId, activityStatusId, comments);
     }
 }
