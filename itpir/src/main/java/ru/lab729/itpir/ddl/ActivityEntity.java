@@ -6,7 +6,9 @@ import ru.lab729.itpir.View;
 import ru.lab729.itpir.model.AbstractBaseEntity;
 import ru.lab729.itpir.util.DateTimeUtil;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,7 +17,10 @@ import java.util.Objects;
 @Table(name = "activity", uniqueConstraints = {@UniqueConstraint(columnNames = {"os_id", "activity_type_id"}, name = "meals_unique_user_datetime_idx")})
 public class ActivityEntity extends AbstractBaseEntity {
 
-
+    @Basic
+    @NotBlank
+    @Size(min = 2, max = 120)
+    @SafeHtml(groups = {View.Web.class})
     @Column(name = "section_id", nullable = false)
     private Integer sectionId;
 

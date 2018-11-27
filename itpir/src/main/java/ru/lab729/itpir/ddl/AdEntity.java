@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
-
+//Арендодатель
 @Entity
 @Table(name = "ad", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "ad_name_idx")})
 public class AdEntity extends AbstractBaseEntity {
