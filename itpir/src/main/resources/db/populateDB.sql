@@ -4,6 +4,16 @@ DELETE
 FROM meals;
 DELETE
 FROM users;
+DELETE
+FROM operator;
+DELETE
+FROM region;
+DELETE
+FROM status_contacts;
+DELETE
+FROM contacts_ad;
+
+
 ALTER SEQUENCE global_seq
   RESTART WITH 100000;
 
@@ -26,68 +36,80 @@ VALUES ('2015-05-30 10:00:00', 'Завтрак', 500, 100000),
        ('2015-06-01 14:00:00', 'Админ ланч', 510, 100001),
        ('2015-06-01 21:00:00', 'Админ ужин', 1500, 100001);
 
-INSERT INTO operator (name, comments)
+INSERT INTO operator (operator, comments)
 VALUES ('МТС', 'оператор МТС '),
        ('Билайн', 'оператор Билайн'),
        ('МегаФон', 'оператор МегаФон');
 
+INSERT INTO region (region, comments)
+VALUES ('77', 'Москва'),
+       ('50', 'МО');
 
-INSERT INTO status_activity (status)
-VALUES ('Не распределен'),
-       ('Приостановлен'),
-       ('Отменён'),
-/*       ('На исправлении ПО'),
-       ('Исправлен'),
-       ('Сделан запрос'),
-       ('Ждем ответа'),*/
-       ('В работе'),
-       ('Выполнен');
+INSERT INTO site (number, name, operator, region, date, city, street, building, comments)
+VALUES ('1279', 'Будапешт', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Авиамоторная', '28С', ' БС 1279'),
+       ('1280', 'Будапешт2', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Автозаводская', '18С', ' БС 1280'),
+       ('1281', 'Будапешт3', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Лесная', '38С', ' БС 1281'),
+       ('1279', 'Будапешт', 100011, 100013, '2018-05-30 13:00:00', 'Москва', 'Тверская', '48С', ' БС 1279'),
+       ('1280', 'Будапешт2', 100012, 100014, '2018-05-30 13:00:00', 'Москва', 'Авиамоторная', '22', ' БС 1280');
 
-INSERT INTO status_ad (status)
-VALUES ('Дествующий'),
-       ('Заморожен');
+INSERT INTO status_contacts (status)
+VALUES ('Нет данных'),
+       ('Не звонить'),
+       ('Звонить для доступа');
 
-INSERT INTO status_executor (status)
-VALUES ('Действующий'),
-       ('Дисквалифицирован');
 
-INSERT INTO status_id (status)
-VALUES ('Действующие'),
-       ('Кривые'),
-       ('Отменены');
+INSERT INTO contacts_ad (site_id, surname, name, phone1, status, confirmed)
+VALUES (100015, 'Лавров', 'Дмитрий', '128656', 100020, false),
+       (100016, 'Иванов', 'Сергей', '356', 100020, false),
+       (100017, 'Петров', 'Иван', '8596455', 100020, false);
+
+INSERT INTO pm (pm, comments)
+VALUES ('Мамонтов', 'МТС'),
+       ('Козлов', 'Хуавей');
+
+INSERT INTO customer (customer)
+VALUES ('МТС'),
+       ('ВымпелКом'),
+       ('МегаФон'),
+       ('Теле2'),
+       ('Хуавей'),
+       ('Эриксон'),
+       ('НСН');
+
+INSERT INTO project (project, pm, customer, comments)
+VALUES ('МТС', 100026, 100028, 'Столб'),
+       ('Хуавей', 100027, 100032, 'SWAP');
+
+INSERT INTO curator (operator, curator)
+VALUES (100010, 'Иваньков'),
+       (100011, 'Сидоров'),
+       (100012, 'Смирнов');
+
+INSERT INTO band (band, comments)
+VALUES ('U900', 'МТС'),
+       ('U2100', 'МТС'),
+       ('L2600', 'Вымпелком');
 
 INSERT INTO status_os (status)
 VALUES ('В работе'),
-       ('Приостановлен'),
+       ('Заморожен'),
        ('Отозван'),
        ('Отменен');
 
-INSERT INTO status_rd (status)
-VALUES ('В работе'),
-       ('Приостановлен'),
-       ('Отозван'),
-       ('Отменен');
-
-INSERT INTO status_ssr (status)
-VALUES ('В работе'),
-       ('Приостановлен'),
-       ('Отозван'),
-       ('Отменен');
-
-INSERT INTO status_tssr (status)
-VALUES ('В работе'),
-       ('Приостановлен'),
-       ('Отозван'),
-       ('Отменен');
-
-INSERT INTO type_BS (BS_Type)
+INSERT INTO type_os (type)
+VALUES ('Новая стройка'),
+       ('Модернизация'),
+       ('Indoor'),
+       ('WLL'),
+       ('РРС');
+INSERT INTO type_BS (type)
 VALUES ('Выгородка'),
        ('Контейнер на крыше'),
        ('Контейнер на земле'),
        ('Климатический шкаф на крыше'),
-       ('Indoor');
+       ('Оборудование в серверной АД');
 
-INSERT INTO type_AMS (AMS_Type)
+INSERT INTO type_AMS (type)
 VALUES ('Столб'),
        ('Башня'),
        ('Мачта'),
@@ -95,41 +117,71 @@ VALUES ('Столб'),
        ('Крыша'),
        ('Дымовая труба');
 
-INSERT INTO type_AFS (AFS_Type)
+INSERT INTO type_AFS (type)
 VALUES ('Антенные опоры на фасаде'),
        ('Антенные опоры на пригрузах');
 
-INSERT INTO executor (name, phone, email, comments, rating, status)
-VALUES ('Ершов С. А.', '8-966-100-31-24', 's.e@email.com', 'АС, КМ', 10, 100020),
-       ('Дамаскин М. А.', '8-966-100-31-25', 's.e@email.com', 'РС, АС, КМ', 10, 100021);
+INSERT INTO internal_number (number, project)
+VALUES ('3568999', 100035),
+       ('3569997', 100036);
 
-INSERT INTO ad (name, address, statusad_id)
-VALUES ('ООО Будапешт', 'Москва', 100018),
-       ('ООО Рога и Копыта', 'Питер', 100018),
-       ('ООО Гугль', 'Питер', 100019);
+INSERT INTO os (date, site, internal_number, curator, band, type_os, type_BS, type_AMS, type_AFS, status_os, comments)
+VALUES (now(), 100015, 100065, 100037, 100040, 100047, 100052, 100058, 100063, 100043, 'МТС'),
+       (now(), 100018, 100066, 100038, 100040, 100047, 100052, 100058, 100063, 100043, 'HW');
 
-INSERT INTO activity_type (activity, comments)
-VALUES ('Запрос оператору', 'Уточнение'),
-       ('Исправление', 'Проектирование'),
-       ('Получение', 'Проектирование'),
-       ('Разработка', 'Проектирование'),
-       ('Оплата', 'Оплата');
+INSERT INTO nomenclature_works (works)
+VALUES ('Обследование ОС'),
+       ('Разработка SSR'),
+       ('Разработка TSSR'),
+       ('Разработка ТЗ'),
+       ('Разработка ПЗ'),
+       ('Разработка РС'),
+       ('Разработка ЭМ'),
+       ('Разработка ЭС'),
+       ('Разработка АС'),
+       ('Разработка КМ'),
+       ('Разработка РРС'),
+       ('Разработка РРС1'),
+       ('Разработка ДП'),
+       ('Разработка ПРА');
 
-INSERT INTO activity_section (section, comments)
-VALUES ('ИД', 'Раздел ИД'),
-       ('Обследование', 'Раздел обследование'),
-       ('SSR', 'Раздел SSR'),
-       ('TSSR', 'Раздел TSSR'),
-       ('РД', 'Раздел РД'),
-       ('ТУ', 'Раздел ТУ'),
-       ('РНС', 'Раздел РНС'),
-       ('Форма 1А', 'Раздел Форма 1А');
+INSERT INTO type_implementer (type)
+VALUES ('Оклад'),
+       ('Сделка'),
+       ('Фриланс');
+
+INSERT INTO status_implementer (status)
+VALUES ('Готов к работе'),
+       ('Занят'),
+       ('Дисквалифицирован');
+
+INSERT INTO implementer (implementer, phone, email, type, status, rating, comments)
+VALUES ('Ершов С. А.', '8-966-100-31-24', 's.e@email.com', 100083, 100086, 1, 'АС, КМ'),
+       ('Дамаскин М. А.', '8-966-100-31-25', 'm.d@email.com', 100084, 100087, 1, 'РС, АС, КМ');
+
+INSERT INTO tzp (tzp, price, type_os, type_implementer, comments)
+VALUES ('Альбом РС', 1200, 100047, 100083, 'МТС'),
+       ('SSR', 3200, 100048, 100084, 'МТС');
+
+INSERT INTO status_activity (status)
+VALUES ('Нет подтверждения'),
+       ('В работе'),
+       ('Выполнено'),
+       ('Приостановлено'),
+       ('Отозвано');
+
+INSERT INTO type_activity (type)
+VALUES ('Запрос исходных данных'),
+       ('Запрос исходного проекта'),
+       ('Уточнение исходных данных'),
+       ('Обследование'),
+       ('Фотоотчет'),
+       ('SSR'),
+       ('TSSR'),
+       ('РД'),
+       ('Сдача РД'),
+       ('ИД');
 
 
-/*INSERT INTO site (site_number, site_name, operator_id, ad_id, site_date, comments)
-VALUES ('1279', 'Будапешт', 100010, 100056, '2015-05-30 13:00:00', ' БС 1279'),
-       ('1280', 'Будапешт2', 100010, 100057, '2015-05-30 13:00:00', ' БС 1280'),
-       ('1281', 'Будапешт3', 100010, 100058, '2015-05-30 13:00:00', ' БС 1281'),
-       ('1279', 'Будапешт', 100011, 100056, '2015-05-30 13:00:00', ' БС 1279'),
-       ('1280', 'Будапешт2', 100012, 100056, '2015-05-30 13:00:00', ' БС 1280');*/
+
 

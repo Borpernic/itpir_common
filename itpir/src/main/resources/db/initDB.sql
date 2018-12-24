@@ -2,23 +2,29 @@ DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS meals;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS operator CASCADE;
-DROP TABLE IF EXISTS status_ad CASCADE;
-DROP TABLE IF EXISTS ad CASCADE;
-DROP TABLE IF EXISTS Site CASCADE;
-DROP TABLE IF EXISTS status_activity CASCADE;
-DROP TABLE IF EXISTS status_executor CASCADE;
-DROP TABLE IF EXISTS status_id CASCADE;
+DROP TABLE IF EXISTS region CASCADE;
+DROP TABLE IF EXISTS site CASCADE;
+DROP TABLE IF EXISTS status_contacts CASCADE;
+DROP TABLE IF EXISTS contacts_ad CASCADE;
+DROP TABLE IF EXISTS pm CASCADE;
+DROP TABLE IF EXISTS customer CASCADE;
+DROP TABLE IF EXISTS project CASCADE;
+DROP TABLE IF EXISTS curator CASCADE;
+DROP TABLE IF EXISTS band CASCADE;
 DROP TABLE IF EXISTS status_os CASCADE;
-DROP TABLE IF EXISTS status_rd CASCADE;
-DROP TABLE IF EXISTS status_ssr CASCADE;
-DROP TABLE IF EXISTS status_tssr CASCADE;
+DROP TABLE IF EXISTS type_os CASCADE;
 DROP TABLE IF EXISTS type_BS CASCADE;
 DROP TABLE IF EXISTS type_AMS CASCADE;
 DROP TABLE IF EXISTS type_AFS CASCADE;
-DROP TABLE IF EXISTS executor CASCADE;
-DROP TABLE IF EXISTS activity_type CASCADE;
-DROP TABLE IF EXISTS activity_section CASCADE;
-
+DROP TABLE IF EXISTS internal_number CASCADE;
+DROP TABLE IF EXISTS os CASCADE;
+DROP TABLE IF EXISTS nomenclature_works CASCADE;
+DROP TABLE IF EXISTS type_implementer CASCADE;
+DROP TABLE IF EXISTS status_implementer CASCADE;
+DROP TABLE IF EXISTS implementer CASCADE;
+DROP TABLE IF EXISTS tzp CASCADE;
+DROP TABLE IF EXISTS status_activity CASCADE;
+DROP TABLE IF EXISTS type_activity CASCADE;
 
 DROP SEQUENCE IF EXISTS global_seq CASCADE;
 CREATE SEQUENCE global_seq
@@ -59,68 +65,112 @@ CREATE UNIQUE INDEX meals_unique_user_datetime_idx
 CREATE TABLE operator
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name     TEXT NOT NULL,
+  operator TEXT NOT NULL,
   comments TEXT NOT NULL,
-  CONSTRAINT operator_name_idx UNIQUE (name)
+  CONSTRAINT operator_operator_idx UNIQUE (operator)
 
 );
 
-CREATE TABLE status_ad (
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_ad_status_idx UNIQUE (status)
-
-);
-
-
-CREATE TABLE ad
+CREATE TABLE region
 (
-  id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name        TEXT    NOT NULL,
-  address     TEXT    NOT NULL,
-  statusAd_Id INTEGER NOT NULL,
-  FOREIGN KEY (statusAd_Id) REFERENCES status_ad (id) ON DELETE CASCADE,
-  CONSTRAINT ad_name_idx UNIQUE (name)
-
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  region   TEXT NOT NULL,
+  comments TEXT NOT NULL,
+  CONSTRAINT region_region_idx UNIQUE (region)
 );
 
-
-CREATE TABLE Site
+CREATE TABLE site
 (
-  id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  site_number VARCHAR   NOT NULL,
-  site_name   TEXT      NOT NULL,
-  operator_id INTEGER   NOT NULL,
-  ad_Id       INTEGER   NOT NULL,
-  site_date   TIMESTAMP NOT NULL,
-  comments    TEXT      NOT NULL,
-  FOREIGN KEY (operator_id) REFERENCES operator (id) ON DELETE CASCADE,
-  FOREIGN KEY (ad_Id) REFERENCES ad (id) ON DELETE CASCADE
-
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  number   VARCHAR   NOT NULL,
+  name     TEXT      NOT NULL,
+  operator INTEGER   NOT NULL,
+  region   INTEGER   NOT NULL,
+  date     TIMESTAMP NOT NULL,
+  city     TEXT      NOT NULL,
+  street   TEXT      NOT NULL,
+  building TEXT      NOT NULL,
+  comments TEXT      NOT NULL,
+  FOREIGN KEY (operator) REFERENCES operator (id),
+  FOREIGN KEY (region) REFERENCES region (id)
 );
 CREATE UNIQUE INDEX site_site_number_operator_id_key
-  ON Site (site_number, operator_id);
+  ON Site (number, operator);
 
-CREATE TABLE status_activity
+CREATE TABLE status_contacts
 (
   id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   status TEXT NOT NULL,
-  CONSTRAINT status_activity_status_idx UNIQUE (status)
-
+  CONSTRAINT status_contacts_status_idx UNIQUE (status)
 );
-CREATE TABLE status_executor
-(
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_executor_status_idx UNIQUE (status)
 
+CREATE TABLE contacts_ad
+(
+  id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  site_id    INTEGER NOT NULL,
+  surname    TEXT    NOT NULL,
+  name       TEXT    NOT NULL,
+  middlename TEXT,
+  position   TEXT,
+  phone1     TEXT    NOT NULL,
+  phone2     TEXT,
+  email      TEXT,
+  status     INTEGER NOT NULL,
+  comments   TEXT,
+  confirmed  boolean NOT null,
+  city       TEXT,
+  street     TEXT,
+  building   TEXT,
+
+  FOREIGN KEY (site_id) REFERENCES site (id) ON DELETE CASCADE,
+  FOREIGN KEY (status) REFERENCES status_contacts (id)
 );
-CREATE TABLE status_id
-(
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_id_status_idx UNIQUE (status)
 
+CREATE TABLE pm
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  pm       TEXT NOT NULL,
+  comments TEXT,
+  CONSTRAINT pm_pm_idx UNIQUE (pm)
+);
+
+CREATE TABLE customer
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  customer VARCHAR NOT NULL,
+  comments TEXT,
+  CONSTRAINT customer_customer_idx UNIQUE (customer)
+);
+
+CREATE TABLE project
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  project  VARCHAR NOT NULL,
+  pm       INTEGER NOT NULL,
+  customer INTEGER NOT NULL,
+  comments TEXT    NOT NULL,
+  FOREIGN KEY (pm) REFERENCES pm (id),
+  FOREIGN KEY (customer) REFERENCES customer (id)
+);
+
+CREATE TABLE curator
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  operator INTEGER NOT NULL,
+  curator  TEXT    NOT NULL,
+  phone    TEXT,
+  email    TEXT,
+  comments TEXT,
+  CONSTRAINT curator_curator_idx UNIQUE (curator),
+  FOREIGN KEY (operator) REFERENCES operator (id)
+);
+
+CREATE TABLE band
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  band     TEXT NOT NULL,
+  comments TEXT,
+  CONSTRAINT band_band_idx UNIQUE (band)
 );
 
 CREATE TABLE status_os
@@ -128,75 +178,155 @@ CREATE TABLE status_os
   id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   status TEXT NOT NULL,
   CONSTRAINT status_os_status_idx UNIQUE (status)
+);
 
-);
-CREATE TABLE status_rd
+CREATE TABLE type_os
 (
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_rd_status_idx UNIQUE (status)
+  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type TEXT NOT NULL,
+  CONSTRAINT type_os_type_idx UNIQUE (type)
+);
 
-);
-CREATE TABLE status_ssr
-(
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_ssr_status_idx UNIQUE (status)
-
-);
-CREATE TABLE status_tssr
-(
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_tssr_status_idx UNIQUE (status)
-);
 CREATE TABLE type_BS
 (
-  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  BS_Type TEXT NOT NULL,
-  CONSTRAINT type_BS_bsType_idx UNIQUE (BS_Type)
-
+  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type TEXT NOT NULL,
+  CONSTRAINT type_BS_type_idx UNIQUE (type)
 );
+
 CREATE TABLE type_AMS
 (
-  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  AMS_Type TEXT NOT NULL,
-  CONSTRAINT type_AMS_amsType_idx UNIQUE (AMS_Type)
-
+  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type TEXT NOT NULL,
+  CONSTRAINT type_AMS_type_idx UNIQUE (type)
 );
+
 CREATE TABLE type_AFS
 (
-  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  AFS_Type TEXT NOT NULL,
-  CONSTRAINT type_AFS_afsType_idx UNIQUE (AFS_Type)
+  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type TEXT NOT NULL,
+  CONSTRAINT type_AFS_type_idx UNIQUE (type)
+);
 
-);
-CREATE TABLE executor
+CREATE TABLE internal_number
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name     TEXT    NOT NULL,
-  phone    TEXT,
-  email    TEXT,
+  project  INTEGER NOT NULL,
+  number   TEXT    NOT NULL,
   comments TEXT,
-  rating   INTEGER NOT NULL,
-  status   INTEGER NOT NULL,
-  CONSTRAINT executor_name_idx UNIQUE (name),
-  FOREIGN KEY (status) REFERENCES status_executor (id) ON DELETE CASCADE
+  CONSTRAINT internal_number_number_idx UNIQUE (number),
+  FOREIGN KEY (project) REFERENCES project (id)
 );
-CREATE TABLE activity_type
+
+CREATE TABLE os
+(
+  id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  date            timestamp NOT NULL,
+  site            INTEGER   NOT NULL,
+  internal_number INTEGER   NOT NULL,
+  curator         INTEGER   NOT NULL,
+  band            INTEGER   NOT NULL,
+  type_os         INTEGER   NOT NULL,
+  type_BS         INTEGER   NOT NULL,
+  type_AMS        INTEGER   NOT NULL,
+  type_AFS        INTEGER   NOT NULL,
+  source_data     BOOLEAN,
+  source_RD       BOOLEAN,
+  RNS             BOOLEAN,
+  F1A             BOOLEAN,
+  survey          BOOLEAN,
+  SSR             BOOLEAN,
+  TSSR            BOOLEAN,
+  RD              BOOLEAN,
+  implDoc         BOOLEAN,
+  status_os       INTEGER   NOT NULL,
+  comments        TEXT      NOT NULL,
+  FOREIGN KEY (site) REFERENCES site (id),
+  FOREIGN KEY (internal_number) REFERENCES internal_number (id),
+  FOREIGN KEY (curator) REFERENCES curator (id),
+  FOREIGN KEY (band) REFERENCES band (id),
+  FOREIGN KEY (type_os) REFERENCES type_os (id),
+  FOREIGN KEY (type_BS) REFERENCES type_BS (id),
+  FOREIGN KEY (type_AMS) REFERENCES type_AMS (id),
+  FOREIGN KEY (type_AFS) REFERENCES type_AFS (id),
+  FOREIGN KEY (status_os) REFERENCES status_os (id)
+);
+
+CREATE TABLE nomenclature_works
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  activity TEXT NOT NULL,
+  works    TEXT NOT NULL,
   comments TEXT,
-  CONSTRAINT activity_type_activity_idx UNIQUE (activity)
+  CONSTRAINT nomenclature_works_works_idx UNIQUE (works)
 );
-CREATE TABLE activity_section
+
+CREATE TABLE type_implementer
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  section TEXT NOT NULL,
+  type     TEXT NOT NULL,
   comments TEXT,
-  CONSTRAINT activity_section_section_idx UNIQUE (section)
+  CONSTRAINT type_implementer_type_idx UNIQUE (type)
 );
+
+CREATE TABLE status_implementer
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  status   TEXT NOT NULL,
+  comments TEXT,
+  CONSTRAINT status_implementer_status_idx UNIQUE (status)
+);
+
+CREATE TABLE implementer
+(
+  id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  implementer TEXT    NOT NULL,
+  phone       TEXT    NOT NULL,
+  email       TEXT    NOT NULL,
+  status      INTEGER NOT NULL,
+  type        INTEGER NOT NULL,
+  rating      numeric NOT NULL,
+  comments    TEXT,
+  CONSTRAINT implementer_implementer_idx UNIQUE (implementer),
+  FOREIGN KEY (status) REFERENCES status_implementer (id),
+  FOREIGN KEY (type) REFERENCES type_implementer (id)
+);
+
+CREATE TABLE tzp
+(
+  id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  tzp              TEXT    NOT NULL,
+  price            numeric NOT NULL,
+  type_os          INTEGER NOT NULL,
+  type_implementer INTEGER NOT NULL,
+  comments         TEXT,
+  CONSTRAINT tzp_tzp_idx UNIQUE (tzp)
+);
+
+CREATE TABLE status_activity
+(
+  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  status TEXT NOT NULL,
+  CONSTRAINT status_activity_status_idx UNIQUE (status)
+);
+
+
+CREATE TABLE type_activity
+(
+  id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type        TEXT NOT NULL,
+  source_data BOOLEAN  NOT NULL,
+  source_RD   BOOLEAN NOT NULL,
+  RNS         BOOLEAN NOT NULL,
+  F1A         BOOLEAN NOT NULL,
+  survey      BOOLEAN NOT NULL,
+  SSR         BOOLEAN NOT NULL,
+  TSSR        BOOLEAN NOT NULL,
+  RD          BOOLEAN NOT NULL,
+  implDoc     BOOLEAN NOT NULL,
+  comments    TEXT,
+  CONSTRAINT type_activity_type_idx UNIQUE (type)
+);
+
 
 
 
