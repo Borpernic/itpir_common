@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS implementer CASCADE;
 DROP TABLE IF EXISTS tzp CASCADE;
 DROP TABLE IF EXISTS status_activity CASCADE;
 DROP TABLE IF EXISTS type_activity CASCADE;
+DROP TABLE IF EXISTS activity CASCADE;
 
 DROP SEQUENCE IF EXISTS global_seq CASCADE;
 CREATE SEQUENCE global_seq
@@ -117,7 +118,7 @@ CREATE TABLE contacts_ad
   email      TEXT,
   status     INTEGER NOT NULL,
   comments   TEXT,
-  confirmed  boolean NOT null,
+  confirmed  BOOLEAN NOT NULL,
   city       TEXT,
   street     TEXT,
   building   TEXT,
@@ -221,7 +222,7 @@ CREATE TABLE internal_number
 CREATE TABLE os
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  date            timestamp NOT NULL,
+  date            TIMESTAMP NOT NULL,
   site            INTEGER   NOT NULL,
   internal_number INTEGER   NOT NULL,
   curator         INTEGER   NOT NULL,
@@ -284,7 +285,7 @@ CREATE TABLE implementer
   email       TEXT    NOT NULL,
   status      INTEGER NOT NULL,
   type        INTEGER NOT NULL,
-  rating      numeric NOT NULL,
+  rating      NUMERIC NOT NULL,
   comments    TEXT,
   CONSTRAINT implementer_implementer_idx UNIQUE (implementer),
   FOREIGN KEY (status) REFERENCES status_implementer (id),
@@ -295,7 +296,7 @@ CREATE TABLE tzp
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   tzp              TEXT    NOT NULL,
-  price            numeric NOT NULL,
+  price            NUMERIC NOT NULL,
   type_os          INTEGER NOT NULL,
   type_implementer INTEGER NOT NULL,
   comments         TEXT,
@@ -313,8 +314,8 @@ CREATE TABLE status_activity
 CREATE TABLE type_activity
 (
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type        TEXT NOT NULL,
-  source_data BOOLEAN  NOT NULL,
+  type        TEXT    NOT NULL,
+  source_data BOOLEAN NOT NULL,
   source_RD   BOOLEAN NOT NULL,
   RNS         BOOLEAN NOT NULL,
   F1A         BOOLEAN NOT NULL,
@@ -328,5 +329,25 @@ CREATE TABLE type_activity
 );
 
 
+CREATE TABLE activity
+(
+  id                 INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  date               TIMESTAMP NOT NULL,
+  os                 INTEGER   NOT NULL,
+  implementer        NUMERIC   NOT NULL,
+  type_activity      NUMERIC   NOT NULL,
+  status_activity    NUMERIC   NOT NULL,
+  date_change_status TIMESTAMP,
+  plane_date         TIMESTAMP NOT NULL,
+  accept             BOOLEAN,
+  accept_date        TIMESTAMP,
+  rating             NUMERIC   NOT NULL,
+  comments           TEXT,
+  CONSTRAINT activity_type_idx UNIQUE (type),
+  FOREIGN KEY (os) REFERENCES os (id),
+  FOREIGN KEY (implementer) REFERENCES implementer (id),
+  FOREIGN KEY (type_activity) REFERENCES type_activity (id),
+  FOREIGN KEY (status_activity) REFERENCES status_activity (id)
+);
 
 
