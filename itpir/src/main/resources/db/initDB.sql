@@ -23,10 +23,16 @@ DROP TABLE IF EXISTS type_implementer CASCADE;
 DROP TABLE IF EXISTS status_implementer CASCADE;
 DROP TABLE IF EXISTS implementer CASCADE;
 DROP TABLE IF EXISTS tzp CASCADE;
+DROP TABLE IF EXISTS type_task CASCADE;
+DROP TABLE IF EXISTS result_task CASCADE;
+DROP TABLE IF EXISTS department CASCADE;
 DROP TABLE IF EXISTS status_activity CASCADE;
 DROP TABLE IF EXISTS type_activity CASCADE;
 DROP TABLE IF EXISTS activity CASCADE;
+DROP TABLE IF EXISTS date_change_status CASCADE;
 
+
+DROP TABLE IF EXISTS task CASCADE;
 DROP SEQUENCE IF EXISTS global_seq CASCADE;
 CREATE SEQUENCE global_seq
   START 100000;
@@ -240,6 +246,7 @@ CREATE TABLE os
   TSSR            BOOLEAN,
   RD              BOOLEAN,
   implDoc         BOOLEAN,
+  signedLL        BOOLEAN,
   status_os       INTEGER   NOT NULL,
   comments        TEXT      NOT NULL,
   FOREIGN KEY (site) REFERENCES site (id),
@@ -296,11 +303,37 @@ CREATE TABLE tzp
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   tzp              TEXT    NOT NULL,
+  razmernost       TEXT    NOT NULL,
   price            NUMERIC NOT NULL,
   type_os          INTEGER NOT NULL,
   type_implementer INTEGER NOT NULL,
+
   comments         TEXT,
   CONSTRAINT tzp_tzp_idx UNIQUE (tzp)
+);
+
+CREATE TABLE type_task
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type     TEXT NOT NULL,
+  comments TEXT,
+  CONSTRAINT type_task_type_idx UNIQUE (type)
+);
+
+CREATE TABLE result_task
+(
+  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  result   TEXT NOT NULL,
+  comments TEXT,
+  CONSTRAINT result_task_result_idx UNIQUE (result)
+);
+
+CREATE TABLE department
+(
+  id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  department TEXT NOT NULL,
+  comments   TEXT,
+  CONSTRAINT department_department_idx UNIQUE (department)
 );
 
 CREATE TABLE status_activity
@@ -324,30 +357,58 @@ CREATE TABLE type_activity
   TSSR        BOOLEAN NOT NULL,
   RD          BOOLEAN NOT NULL,
   implDoc     BOOLEAN NOT NULL,
+  signedLL    BOOLEAN NOT NULL,
   comments    TEXT,
   CONSTRAINT type_activity_type_idx UNIQUE (type)
 );
 
-
 CREATE TABLE activity
 (
   id                 INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  date               TIMESTAMP NOT NULL,
   os                 INTEGER   NOT NULL,
   implementer        INTEGER   NOT NULL,
   type_activity      INTEGER   NOT NULL,
-  status_activity    INTEGER   NOT NULL,
-  date_change_status TIMESTAMP,
+  date               TIMESTAMP NOT NULL,
   plane_date         TIMESTAMP NOT NULL,
+  rating             NUMERIC   NOT NULL,
   accept             BOOLEAN,
   accept_date        TIMESTAMP,
-  rating             NUMERIC   NOT NULL,
+  status_activity    INTEGER   NOT NULL,
+  date_change_status TIMESTAMP,
   comments           TEXT,
-  CONSTRAINT activity_idx UNIQUE (os,type_activity,implementer),
+  CONSTRAINT activity_idx UNIQUE (os, type_activity, implementer),
   FOREIGN KEY (os) REFERENCES os (id),
   FOREIGN KEY (implementer) REFERENCES implementer (id),
   FOREIGN KEY (type_activity) REFERENCES type_activity (id),
   FOREIGN KEY (status_activity) REFERENCES status_activity (id)
 );
 
+CREATE TABLE date_change_status
+(
+  id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  activity        INTEGER   NOT NULL,
+  date            TIMESTAMP NOT NULL,
+  status_activity INTEGER   NOT NULL,
+  comments        TEXT,
+  FOREIGN KEY (activity) REFERENCES activity (id),
+  FOREIGN KEY (status_activity) REFERENCES status_activity (id)
+);
 
+CREATE TABLE task
+(
+  id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  activity      INTEGER   NOT NULL,
+  date          TIMESTAMP NOT NULL,
+  type_task     INTEGER   NOT NULL,
+  department    INTEGER   NOT NULL,
+  plane_date    TIMESTAMP NOT NULL,
+  right_on_time BOOLEAN,
+  approve       BOOLEAN,
+  approve_date  TIMESTAMP,
+  result_task   INTEGER   NOT NULL,
+  comments      TEXT,
+  FOREIGN KEY (activity) REFERENCES activity (id),
+  FOREIGN KEY (type_task) REFERENCES type_task (id),
+  FOREIGN KEY (department) REFERENCES department (id),
+  FOREIGN KEY (result_task) REFERENCES result_task (id)
+);
