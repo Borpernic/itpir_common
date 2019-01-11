@@ -30,10 +30,10 @@ DROP TABLE IF EXISTS status_activity CASCADE;
 DROP TABLE IF EXISTS type_activity CASCADE;
 DROP TABLE IF EXISTS activity CASCADE;
 DROP TABLE IF EXISTS date_change_status CASCADE;
-
-
 DROP TABLE IF EXISTS task CASCADE;
+
 DROP SEQUENCE IF EXISTS global_seq CASCADE;
+
 CREATE SEQUENCE global_seq
   START 100000;
 
@@ -89,15 +89,15 @@ CREATE TABLE region
 CREATE TABLE site
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  number   VARCHAR   NOT NULL,
-  name     TEXT      NOT NULL,
-  operator INTEGER   NOT NULL,
-  region   INTEGER   NOT NULL,
-  date     TIMESTAMP NOT NULL,
-  city     TEXT      NOT NULL,
-  street   TEXT      NOT NULL,
-  building TEXT      NOT NULL,
-  comments TEXT      NOT NULL,
+  number   VARCHAR                 NOT NULL,
+  name     TEXT                    NOT NULL,
+  operator INTEGER                 NOT NULL,
+  region   INTEGER                 NOT NULL,
+  date     TIMESTAMP DEFAULT now() NOT NULL,
+  city     TEXT                    NOT NULL,
+  street   TEXT                    NOT NULL,
+  building TEXT                    NOT NULL,
+  comments TEXT                    NOT NULL,
   FOREIGN KEY (operator) REFERENCES operator (id),
   FOREIGN KEY (region) REFERENCES region (id)
 );
@@ -228,15 +228,15 @@ CREATE TABLE internal_number
 CREATE TABLE os
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  date            TIMESTAMP NOT NULL,
-  site            INTEGER   NOT NULL,
-  internal_number INTEGER   NOT NULL,
-  curator         INTEGER   NOT NULL,
-  band            INTEGER   NOT NULL,
-  type_os         INTEGER   NOT NULL,
-  type_BS         INTEGER   NOT NULL,
-  type_AMS        INTEGER   NOT NULL,
-  type_AFS        INTEGER   NOT NULL,
+  date            TIMESTAMP DEFAULT now() NOT NULL,
+  site            INTEGER                 NOT NULL,
+  internal_number INTEGER                 NOT NULL,
+  curator         INTEGER                 NOT NULL,
+  band            INTEGER                 NOT NULL,
+  type_os         INTEGER                 NOT NULL,
+  type_BS         INTEGER                 NOT NULL,
+  type_AMS        INTEGER                 NOT NULL,
+  type_AFS        INTEGER                 NOT NULL,
   source_data     BOOLEAN,
   source_RD       BOOLEAN,
   RNS             BOOLEAN,
@@ -247,8 +247,8 @@ CREATE TABLE os
   RD              BOOLEAN,
   implDoc         BOOLEAN,
   signedLL        BOOLEAN,
-  status_os       INTEGER   NOT NULL,
-  comments        TEXT      NOT NULL,
+  status_os       INTEGER                 NOT NULL,
+  comments        TEXT                    NOT NULL,
   FOREIGN KEY (site) REFERENCES site (id),
   FOREIGN KEY (internal_number) REFERENCES internal_number (id),
   FOREIGN KEY (curator) REFERENCES curator (id),
@@ -365,15 +365,15 @@ CREATE TABLE type_activity
 CREATE TABLE activity
 (
   id                 INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  os                 INTEGER   NOT NULL,
-  implementer        INTEGER   NOT NULL,
-  type_activity      INTEGER   NOT NULL,
-  date               TIMESTAMP NOT NULL,
-  plane_date         TIMESTAMP NOT NULL,
-  rating             NUMERIC   NOT NULL,
+  os                 INTEGER                 NOT NULL,
+  implementer        INTEGER                 NOT NULL,
+  type_activity      INTEGER                 NOT NULL,
+  date               TIMESTAMP DEFAULT now() NOT NULL,
+  plane_date         TIMESTAMP               NOT NULL,
+  rating             NUMERIC                 NOT NULL,
   accept             BOOLEAN,
   accept_date        TIMESTAMP,
-  status_activity    INTEGER   NOT NULL,
+  status_activity    INTEGER                 NOT NULL,
   date_change_status TIMESTAMP,
   comments           TEXT,
   CONSTRAINT activity_idx UNIQUE (os, type_activity, implementer),
@@ -397,15 +397,15 @@ CREATE TABLE date_change_status
 CREATE TABLE task
 (
   id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  activity      INTEGER   NOT NULL,
-  date          TIMESTAMP NOT NULL,
-  type_task     INTEGER   NOT NULL,
-  department    INTEGER   NOT NULL,
-  plane_date    TIMESTAMP NOT NULL,
+  activity      INTEGER                 NOT NULL,
+  date          TIMESTAMP DEFAULT now() NOT NULL,
+  type_task     INTEGER                 NOT NULL,
+  department    INTEGER                 NOT NULL,
+  plane_date    TIMESTAMP               NOT NULL,
   right_on_time BOOLEAN,
   approve       BOOLEAN,
   approve_date  TIMESTAMP,
-  result_task   INTEGER   NOT NULL,
+  result_task   INTEGER                 NOT NULL,
   comments      TEXT,
   FOREIGN KEY (activity) REFERENCES activity (id),
   FOREIGN KEY (type_task) REFERENCES type_task (id),

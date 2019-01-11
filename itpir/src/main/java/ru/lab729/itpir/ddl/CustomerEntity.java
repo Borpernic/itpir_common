@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pm", schema = "public", catalog = "itpirdb")
-public class PmEntity {
+@Table(name = "customer", schema = "public", catalog = "itpirdb")
+public class CustomerEntity {
     private int id;
-    private String pm;
+    private String customer;
     private String comments;
 
     @Id
@@ -21,13 +21,13 @@ public class PmEntity {
     }
 
     @Basic
-    @Column(name = "pm", nullable = false, length = -1)
-    public String getPm() {
-        return pm;
+    @Column(name = "customer", nullable = false, length = -1)
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setPm(String pm) {
-        this.pm = pm;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     @Basic
@@ -44,15 +44,15 @@ public class PmEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PmEntity pmEntity = (PmEntity) o;
-        return id == pmEntity.id &&
-                Objects.equals(pm, pmEntity.pm) &&
-                Objects.equals(comments, pmEntity.comments);
+        CustomerEntity that = (CustomerEntity) o;
+        return id == that.id &&
+                Objects.equals(customer, that.customer) &&
+                Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, pm, comments);
+        return Objects.hash(id, customer, comments);
     }
 }

@@ -1,32 +1,32 @@
 package ru.lab729.itpir.ddl;
 
-import org.hibernate.validator.constraints.SafeHtml;
-import ru.lab729.itpir.View;
-import ru.lab729.itpir.model.AbstractBaseEntity;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "type_AMS", uniqueConstraints = {@UniqueConstraint(columnNames = "AMS_Type", name = "type_AMS_amsType_idx")})
-public class TypeAmsEntity extends AbstractBaseEntity {
+@Table(name = "type_ams", schema = "public", catalog = "itpirdb")
+public class TypeAmsEntity {
+    private int id;
+    private String type;
 
-    @Basic
-    @Column(name = "AMS_Type", nullable = false, length = -1)
-    @NotBlank
-    @Size(min = 2, max = 50)
-    @SafeHtml(groups = {View.Web.class})
-    private String amsType;
-
-
-    public String getAmsType() {
-        return amsType;
+    @Id
+    @Column(name = "id", nullable = false)
+    public int getId() {
+        return id;
     }
 
-    public void setAmsType(String amsType) {
-        this.amsType = amsType;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "type", nullable = false, length = -1)
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class TypeAmsEntity extends AbstractBaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         TypeAmsEntity that = (TypeAmsEntity) o;
         return id == that.id &&
-                Objects.equals(amsType, that.amsType);
+                Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, amsType);
+        return Objects.hash(id, type);
     }
 }

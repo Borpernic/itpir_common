@@ -1,32 +1,32 @@
 package ru.lab729.itpir.ddl;
 
-import org.hibernate.validator.constraints.SafeHtml;
-import ru.lab729.itpir.View;
-import ru.lab729.itpir.model.AbstractBaseEntity;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "type_AFS", uniqueConstraints = {@UniqueConstraint(columnNames = "AFS_Type", name = "type_AFS_afsType_idx")})
-public class TypeAfsEntity extends AbstractBaseEntity {
+@Table(name = "type_afs", schema = "public", catalog = "itpirdb")
+public class TypeAfsEntity {
+    private int id;
+    private String type;
 
-    @Basic
-    @Column(name = "AFS_Type", nullable = false, length = -1)
-    @NotBlank
-    @Size(min = 2, max = 50)
-    @SafeHtml(groups = {View.Web.class})
-    private String afsType;
-
-
-    public String getAfsType() {
-        return afsType;
+    @Id
+    @Column(name = "id", nullable = false)
+    public int getId() {
+        return id;
     }
 
-    public void setAfsType(String afsType) {
-        this.afsType = afsType;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "type", nullable = false, length = -1)
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class TypeAfsEntity extends AbstractBaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         TypeAfsEntity that = (TypeAfsEntity) o;
         return id == that.id &&
-                Objects.equals(afsType, that.afsType);
+                Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, afsType);
+        return Objects.hash(id, type);
     }
 }

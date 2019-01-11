@@ -4,10 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "type_bs", schema = "public", catalog = "itpirdb")
-public class TypeBsEntity {
+@Table(name = "type_task", schema = "public", catalog = "itpirdb")
+public class TypeTaskEntity {
     private int id;
     private String type;
+    private String comments;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -29,18 +30,29 @@ public class TypeBsEntity {
         this.type = type;
     }
 
+    @Basic
+    @Column(name = "comments", nullable = true, length = -1)
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TypeBsEntity that = (TypeBsEntity) o;
+        TypeTaskEntity that = (TypeTaskEntity) o;
         return id == that.id &&
-                Objects.equals(type, that.type);
+                Objects.equals(type, that.type) &&
+                Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, type);
+        return Objects.hash(id, type, comments);
     }
 }

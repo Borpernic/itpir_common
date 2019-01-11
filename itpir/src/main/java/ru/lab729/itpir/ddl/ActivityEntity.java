@@ -1,65 +1,147 @@
 package ru.lab729.itpir.ddl;
 
-import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.format.annotation.DateTimeFormat;
-import ru.lab729.itpir.View;
-import ru.lab729.itpir.model.AbstractBaseEntity;
-import ru.lab729.itpir.util.DateTimeUtil;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "activity", schema = "public", catalog = "itpirdb")
+public class ActivityEntity {
 
-@Table(name = "activity", uniqueConstraints = {@UniqueConstraint(columnNames = {"os_id", "activity_type_id"}, name = "meals_unique_user_datetime_idx")})
-public class ActivityEntity extends AbstractBaseEntity {
 
-    @Basic
-    @NotBlank
-    @Size(min = 2, max = 120)
-    @SafeHtml(groups = {View.Web.class})
-    @Column(name = "section_id", nullable = false)
-    private Integer sectionId;
-
-    @Column(name = "os_id", nullable = false)
-    private Integer osId;
-
-    @Column(name = "executor_id", nullable = false)
-    private Integer executorId;
-
-    @Column(name = "date", nullable = false)
-    @NotNull
-    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime date = LocalDateTime.now();
-
-    @Basic
-    @Column(name = "plane_date", nullable = false)
-    @NotNull
-    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime planeDate;
-
-    @Basic
-    @Column(name = "activity_type_id", nullable = false)
-    private Integer activityTypeId;
-
-    @Basic
-    @Column(name = "activity_status_id", nullable = false)
-    private Integer activityStatusId;
-
-    @Basic
-    @Column(name = "comments", nullable = true, length = -1)
-    @SafeHtml(groups = {View.Web.class})
+    private int id;
+    private int os;
+    private int implementer;
+    private int typeActivity;
+    private Timestamp date;
+    private Timestamp planeDate;
+    private BigInteger rating;
+    private Boolean accept;
+    private Timestamp acceptDate;
+    private int statusActivity;
+    private Timestamp dateChangeStatus;
     private String comments;
 
-/*    @Id
+    @Id
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
-    }*/
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "os", nullable = false)
+    public int getOs() {
+        return os;
+    }
+
+    public void setOs(int os) {
+        this.os = os;
+    }
+
+    @Basic
+    @Column(name = "implementer", nullable = false)
+    public int getImplementer() {
+        return implementer;
+    }
+
+    public void setImplementer(int implementer) {
+        this.implementer = implementer;
+    }
+
+    @Basic
+    @Column(name = "type_activity", nullable = false)
+    public int getTypeActivity() {
+        return typeActivity;
+    }
+
+    public void setTypeActivity(int typeActivity) {
+        this.typeActivity = typeActivity;
+    }
+
+    @Basic
+    @Column(name = "date", nullable = false)
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    @Basic
+    @Column(name = "plane_date", nullable = false)
+    public Timestamp getPlaneDate() {
+        return planeDate;
+    }
+
+    public void setPlaneDate(Timestamp planeDate) {
+        this.planeDate = planeDate;
+    }
+
+    @Basic
+    @Column(name = "rating", nullable = false, precision = 0)
+    public BigInteger getRating() {
+        return rating;
+    }
+
+    public void setRating(BigInteger rating) {
+        this.rating = rating;
+    }
+
+    @Basic
+    @Column(name = "accept", nullable = true)
+    public Boolean getAccept() {
+        return accept;
+    }
+
+    public void setAccept(Boolean accept) {
+        this.accept = accept;
+    }
+
+    @Basic
+    @Column(name = "accept_date", nullable = true)
+    public Timestamp getAcceptDate() {
+        return acceptDate;
+    }
+
+    public void setAcceptDate(Timestamp acceptDate) {
+        this.acceptDate = acceptDate;
+    }
+
+    @Basic
+    @Column(name = "status_activity", nullable = false)
+    public int getStatusActivity() {
+        return statusActivity;
+    }
+
+    public void setStatusActivity(int statusActivity) {
+        this.statusActivity = statusActivity;
+    }
+
+    @Basic
+    @Column(name = "date_change_status", nullable = true)
+    public Timestamp getDateChangeStatus() {
+        return dateChangeStatus;
+    }
+
+    public void setDateChangeStatus(Timestamp dateChangeStatus) {
+        this.dateChangeStatus = dateChangeStatus;
+    }
+
+    @Basic
+    @Column(name = "comments", nullable = true, length = -1)
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -67,18 +149,22 @@ public class ActivityEntity extends AbstractBaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         ActivityEntity that = (ActivityEntity) o;
         return id == that.id &&
-                Objects.equals(osId, that.osId) &&
-                Objects.equals(executorId, that.executorId) &&
+                os == that.os &&
+                implementer == that.implementer &&
+                typeActivity == that.typeActivity &&
+                statusActivity == that.statusActivity &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(planeDate, that.planeDate) &&
-                Objects.equals(activityTypeId, that.activityTypeId) &&
-                Objects.equals(activityStatusId, that.activityStatusId) &&
+                Objects.equals(rating, that.rating) &&
+                Objects.equals(accept, that.accept) &&
+                Objects.equals(acceptDate, that.acceptDate) &&
+                Objects.equals(dateChangeStatus, that.dateChangeStatus) &&
                 Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, osId, executorId, date, planeDate, activityTypeId, activityStatusId, comments);
+        return Objects.hash(id, os, implementer, typeActivity, date, planeDate, rating, accept, acceptDate, statusActivity, dateChangeStatus, comments);
     }
 }

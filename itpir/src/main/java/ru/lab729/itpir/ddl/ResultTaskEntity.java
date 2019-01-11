@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pm", schema = "public", catalog = "itpirdb")
-public class PmEntity {
+@Table(name = "result_task", schema = "public", catalog = "itpirdb")
+public class ResultTaskEntity {
     private int id;
-    private String pm;
+    private String result;
     private String comments;
 
     @Id
@@ -21,13 +21,13 @@ public class PmEntity {
     }
 
     @Basic
-    @Column(name = "pm", nullable = false, length = -1)
-    public String getPm() {
-        return pm;
+    @Column(name = "result", nullable = false, length = -1)
+    public String getResult() {
+        return result;
     }
 
-    public void setPm(String pm) {
-        this.pm = pm;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     @Basic
@@ -44,15 +44,15 @@ public class PmEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PmEntity pmEntity = (PmEntity) o;
-        return id == pmEntity.id &&
-                Objects.equals(pm, pmEntity.pm) &&
-                Objects.equals(comments, pmEntity.comments);
+        ResultTaskEntity that = (ResultTaskEntity) o;
+        return id == that.id &&
+                Objects.equals(result, that.result) &&
+                Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, pm, comments);
+        return Objects.hash(id, result, comments);
     }
 }

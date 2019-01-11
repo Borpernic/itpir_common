@@ -1,4 +1,4 @@
-package ru.lab729.itpir.ddl;
+package ru.lab729.itpir.ddlold;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
@@ -10,37 +10,37 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status_executor", uniqueConstraints = {@UniqueConstraint(columnNames = "status", name = "status_executor_status_idx")})
-public class StatusExecutorEntity extends AbstractBaseEntity {
+@Table(name = "type_AMS", uniqueConstraints = {@UniqueConstraint(columnNames = "AMS_Type", name = "type_AMS_amsType_idx")})
+public class TypeAmsEntity extends AbstractBaseEntity {
 
     @Basic
-    @Column(name = "status", nullable = true, length = 20)
+    @Column(name = "AMS_Type", nullable = false, length = -1)
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
-    private String status;
+    private String amsType;
 
 
-    public String getStatus() {
-        return status;
+    public String getAmsType() {
+        return amsType;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAmsType(String amsType) {
+        this.amsType = amsType;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StatusExecutorEntity that = (StatusExecutorEntity) o;
+        TypeAmsEntity that = (TypeAmsEntity) o;
         return id == that.id &&
-                Objects.equals(status, that.status);
+                Objects.equals(amsType, that.amsType);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, status);
+        return Objects.hash(id, amsType);
     }
 }

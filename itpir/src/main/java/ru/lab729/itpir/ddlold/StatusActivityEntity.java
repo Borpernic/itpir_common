@@ -1,4 +1,4 @@
-package ru.lab729.itpir.ddl;
+package ru.lab729.itpir.ddlold;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
@@ -10,9 +10,8 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status_tssr", uniqueConstraints = {@UniqueConstraint(columnNames = "status", name = "status_tssr_status_idx")})
-public class StatusTssrEntity extends AbstractBaseEntity {
-
+@Table(name = "status_activity",  uniqueConstraints = {@UniqueConstraint(columnNames = "status", name = "status_activity_status_idx")})
+public class StatusActivityEntity extends AbstractBaseEntity {
     @Basic
     @Column(name = "status", nullable = false, length = 20)
     @NotBlank
@@ -33,7 +32,7 @@ public class StatusTssrEntity extends AbstractBaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StatusTssrEntity that = (StatusTssrEntity) o;
+        StatusActivityEntity that = (StatusActivityEntity) o;
         return id == that.id &&
                 Objects.equals(status, that.status);
     }

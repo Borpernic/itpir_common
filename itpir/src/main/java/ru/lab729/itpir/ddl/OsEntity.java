@@ -1,41 +1,36 @@
 package ru.lab729.itpir.ddl;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.sql.Date;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "os", schema = "public", catalog = "itpirdb")
 public class OsEntity {
     private int id;
-    private int projectId;
-    private int orderId;
-    private int pmId;
-    private int osTypeId;
-    private int servicesTypeId;
-    private String band;
-    private Integer tu;
-    private Integer rns;
-    private Integer forma1A;
-    private Integer access;
-    private Date orderDate;
-    private Integer survey;
-    private Integer ssr;
-    private Integer tssr;
-    private Integer rd;
-    private Integer executiveDocumentation;
-    private Date surveyDatePlan;
-    private Date ssrDatePlan;
-    private Date tssrDatePlan;
-    private Date rdDatePlan;
-    private Date idDatePlan;
-    private Integer status;
+    private Timestamp date;
+    private int site;
+    private int internalNumber;
+    private int curator;
+    private int band;
+    private int typeOs;
+    private int typeBs;
+    private int typeAms;
+    private int typeAfs;
+    private Boolean sourceData;
+    private Boolean sourceRd;
+    private Boolean rns;
+    private Boolean f1A;
+    private Boolean survey;
+    private Boolean ssr;
+    private Boolean tssr;
+    private Boolean rd;
+    private Boolean impldoc;
+    private Boolean signedll;
+    private int statusOs;
     private String comments;
 
-    @Basic
+    @Id
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
@@ -46,227 +41,207 @@ public class OsEntity {
     }
 
     @Basic
-    @Column(name = "project_id", nullable = false)
-    public int getProjectId() {
-        return projectId;
+    @Column(name = "date", nullable = false)
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    @Basic
-    @Column(name = "order_id", nullable = false)
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     @Basic
-    @Column(name = "PM_id", nullable = false)
-    public int getPmId() {
-        return pmId;
+    @Column(name = "site", nullable = false)
+    public int getSite() {
+        return site;
     }
 
-    public void setPmId(int pmId) {
-        this.pmId = pmId;
-    }
-
-    @Basic
-    @Column(name = "os_type_id", nullable = false)
-    public int getOsTypeId() {
-        return osTypeId;
-    }
-
-    public void setOsTypeId(int osTypeId) {
-        this.osTypeId = osTypeId;
+    public void setSite(int site) {
+        this.site = site;
     }
 
     @Basic
-    @Column(name = "services_type_id", nullable = false)
-    public int getServicesTypeId() {
-        return servicesTypeId;
+    @Column(name = "internal_number", nullable = false)
+    public int getInternalNumber() {
+        return internalNumber;
     }
 
-    public void setServicesTypeId(int servicesTypeId) {
-        this.servicesTypeId = servicesTypeId;
+    public void setInternalNumber(int internalNumber) {
+        this.internalNumber = internalNumber;
     }
 
     @Basic
-    @Column(name = "band", nullable = true, length = -1)
-    public String getBand() {
+    @Column(name = "curator", nullable = false)
+    public int getCurator() {
+        return curator;
+    }
+
+    public void setCurator(int curator) {
+        this.curator = curator;
+    }
+
+    @Basic
+    @Column(name = "band", nullable = false)
+    public int getBand() {
         return band;
     }
 
-    public void setBand(String band) {
+    public void setBand(int band) {
         this.band = band;
     }
 
     @Basic
-    @Column(name = "TU", nullable = true)
-    public Integer getTu() {
-        return tu;
+    @Column(name = "type_os", nullable = false)
+    public int getTypeOs() {
+        return typeOs;
     }
 
-    public void setTu(Integer tu) {
-        this.tu = tu;
+    public void setTypeOs(int typeOs) {
+        this.typeOs = typeOs;
     }
 
     @Basic
-    @Column(name = "RNS", nullable = true)
-    public Integer getRns() {
+    @Column(name = "type_bs", nullable = false)
+    public int getTypeBs() {
+        return typeBs;
+    }
+
+    public void setTypeBs(int typeBs) {
+        this.typeBs = typeBs;
+    }
+
+    @Basic
+    @Column(name = "type_ams", nullable = false)
+    public int getTypeAms() {
+        return typeAms;
+    }
+
+    public void setTypeAms(int typeAms) {
+        this.typeAms = typeAms;
+    }
+
+    @Basic
+    @Column(name = "type_afs", nullable = false)
+    public int getTypeAfs() {
+        return typeAfs;
+    }
+
+    public void setTypeAfs(int typeAfs) {
+        this.typeAfs = typeAfs;
+    }
+
+    @Basic
+    @Column(name = "source_data", nullable = true)
+    public Boolean getSourceData() {
+        return sourceData;
+    }
+
+    public void setSourceData(Boolean sourceData) {
+        this.sourceData = sourceData;
+    }
+
+    @Basic
+    @Column(name = "source_rd", nullable = true)
+    public Boolean getSourceRd() {
+        return sourceRd;
+    }
+
+    public void setSourceRd(Boolean sourceRd) {
+        this.sourceRd = sourceRd;
+    }
+
+    @Basic
+    @Column(name = "rns", nullable = true)
+    public Boolean getRns() {
         return rns;
     }
 
-    public void setRns(Integer rns) {
+    public void setRns(Boolean rns) {
         this.rns = rns;
     }
 
     @Basic
-    @Column(name = "forma1a", nullable = true)
-    public Integer getForma1A() {
-        return forma1A;
+    @Column(name = "f1a", nullable = true)
+    public Boolean getF1A() {
+        return f1A;
     }
 
-    public void setForma1A(Integer forma1A) {
-        this.forma1A = forma1A;
-    }
-
-    @Basic
-    @Column(name = "access", nullable = true)
-    public Integer getAccess() {
-        return access;
-    }
-
-    public void setAccess(Integer access) {
-        this.access = access;
-    }
-
-    @Basic
-    @Column(name = "order_date", nullable = false)
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+    public void setF1A(Boolean f1A) {
+        this.f1A = f1A;
     }
 
     @Basic
     @Column(name = "survey", nullable = true)
-    public Integer getSurvey() {
+    public Boolean getSurvey() {
         return survey;
     }
 
-    public void setSurvey(Integer survey) {
+    public void setSurvey(Boolean survey) {
         this.survey = survey;
     }
 
     @Basic
-    @Column(name = "SSR", nullable = true)
-    public Integer getSsr() {
+    @Column(name = "ssr", nullable = true)
+    public Boolean getSsr() {
         return ssr;
     }
 
-    public void setSsr(Integer ssr) {
+    public void setSsr(Boolean ssr) {
         this.ssr = ssr;
     }
 
     @Basic
-    @Column(name = "TSSR", nullable = true)
-    public Integer getTssr() {
+    @Column(name = "tssr", nullable = true)
+    public Boolean getTssr() {
         return tssr;
     }
 
-    public void setTssr(Integer tssr) {
+    public void setTssr(Boolean tssr) {
         this.tssr = tssr;
     }
 
     @Basic
-    @Column(name = "RD", nullable = true)
-    public Integer getRd() {
+    @Column(name = "rd", nullable = true)
+    public Boolean getRd() {
         return rd;
     }
 
-    public void setRd(Integer rd) {
+    public void setRd(Boolean rd) {
         this.rd = rd;
     }
 
     @Basic
-    @Column(name = "executive_documentation", nullable = true)
-    public Integer getExecutiveDocumentation() {
-        return executiveDocumentation;
+    @Column(name = "impldoc", nullable = true)
+    public Boolean getImpldoc() {
+        return impldoc;
     }
 
-    public void setExecutiveDocumentation(Integer executiveDocumentation) {
-        this.executiveDocumentation = executiveDocumentation;
-    }
-
-    @Basic
-    @Column(name = "survey_date_plan", nullable = true)
-    public Date getSurveyDatePlan() {
-        return surveyDatePlan;
-    }
-
-    public void setSurveyDatePlan(Date surveyDatePlan) {
-        this.surveyDatePlan = surveyDatePlan;
+    public void setImpldoc(Boolean impldoc) {
+        this.impldoc = impldoc;
     }
 
     @Basic
-    @Column(name = "SSR_date_plan", nullable = true)
-    public Date getSsrDatePlan() {
-        return ssrDatePlan;
+    @Column(name = "signedll", nullable = true)
+    public Boolean getSignedll() {
+        return signedll;
     }
 
-    public void setSsrDatePlan(Date ssrDatePlan) {
-        this.ssrDatePlan = ssrDatePlan;
-    }
-
-    @Basic
-    @Column(name = "TSSR_date_plan", nullable = true)
-    public Date getTssrDatePlan() {
-        return tssrDatePlan;
-    }
-
-    public void setTssrDatePlan(Date tssrDatePlan) {
-        this.tssrDatePlan = tssrDatePlan;
+    public void setSignedll(Boolean signedll) {
+        this.signedll = signedll;
     }
 
     @Basic
-    @Column(name = "RD_date_plan", nullable = true)
-    public Date getRdDatePlan() {
-        return rdDatePlan;
+    @Column(name = "status_os", nullable = false)
+    public int getStatusOs() {
+        return statusOs;
     }
 
-    public void setRdDatePlan(Date rdDatePlan) {
-        this.rdDatePlan = rdDatePlan;
-    }
-
-    @Basic
-    @Column(name = "ID_date_plan", nullable = true)
-    public Date getIdDatePlan() {
-        return idDatePlan;
-    }
-
-    public void setIdDatePlan(Date idDatePlan) {
-        this.idDatePlan = idDatePlan;
+    public void setStatusOs(int statusOs) {
+        this.statusOs = statusOs;
     }
 
     @Basic
-    @Column(name = "Status", nullable = true)
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    @Basic
-    @Column(name = "comments", nullable = true, length = -1)
+    @Column(name = "comments", nullable = false, length = -1)
     public String getComments() {
         return comments;
     }
@@ -281,34 +256,32 @@ public class OsEntity {
         if (o == null || getClass() != o.getClass()) return false;
         OsEntity osEntity = (OsEntity) o;
         return id == osEntity.id &&
-                projectId == osEntity.projectId &&
-                orderId == osEntity.orderId &&
-                pmId == osEntity.pmId &&
-                osTypeId == osEntity.osTypeId &&
-                servicesTypeId == osEntity.servicesTypeId &&
-                Objects.equals(band, osEntity.band) &&
-                Objects.equals(tu, osEntity.tu) &&
+                site == osEntity.site &&
+                internalNumber == osEntity.internalNumber &&
+                curator == osEntity.curator &&
+                band == osEntity.band &&
+                typeOs == osEntity.typeOs &&
+                typeBs == osEntity.typeBs &&
+                typeAms == osEntity.typeAms &&
+                typeAfs == osEntity.typeAfs &&
+                statusOs == osEntity.statusOs &&
+                Objects.equals(date, osEntity.date) &&
+                Objects.equals(sourceData, osEntity.sourceData) &&
+                Objects.equals(sourceRd, osEntity.sourceRd) &&
                 Objects.equals(rns, osEntity.rns) &&
-                Objects.equals(forma1A, osEntity.forma1A) &&
-                Objects.equals(access, osEntity.access) &&
-                Objects.equals(orderDate, osEntity.orderDate) &&
+                Objects.equals(f1A, osEntity.f1A) &&
                 Objects.equals(survey, osEntity.survey) &&
                 Objects.equals(ssr, osEntity.ssr) &&
                 Objects.equals(tssr, osEntity.tssr) &&
                 Objects.equals(rd, osEntity.rd) &&
-                Objects.equals(executiveDocumentation, osEntity.executiveDocumentation) &&
-                Objects.equals(surveyDatePlan, osEntity.surveyDatePlan) &&
-                Objects.equals(ssrDatePlan, osEntity.ssrDatePlan) &&
-                Objects.equals(tssrDatePlan, osEntity.tssrDatePlan) &&
-                Objects.equals(rdDatePlan, osEntity.rdDatePlan) &&
-                Objects.equals(idDatePlan, osEntity.idDatePlan) &&
-                Objects.equals(status, osEntity.status) &&
+                Objects.equals(impldoc, osEntity.impldoc) &&
+                Objects.equals(signedll, osEntity.signedll) &&
                 Objects.equals(comments, osEntity.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, projectId, orderId, pmId, osTypeId, servicesTypeId, band, tu, rns, forma1A, access, orderDate, survey, ssr, tssr, rd, executiveDocumentation, surveyDatePlan, ssrDatePlan, tssrDatePlan, rdDatePlan, idDatePlan, status, comments);
+        return Objects.hash(id, date, site, internalNumber, curator, band, typeOs, typeBs, typeAms, typeAfs, sourceData, sourceRd, rns, f1A, survey, ssr, tssr, rd, impldoc, signedll, statusOs, comments);
     }
 }

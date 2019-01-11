@@ -1,13 +1,13 @@
-package ru.lab729.itpir.ddl;
+package ru.lab729.itpir.ddlold;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pm", schema = "public", catalog = "itpirdb")
-public class PmEntity {
+@Table(name = "order", schema = "public", catalog = "itpirdb")
+public class OrderEntity {
     private int id;
-    private String pm;
+    private String order;
     private String comments;
 
     @Id
@@ -21,13 +21,13 @@ public class PmEntity {
     }
 
     @Basic
-    @Column(name = "pm", nullable = false, length = -1)
-    public String getPm() {
-        return pm;
+    @Column(name = "order", nullable = false, length = -1)
+    public String getOrder() {
+        return order;
     }
 
-    public void setPm(String pm) {
-        this.pm = pm;
+    public void setOrder(String order) {
+        this.order = order;
     }
 
     @Basic
@@ -44,15 +44,15 @@ public class PmEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PmEntity pmEntity = (PmEntity) o;
-        return id == pmEntity.id &&
-                Objects.equals(pm, pmEntity.pm) &&
-                Objects.equals(comments, pmEntity.comments);
+        OrderEntity that = (OrderEntity) o;
+        return id == that.id &&
+                Objects.equals(order, that.order) &&
+                Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, pm, comments);
+        return Objects.hash(id, order, comments);
     }
 }

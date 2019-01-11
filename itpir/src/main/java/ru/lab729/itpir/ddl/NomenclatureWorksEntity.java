@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pm", schema = "public", catalog = "itpirdb")
-public class PmEntity {
+@Table(name = "nomenclature_works", schema = "public", catalog = "itpirdb")
+public class NomenclatureWorksEntity {
     private int id;
-    private String pm;
+    private String works;
     private String comments;
 
     @Id
@@ -21,13 +21,13 @@ public class PmEntity {
     }
 
     @Basic
-    @Column(name = "pm", nullable = false, length = -1)
-    public String getPm() {
-        return pm;
+    @Column(name = "works", nullable = false, length = -1)
+    public String getWorks() {
+        return works;
     }
 
-    public void setPm(String pm) {
-        this.pm = pm;
+    public void setWorks(String works) {
+        this.works = works;
     }
 
     @Basic
@@ -44,15 +44,15 @@ public class PmEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PmEntity pmEntity = (PmEntity) o;
-        return id == pmEntity.id &&
-                Objects.equals(pm, pmEntity.pm) &&
-                Objects.equals(comments, pmEntity.comments);
+        NomenclatureWorksEntity that = (NomenclatureWorksEntity) o;
+        return id == that.id &&
+                Objects.equals(works, that.works) &&
+                Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, pm, comments);
+        return Objects.hash(id, works, comments);
     }
 }

@@ -1,14 +1,18 @@
 package ru.lab729.itpir.ddl;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tzp", schema = "public", catalog = "itpirdb")
 public class TzpEntity {
     private int id;
-    private String title;
-    private Integer price;
+    private String tzp;
+    private String razmernost;
+    private BigInteger price;
+    private int typeOs;
+    private int typeImplementer;
     private String comments;
 
     @Id
@@ -22,23 +26,53 @@ public class TzpEntity {
     }
 
     @Basic
-    @Column(name = "title", nullable = true, length = -1)
-    public String getTitle() {
-        return title;
+    @Column(name = "tzp", nullable = false, length = -1)
+    public String getTzp() {
+        return tzp;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTzp(String tzp) {
+        this.tzp = tzp;
     }
 
     @Basic
-    @Column(name = "price", nullable = true)
-    public Integer getPrice() {
+    @Column(name = "razmernost", nullable = false, length = -1)
+    public String getRazmernost() {
+        return razmernost;
+    }
+
+    public void setRazmernost(String razmernost) {
+        this.razmernost = razmernost;
+    }
+
+    @Basic
+    @Column(name = "price", nullable = false, precision = 0)
+    public BigInteger getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigInteger price) {
         this.price = price;
+    }
+
+    @Basic
+    @Column(name = "type_os", nullable = false)
+    public int getTypeOs() {
+        return typeOs;
+    }
+
+    public void setTypeOs(int typeOs) {
+        this.typeOs = typeOs;
+    }
+
+    @Basic
+    @Column(name = "type_implementer", nullable = false)
+    public int getTypeImplementer() {
+        return typeImplementer;
+    }
+
+    public void setTypeImplementer(int typeImplementer) {
+        this.typeImplementer = typeImplementer;
     }
 
     @Basic
@@ -57,7 +91,10 @@ public class TzpEntity {
         if (o == null || getClass() != o.getClass()) return false;
         TzpEntity tzpEntity = (TzpEntity) o;
         return id == tzpEntity.id &&
-                Objects.equals(title, tzpEntity.title) &&
+                typeOs == tzpEntity.typeOs &&
+                typeImplementer == tzpEntity.typeImplementer &&
+                Objects.equals(tzp, tzpEntity.tzp) &&
+                Objects.equals(razmernost, tzpEntity.razmernost) &&
                 Objects.equals(price, tzpEntity.price) &&
                 Objects.equals(comments, tzpEntity.comments);
     }
@@ -65,6 +102,6 @@ public class TzpEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, title, price, comments);
+        return Objects.hash(id, tzp, razmernost, price, typeOs, typeImplementer, comments);
     }
 }

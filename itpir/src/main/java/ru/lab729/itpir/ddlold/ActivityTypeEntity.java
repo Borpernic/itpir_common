@@ -1,4 +1,4 @@
-package ru.lab729.itpir.ddl;
+package ru.lab729.itpir.ddlold;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
@@ -10,16 +10,16 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "activity_section",  uniqueConstraints = {@UniqueConstraint(columnNames = {"section"}, name = "activity_section_section_idx")})
-public class ActivitySectionEntity extends AbstractBaseEntity {
+@Table(name = "activity_type",  uniqueConstraints = {@UniqueConstraint(columnNames = {"activity"}, name = "activity_type_activity_idx")})
+public class ActivityTypeEntity extends AbstractBaseEntity {
 
 
     @Basic
-    @Column(name = "section", nullable = false)
+    @Column(name = "activity", nullable = false)
     @NotBlank
     @Size(min = 2, max = 120)
     @SafeHtml(groups = {View.Web.class})
-    private String section;
+    private String activity;
 
     @Basic
     @Column(name = "comments", nullable = false)
@@ -28,12 +28,12 @@ public class ActivitySectionEntity extends AbstractBaseEntity {
     private String comments;
 
 
-    public String getSection() {
-        return section;
+    public String getActivity() {
+        return activity;
     }
 
-    public void setSection(String activity) {
-        this.section = activity;
+    public void setActivity(String activity) {
+        this.activity = activity;
     }
 
 
@@ -49,15 +49,15 @@ public class ActivitySectionEntity extends AbstractBaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ActivitySectionEntity that = (ActivitySectionEntity) o;
+        ActivityTypeEntity that = (ActivityTypeEntity) o;
         return id == that.id &&
-                Objects.equals(section, that.section) &&
+                Objects.equals(activity, that.activity) &&
                 Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, section, comments);
+        return Objects.hash(id, activity, comments);
     }
 }

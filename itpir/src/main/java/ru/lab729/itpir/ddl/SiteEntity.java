@@ -1,145 +1,152 @@
 package ru.lab729.itpir.ddl;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
 import ru.lab729.itpir.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import java.util.*;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-
-//@Table(name = "meals",)
-@Table(name = "site", uniqueConstraints = {@UniqueConstraint(columnNames = {"site_number", "operator_id"}, name = "site_site_number_operator_id_key")})
+@Table(name = "site", schema = "public", catalog = "itpirdb")
 public class SiteEntity extends AbstractBaseEntity {
 
+    public static final String ALL_SORTED = "RegionEntity.getAllSorted";
+    public static final String ALL = "RegionEntity.getAll";
+    public static final String DELETE = "RegionEntity.delete";
+    public static final String DELETE_ALL = "RegionEntity.deleteAll";
+    public static final String GET = "RegionEntity.get";
+    public static final String GET_BY_COMMENTS = "RegionEntity.getByComments";
+
     @Basic
-    @Column(name = "site_number", nullable = false, length = 10)
+    @Size(max = 5)
+    @SafeHtml(groups = {View.Web.class})
     @NotBlank
-    @Size(min = 2, max = 10)
-    @SafeHtml(groups = {View.Web.class})
-    private String siteNumber;
+    @Column(name = "number", nullable = false)
+    private String number;
 
     @Basic
-    @Column(name = "site_name", nullable = false, length = 50)
+    @Size(max = 50)
+    @SafeHtml(groups = {View.Web.class})
     @NotBlank
-    @Size(min = 2, max = 50)
-    @SafeHtml(groups = {View.Web.class})
-    private String siteName;
-
-    //  @Basic
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "operator_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull(groups = View.Persist.class)
-    // @Column(name = "operator_id", nullable = false)
-    private OperatorEntity operator;
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ad_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull(groups = View.Persist.class)
-    //@Column(name = "ad_id", nullable = false)
-    private AdEntity ad;
-
-
-    @Column(name = "site_date", nullable = false, columnDefinition = "timestamp default now()")
-    @NotNull
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Size(min = 2, max = 120)
-    @SafeHtml(groups = {View.Web.class})
-    private Date siteDate = new java.util.Date();
+    @Column(name = "name", nullable = false, length = 50)
+    private String name;
 
     @Basic
-    @Column(name = "comments", nullable = true, length = -1)
-    @Size(min = 2, max = 50)
+    @Column(name = "operator", nullable = false)
+    private int operator;
+
+    @Basic
+    @Column(name = "region", nullable = false)
+    private int region;
+
+    @Basic
+    @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
+    private Date date= new Date();
+
+    @Basic
+    @Size(max = 20)
     @SafeHtml(groups = {View.Web.class})
+    @NotBlank
+    @Column(name = "city", nullable = false, length = 20)
+    private String city;
+
+    @Basic
+    @Size(max = 50)
+    @SafeHtml(groups = {View.Web.class})
+    @NotBlank
+    @Column(name = "street", nullable = false, length = 50)
+    private String street;
+
+    @Basic
+    @Size(max = 5)
+    @SafeHtml(groups = {View.Web.class})
+    @NotBlank
+    @Column(name = "building", nullable = false, length = 5)
+    private String building;
+
+    @Basic
+    @Size(max = 150)
+    @SafeHtml(groups = {View.Web.class})
+    @NotBlank
+    @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
-    public SiteEntity() {
+
+    public String getNumber() {
+        return number;
     }
 
-    public SiteEntity(Integer id, String siteNumber, String siteName, Date siteDate, String comments) {
-        super(id);
-        this.siteNumber = siteNumber;
-        this.siteName = siteName;
-        this.siteDate = siteDate;
-        this.comments = comments;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public SiteEntity(String siteNumber, String siteName, Date siteDate, String comments) {
-        this(null, siteNumber, siteName, siteDate, comments);
+
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SiteEntity that = (SiteEntity) o;
-        return operator.getId() == that.getId() &&
-                ad.getId() == that.getId() &&
-                id == that.id &&
-                Objects.equals(siteNumber, that.siteNumber) &&
-                Objects.equals(siteName, that.siteName) &&
-                Objects.equals(siteDate, that.siteDate) &&
-                Objects.equals(comments, that.comments);
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(siteNumber, operator.getId(), ad, siteName, siteDate, comments, id);
-    }
-
-    public String getSiteNumber() {
-        return siteNumber;
-    }
-
-    public void setSiteNumber(String siteNumber) {
-        this.siteNumber = siteNumber;
-    }
-
-    public String getSiteName() {
-        return siteName;
-    }
-
-    public void setSiteName(String siteName) {
-        this.siteName = siteName;
-    }
-
-    public OperatorEntity getOperator() {
+    public int getOperator() {
         return operator;
     }
 
-    public void setOperator(OperatorEntity operator) {
+    public void setOperator(int operator) {
         this.operator = operator;
     }
 
-    public AdEntity getAd() {
-        return ad;
+    public int getRegion() {
+        return region;
     }
 
-    public void setAd(AdEntity ad) {
-        this.ad = ad;
+    public void setRegion(int region) {
+        this.region = region;
     }
 
-    public Date getSiteDate() {
-        return siteDate;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setSiteDate(Date siteDate) {
-        this.siteDate = siteDate;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    @Basic
+    @Column(name = "comments", nullable = false, length = -1)
     public String getComments() {
         return comments;
     }
@@ -147,4 +154,27 @@ public class SiteEntity extends AbstractBaseEntity {
     public void setComments(String comments) {
         this.comments = comments;
     }
+
+    /*@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SiteEntity that = (SiteEntity) o;
+        return id == that.id &&
+                operator == that.operator &&
+                region == that.region &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(street, that.street) &&
+                Objects.equals(building, that.building) &&
+                Objects.equals(comments, that.comments);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, number, name, operator, region, date, city, street, building, comments);
+    }*/
 }

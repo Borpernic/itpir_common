@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "status_activity", schema = "public", catalog = "itpirdb")
-public class StatusActivityEntity {
+@Table(name = "status_contacts", schema = "public", catalog = "itpirdb")
+public class StatusContactsEntity {
     private int id;
     private String status;
 
@@ -33,7 +33,7 @@ public class StatusActivityEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StatusActivityEntity that = (StatusActivityEntity) o;
+        StatusContactsEntity that = (StatusContactsEntity) o;
         return id == that.id &&
                 Objects.equals(status, that.status);
     }
