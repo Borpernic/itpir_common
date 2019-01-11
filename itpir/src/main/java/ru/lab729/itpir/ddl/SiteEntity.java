@@ -11,16 +11,27 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
+@NamedQueries({
+        @NamedQuery(name = SiteEntity.ALL_SORTED, query = "SELECT s FROM SiteEntity s ORDER BY s.number ASC"),
+        @NamedQuery(name = SiteEntity.ALL_OPERATOR, query = "SELECT s FROM SiteEntity s JOIN FETCH o. WHERE u.email=?1\"WHERE s.operator.id=:oid ORDER BY s.number ASC"),
+
+        @NamedQuery(name = SiteEntity.DELETE, query = "DELETE FROM RegionEntity r WHERE r.id=:id"),
+        @NamedQuery(name = SiteEntity.DELETE_ALL, query = "DELETE FROM RegionEntity r"),
+        @NamedQuery(name = SiteEntity.GET, query = "SELECT o FROM RegionEntity r WHERE r.id=:id"),
+        @NamedQuery(name = SiteEntity.GET_BY_COMMENTS, query = "SELECT o FROM RegionEntity r WHERE r.comments=:comments"),
+})
+
+
 @Entity
-@Table(name = "site", schema = "public", catalog = "itpirdb")
+@Table(name = "site", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"number", "operator"}, name = "site_site_number_operator_id_key")})
 public class SiteEntity extends AbstractBaseEntity {
 
-    public static final String ALL_SORTED = "RegionEntity.getAllSorted";
-    public static final String ALL = "RegionEntity.getAll";
-    public static final String DELETE = "RegionEntity.delete";
-    public static final String DELETE_ALL = "RegionEntity.deleteAll";
-    public static final String GET = "RegionEntity.get";
-    public static final String GET_BY_COMMENTS = "RegionEntity.getByComments";
+    public static final String ALL_SORTED = "SiteEntity.getAllSorted";
+
+    public static final String DELETE = "SiteEntity.delete";
+    public static final String DELETE_ALL = "SiteEntity.deleteAll";
+    public static final String GET = "SiteEntity.get";
+    public static final String GET_BY_COMMENTS = "SiteEntity.getByComments";
 
     @Basic
     @Size(max = 5)
@@ -46,7 +57,7 @@ public class SiteEntity extends AbstractBaseEntity {
 
     @Basic
     @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
-    private Date date= new Date();
+    private Date date = new Date();
 
     @Basic
     @Size(max = 20)
@@ -110,11 +121,11 @@ public class SiteEntity extends AbstractBaseEntity {
         this.region = region;
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
