@@ -1,27 +1,27 @@
-package ru.lab729.itpir.ddl;
+package ru.lab729.itpir.model;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
-import ru.lab729.itpir.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
+/*
 @NamedQueries({
         @NamedQuery(name = RegionEntity.ALL_SORTED, query = "SELECT r FROM RegionEntity r ORDER BY r.name ASC"),
         @NamedQuery(name = RegionEntity.ALL, query = "SELECT r FROM RegionEntity r ORDER BY r.id ASC"),
         @NamedQuery(name = RegionEntity.DELETE, query = "DELETE FROM RegionEntity r WHERE r.id=:id"),
         @NamedQuery(name = RegionEntity.DELETE_ALL, query = "DELETE FROM RegionEntity r"),
-        @NamedQuery(name = RegionEntity.GET, query = "SELECT o FROM RegionEntity r WHERE r.id=:id"),
-        @NamedQuery(name = RegionEntity.GET_BY_COMMENTS, query = "SELECT o FROM RegionEntity r WHERE r.comments=:comments"),
+        @NamedQuery(name = RegionEntity.GET, query = "SELECT r FROM RegionEntity r WHERE r.id=:id"),
+        @NamedQuery(name = RegionEntity.GET_BY_COMMENTS, query = "SELECT r FROM RegionEntity r WHERE r.comments=:comments"),
 })
+*/
 
 
 @Entity
-@Table(name = "region", schema = "public", catalog = "itpirdb" , uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}, name = "region_region_idx")})
+@Table(name = "region", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"region"}, name = "region_region_idx")})
 public class RegionEntity extends AbstractBaseEntity {
 
     public static final String ALL_SORTED = "RegionEntity.getAllSorted";
@@ -45,7 +45,6 @@ public class RegionEntity extends AbstractBaseEntity {
     @Basic
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
-
 
 
     public String getRegion() {
@@ -83,12 +82,11 @@ public class RegionEntity extends AbstractBaseEntity {
     public RegionEntity() {
     }
 
-    public RegionEntity(String region,  String comments) {
-        this.region = region;
-        this.comments = comments;
+    public RegionEntity(String region, String comments) {
+        this(null, region, comments);
     }
 
-    public RegionEntity(Integer id,  String region,  String comments) {
+    public RegionEntity(Integer id, String region, String comments) {
         super(id);
         this.region = region;
         this.comments = comments;

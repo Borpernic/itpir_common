@@ -1,37 +1,42 @@
-package ru.lab729.itpir.ddl;
+package ru.lab729.itpir.model;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
-import ru.lab729.itpir.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Objects;
 
+/*
 @NamedQueries({
         @NamedQuery(name = SiteEntity.ALL_SORTED, query = "SELECT s FROM SiteEntity s ORDER BY s.number ASC"),
-        @NamedQuery(name = SiteEntity.ALL_OPERATOR, query = "SELECT s FROM SiteEntity s JOIN FETCH o. WHERE u.email=?1\"WHERE s.operator.id=:oid ORDER BY s.number ASC"),
+        @NamedQuery(name = SiteEntity.ALL_OPERATOR_SORTED, query = "SELECT s FROM SiteEntity s JOIN FETCH OperatorEntity o WHERE o.id=?1 ORDER BY s.number ASC"),
+        @NamedQuery(name = SiteEntity.ALL_REGION_SORTED, query = "SELECT s FROM SiteEntity s JOIN FETCH RegionEntity r WHERE r.id=?1 ORDER BY s.operator.operator, s.number ASC"),
 
-        @NamedQuery(name = SiteEntity.DELETE, query = "DELETE FROM RegionEntity r WHERE r.id=:id"),
-        @NamedQuery(name = SiteEntity.DELETE_ALL, query = "DELETE FROM RegionEntity r"),
-        @NamedQuery(name = SiteEntity.GET, query = "SELECT o FROM RegionEntity r WHERE r.id=:id"),
-        @NamedQuery(name = SiteEntity.GET_BY_COMMENTS, query = "SELECT o FROM RegionEntity r WHERE r.comments=:comments"),
+        @NamedQuery(name = SiteEntity.DELETE, query = "DELETE FROM SiteEntity s WHERE s.id=:id"),
+        @NamedQuery(name = SiteEntity.DELETE_BY_NUMBER_NAME_OPERATOR, query = "DELETE FROM SiteEntity s WHERE s.number=:number and s.name=:name and s.operator.id=:operatorId"),
+        @NamedQuery(name = SiteEntity.DELETE_ALL_BY_OPERATOR, query = "DELETE FROM SiteEntity s WHERE s.operator.id=?1"),
+        @NamedQuery(name = SiteEntity.DELETE_ALL, query = "DELETE FROM SiteEntity s"),
+        @NamedQuery(name = SiteEntity.GET, query = "SELECT s FROM SiteEntity s WHERE s.id=:id"),
+        @NamedQuery(name = SiteEntity.GET_BY_NUMBER_NAME_OPERATOR, query = "SELECT s FROM SiteEntity s WHERE s.number=:number and s.name=:name and s.operator.id=:operatorId"),
 })
-
+*/
 
 @Entity
-@Table(name = "site", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"number", "operator"}, name = "site_site_number_operator_id_key")})
+@Table(name = "site", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"number", "name", "operator"}, name = "site_site_number_name_operator_id_key")})
 public class SiteEntity extends AbstractBaseEntity {
 
     public static final String ALL_SORTED = "SiteEntity.getAllSorted";
-
+    public static final String ALL_OPERATOR_SORTED = "SiteEntity.getAllOperatorSorted";
+    public static final String ALL_REGION_SORTED = "SiteEntity.getAllRegionSorted";
     public static final String DELETE = "SiteEntity.delete";
+    public static final String DELETE_BY_NUMBER_NAME_OPERATOR = "SiteEntity.deleteByNumberNameOperator";
     public static final String DELETE_ALL = "SiteEntity.deleteAll";
+    public static final String DELETE_ALL_BY_OPERATOR = "SiteEntity.deleteAllByOperator";
     public static final String GET = "SiteEntity.get";
-    public static final String GET_BY_COMMENTS = "SiteEntity.getByComments";
+    public static final String GET_BY_NUMBER_NAME_OPERATOR = "SiteEntity.getByNumberNameOperator";
 
     @Basic
     @Size(max = 5)
@@ -47,13 +52,17 @@ public class SiteEntity extends AbstractBaseEntity {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Basic
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", nullable = false)
+    @NotNull(groups = View.Persist.class)
     @Column(name = "operator", nullable = false)
-    private int operator;
+    private OperatorEntity operator;
 
-    @Basic
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", nullable = false)
+    @NotNull(groups = View.Persist.class)
     @Column(name = "region", nullable = false)
-    private int region;
+    private RegionEntity region;
 
     @Basic
     @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
@@ -105,19 +114,19 @@ public class SiteEntity extends AbstractBaseEntity {
         this.name = name;
     }
 
-    public int getOperator() {
+    public OperatorEntity getOperator() {
         return operator;
     }
 
-    public void setOperator(int operator) {
+    public void setOperator(OperatorEntity operator) {
         this.operator = operator;
     }
 
-    public int getRegion() {
+    public RegionEntity getRegion() {
         return region;
     }
 
-    public void setRegion(int region) {
+    public void setRegion(RegionEntity region) {
         this.region = region;
     }
 
@@ -188,4 +197,26 @@ public class SiteEntity extends AbstractBaseEntity {
 
         return Objects.hash(id, number, name, operator, region, date, city, street, building, comments);
     }*/
+
+    public SiteEntity() {
+    }
+
+
+
+    public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, Date date, String city, String street, String building, String comments) {
+        this(null, number, name, operator, region, date, city, street, building, comments);
+    }
+
+    public SiteEntity(Integer id, String number, String name, OperatorEntity operator, RegionEntity region, Date date, String city, String street, String building, String comments) {
+        super(id);
+        this.number = number;
+        this.name = name;
+        this.operator = operator;
+        this.region = region;
+        this.date = date;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.comments = comments;
+    }
 }

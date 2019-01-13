@@ -101,8 +101,8 @@ CREATE TABLE site
   FOREIGN KEY (operator) REFERENCES operator (id),
   FOREIGN KEY (region) REFERENCES region (id)
 );
-CREATE UNIQUE INDEX site_site_number_operator_id_key
-  ON Site (number, operator);
+CREATE UNIQUE INDEX site_site_number_name_operator_id_key
+  ON Site (number,name, operator);
 
 CREATE TABLE status_contacts
 (
