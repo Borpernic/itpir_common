@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-/*
 @NamedQueries({
         @NamedQuery(name = StatusContactsEntity.ALL_SORTED, query = "SELECT s FROM StatusContactsEntity s ORDER BY s.status ASC"),
         @NamedQuery(name = StatusContactsEntity.ALL, query = "SELECT s FROM StatusContactsEntity s ORDER BY s.id ASC"),
@@ -16,7 +15,6 @@ import java.util.Objects;
         @NamedQuery(name = StatusContactsEntity.DELETE_ALL, query = "DELETE FROM StatusContactsEntity s"),
         @NamedQuery(name = StatusContactsEntity.GET, query = "SELECT s FROM StatusContactsEntity s WHERE s.id=:id"),
 })
-*/
 
 
 @Entity
@@ -29,13 +27,13 @@ public class StatusContactsEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL = "StatusContactsEntity.deleteAll";
     public static final String GET = "StatusContactsEntity.get";
 
-    private String status;
-
     @NotBlank
     @Size(min = 3, max = 15)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "status", nullable = false, length = 15)
+    @Column(name = "status", nullable = false, length = 15, unique = true)
+    private String status;
+
     public String getStatus() {
         return status;
     }

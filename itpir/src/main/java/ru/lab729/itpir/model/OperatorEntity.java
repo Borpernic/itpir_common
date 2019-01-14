@@ -8,14 +8,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @SuppressWarnings("JpaQlInspection")
-/*@NamedQueries({
-        @NamedQuery(name = OperatorEntity.ALL_SORTED, query = "SELECT o FROM OperatorEntity o ORDER BY o.name ASC"),
+@NamedQueries({
+        @NamedQuery(name = OperatorEntity.ALL_SORTED, query = "SELECT o FROM OperatorEntity o ORDER BY o.operator ASC"),
         @NamedQuery(name = OperatorEntity.ALL, query = "SELECT o FROM OperatorEntity o ORDER BY o.id ASC"),
         @NamedQuery(name = OperatorEntity.DELETE, query = "DELETE FROM OperatorEntity o WHERE o.id=:id"),
         @NamedQuery(name = OperatorEntity.DELETE_ALL, query = "DELETE FROM OperatorEntity o"),
         @NamedQuery(name = OperatorEntity.GET, query = "SELECT o FROM OperatorEntity o WHERE o.id=:id"),
         @NamedQuery(name = OperatorEntity.GET_BY_COMMENTS, query = "SELECT o FROM OperatorEntity o WHERE o.comments=:comments"),
-})*/
+})
 @Entity
 @Table(name = "operator", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"operator"}, name = "operator_operator_idx")})
 public class OperatorEntity extends AbstractBaseEntity {
@@ -32,7 +32,7 @@ public class OperatorEntity extends AbstractBaseEntity {
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "operator", nullable = false, length = 50)
+    @Column(name = "operator", nullable = false, length = 50, unique = true)
     private String operator;
 
     @NotBlank

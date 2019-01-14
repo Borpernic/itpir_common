@@ -130,7 +130,8 @@ CREATE TABLE contacts_ad
   building   TEXT,
 
   FOREIGN KEY (site_id) REFERENCES site (id) ON DELETE CASCADE,
-  FOREIGN KEY (status) REFERENCES status_contacts (id)
+  FOREIGN KEY (status) REFERENCES status_contacts (id),
+  CONSTRAINT contacts_ad_email_idx UNIQUE (email)
 );
 
 CREATE TABLE pm
@@ -157,7 +158,9 @@ CREATE TABLE project
   customer INTEGER NOT NULL,
   comments TEXT    NOT NULL,
   FOREIGN KEY (pm) REFERENCES pm (id),
-  FOREIGN KEY (customer) REFERENCES customer (id)
+  FOREIGN KEY (customer) REFERENCES customer (id),
+  CONSTRAINT project_project_idx UNIQUE (project)
+
 );
 
 CREATE TABLE curator

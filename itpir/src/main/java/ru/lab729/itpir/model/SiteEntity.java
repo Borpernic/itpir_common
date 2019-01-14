@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-/*
 @NamedQueries({
         @NamedQuery(name = SiteEntity.ALL_SORTED, query = "SELECT s FROM SiteEntity s ORDER BY s.number ASC"),
         @NamedQuery(name = SiteEntity.ALL_OPERATOR_SORTED, query = "SELECT s FROM SiteEntity s JOIN FETCH OperatorEntity o WHERE o.id=?1 ORDER BY s.number ASC"),
@@ -22,7 +21,6 @@ import java.util.Date;
         @NamedQuery(name = SiteEntity.GET, query = "SELECT s FROM SiteEntity s WHERE s.id=:id"),
         @NamedQuery(name = SiteEntity.GET_BY_NUMBER_NAME_OPERATOR, query = "SELECT s FROM SiteEntity s WHERE s.number=:number and s.name=:name and s.operator.id=:operatorId"),
 })
-*/
 
 @Entity
 @Table(name = "site", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"number", "name", "operator"}, name = "site_site_number_name_operator_id_key")})
@@ -53,15 +51,14 @@ public class SiteEntity extends AbstractBaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "operator", nullable = false)
     @NotNull(groups = View.Persist.class)
-    @Column(name = "operator", nullable = false)
     private OperatorEntity operator;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "region", nullable = false)
     @NotNull(groups = View.Persist.class)
-    @Column(name = "region", nullable = false)
+    //@Column(name = "region", nullable = false)
     private RegionEntity region;
 
     @Basic
@@ -200,7 +197,6 @@ public class SiteEntity extends AbstractBaseEntity {
 
     public SiteEntity() {
     }
-
 
 
     public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, Date date, String city, String street, String building, String comments) {

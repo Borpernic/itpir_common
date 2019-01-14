@@ -8,16 +8,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @SuppressWarnings("JpaQlInspection")
-/*
 @NamedQueries({
-        @NamedQuery(name = RegionEntity.ALL_SORTED, query = "SELECT r FROM RegionEntity r ORDER BY r.name ASC"),
+        @NamedQuery(name = RegionEntity.ALL_SORTED, query = "SELECT r FROM RegionEntity r order by r.region ASC "),
         @NamedQuery(name = RegionEntity.ALL, query = "SELECT r FROM RegionEntity r ORDER BY r.id ASC"),
         @NamedQuery(name = RegionEntity.DELETE, query = "DELETE FROM RegionEntity r WHERE r.id=:id"),
         @NamedQuery(name = RegionEntity.DELETE_ALL, query = "DELETE FROM RegionEntity r"),
         @NamedQuery(name = RegionEntity.GET, query = "SELECT r FROM RegionEntity r WHERE r.id=:id"),
         @NamedQuery(name = RegionEntity.GET_BY_COMMENTS, query = "SELECT r FROM RegionEntity r WHERE r.comments=:comments"),
 })
-*/
 
 
 @Entity
@@ -36,7 +34,7 @@ public class RegionEntity extends AbstractBaseEntity {
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "region", nullable = false, length = 50)
+    @Column(name = "region", nullable = false, length = 50, unique = true)
     private String region;
 
     @NotBlank
