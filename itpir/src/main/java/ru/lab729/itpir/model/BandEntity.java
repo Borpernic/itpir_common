@@ -6,7 +6,7 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = BandEntity.ALL_SORTED, query = "SELECT b FROM BandEntity b ORDER BY b.band ASC"),
@@ -39,6 +39,10 @@ public class BandEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = true, length = 100)
     private String comments;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "band")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
 
     public String getBand() {
         return band;

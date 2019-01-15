@@ -2,6 +2,7 @@ package ru.lab729.itpir.ddl;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -9,13 +10,13 @@ import java.util.Objects;
 public class TaskEntity {
     private int id;
     private int activity;
-    private Timestamp date;
+    private LocalDateTime dateTime;
     private int typeTask;
     private int department;
-    private Timestamp planeDate;
+    private LocalDateTime planeDateTime;
     private Boolean rightOnTime;
     private Boolean approve;
-    private Timestamp approveDate;
+    private LocalDateTime approveDateTime;
     private int resultTask;
     private String comments;
 
@@ -40,13 +41,13 @@ public class TaskEntity {
     }
 
     @Basic
-    @Column(name = "date", nullable = false)
-    public Timestamp getDate() {
-        return date;
+    @Column(name = "date_time", nullable = false)
+    public LocalDateTime getDate() {
+        return dateTime;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setDate(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     @Basic
@@ -70,13 +71,13 @@ public class TaskEntity {
     }
 
     @Basic
-    @Column(name = "plane_date", nullable = false)
-    public Timestamp getPlaneDate() {
-        return planeDate;
+    @Column(name = "plane_date_time", nullable = false)
+    public LocalDateTime getPlaneDate() {
+        return planeDateTime;
     }
 
-    public void setPlaneDate(Timestamp planeDate) {
-        this.planeDate = planeDate;
+    public void setPlaneDate(LocalDateTime planeDateTime) {
+        this.planeDateTime = planeDateTime;
     }
 
     @Basic
@@ -100,13 +101,13 @@ public class TaskEntity {
     }
 
     @Basic
-    @Column(name = "approve_date", nullable = true)
-    public Timestamp getApproveDate() {
-        return approveDate;
+    @Column(name = "approve_date_time", nullable = true)
+    public LocalDateTime getApproveDate() {
+        return approveDateTime;
     }
 
-    public void setApproveDate(Timestamp approveDate) {
-        this.approveDate = approveDate;
+    public void setApproveDate(LocalDateTime approveDate) {
+        this.approveDateTime = approveDateTime;
     }
 
     @Basic
@@ -129,27 +130,4 @@ public class TaskEntity {
         this.comments = comments;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskEntity that = (TaskEntity) o;
-        return id == that.id &&
-                activity == that.activity &&
-                typeTask == that.typeTask &&
-                department == that.department &&
-                resultTask == that.resultTask &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(planeDate, that.planeDate) &&
-                Objects.equals(rightOnTime, that.rightOnTime) &&
-                Objects.equals(approve, that.approve) &&
-                Objects.equals(approveDate, that.approveDate) &&
-                Objects.equals(comments, that.comments);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, activity, date, typeTask, department, planeDate, rightOnTime, approve, approveDate, resultTask, comments);
-    }
 }

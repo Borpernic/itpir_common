@@ -1,13 +1,17 @@
 package ru.lab729.itpir.model;
 
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.lab729.itpir.View;
+import ru.lab729.itpir.util.DateTimeUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = SiteEntity.ALL_SORTED, query = "SELECT s FROM SiteEntity s ORDER BY s.number ASC"),
@@ -62,8 +66,9 @@ public class SiteEntity extends AbstractBaseEntity {
     private RegionEntity region;
 
     @Basic
-    @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
-    private Date date = new Date();
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     @Basic
     @Size(max = 20)
@@ -127,12 +132,12 @@ public class SiteEntity extends AbstractBaseEntity {
         this.region = region;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getDate() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
 
@@ -172,44 +177,26 @@ public class SiteEntity extends AbstractBaseEntity {
         this.comments = comments;
     }
 
-    /*@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SiteEntity that = (SiteEntity) o;
-        return id == that.id &&
-                operator == that.operator &&
-                region == that.region &&
-                Objects.equals(number, that.number) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(city, that.city) &&
-                Objects.equals(street, that.street) &&
-                Objects.equals(building, that.building) &&
-                Objects.equals(comments, that.comments);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, number, name, operator, region, date, city, street, building, comments);
-    }*/
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
 
     public SiteEntity() {
     }
 
 
-    public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, Date date, String city, String street, String building, String comments) {
-        this(null, number, name, operator, region, date, city, street, building, comments);
+    public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
+        this(null, number, name, operator, region, dateTime, city, street, building, comments);
     }
 
-    public SiteEntity(Integer id, String number, String name, OperatorEntity operator, RegionEntity region, Date date, String city, String street, String building, String comments) {
+    public SiteEntity(Integer id, String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
         super(id);
         this.number = number;
         this.name = name;
         this.operator = operator;
         this.region = region;
-        this.date = date;
+        this.dateTime = dateTime;
         this.city = city;
         this.street = street;
         this.building = building;

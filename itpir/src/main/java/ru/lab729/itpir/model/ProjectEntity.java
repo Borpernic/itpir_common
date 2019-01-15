@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = ProjectEntity.ALL_SORTED, query = "SELECT p FROM ProjectEntity p ORDER BY p.project ASC"),
@@ -40,7 +40,7 @@ public class ProjectEntity extends AbstractBaseEntity {
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
-    @Column(name = "project", nullable = false, length = 50)
+    @Column(name = "project", nullable = false, length = 50, unique = true)
     private String project;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -56,7 +56,7 @@ public class ProjectEntity extends AbstractBaseEntity {
     @Basic
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
-    @Column(name = "comments", nullable = false, length = -1)
+    @Column(name = "comments", nullable = false, length = 50)
     private String comments;
 
     public String getProject() {
@@ -94,6 +94,12 @@ public class ProjectEntity extends AbstractBaseEntity {
         this.comments = comments;
     }
 
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("number ASC")
+//    @JsonIgnore
+    protected List<InternalNumberEntity> internalNumberEntities;
 
     public ProjectEntity() {
 

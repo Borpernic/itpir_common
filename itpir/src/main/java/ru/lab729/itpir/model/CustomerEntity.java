@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Objects;
 
 @NamedQueries({
         @NamedQuery(name = CustomerEntity.ALL_SORTED, query = "SELECT c FROM CustomerEntity c ORDER BY c.customer ASC"),

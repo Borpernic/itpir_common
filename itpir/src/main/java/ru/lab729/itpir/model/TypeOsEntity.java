@@ -6,7 +6,7 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 
 @NamedQueries({
@@ -33,6 +33,13 @@ public class TypeOsEntity extends AbstractBaseEntity {
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeOs")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
 
     public String getType() {
         return type;

@@ -1,22 +1,14 @@
 package ru.lab729.itpir.model;
 
-import org.hibernate.validator.constraints.ConstraintComposition;
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
 import ru.lab729.itpir.annotation.Phone;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
-import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.*;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.util.Objects;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static org.hibernate.validator.constraints.CompositionType.OR;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @NamedQueries({

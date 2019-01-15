@@ -9,7 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = CuratorEntity.ALL_SORTED, query = "SELECT c FROM CuratorEntity c ORDER BY c.curator ASC"),
@@ -89,6 +89,11 @@ public class CuratorEntity extends AbstractBaseEntity {
     public String getPhone() {
         return phone;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curator")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
 
     public void setPhone(String phone) {
         this.phone = phone;

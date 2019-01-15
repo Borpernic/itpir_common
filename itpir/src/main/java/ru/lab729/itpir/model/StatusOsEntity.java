@@ -6,7 +6,7 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 
 @NamedQueries({
@@ -34,6 +34,10 @@ public class StatusOsEntity extends AbstractBaseEntity {
     @Column(name = "status", nullable = false, length = 50, unique = true)
     private String status;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "statusOs")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
 
     public String getStatus() {
         return status;

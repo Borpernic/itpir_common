@@ -6,7 +6,6 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 @NamedQueries({
         @NamedQuery(name = StatusContactsEntity.ALL_SORTED, query = "SELECT s FROM StatusContactsEntity s ORDER BY s.status ASC"),

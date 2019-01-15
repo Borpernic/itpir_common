@@ -2,6 +2,7 @@ package ru.lab729.itpir.ddl;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -9,7 +10,7 @@ import java.util.Objects;
 public class DateChangeStatusEntity {
     private int id;
     private int activity;
-    private Timestamp date;
+    private LocalDateTime dateTime;
     private int statusActivity;
     private String comments;
 
@@ -34,13 +35,13 @@ public class DateChangeStatusEntity {
     }
 
     @Basic
-    @Column(name = "date", nullable = false)
-    public Timestamp getDate() {
-        return date;
+    @Column(name = "date_time", nullable = false)
+    public LocalDateTime getDate() {
+        return dateTime;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setDate(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     @Basic
@@ -63,21 +64,5 @@ public class DateChangeStatusEntity {
         this.comments = comments;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DateChangeStatusEntity that = (DateChangeStatusEntity) o;
-        return id == that.id &&
-                activity == that.activity &&
-                statusActivity == that.statusActivity &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(comments, that.comments);
-    }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, activity, date, statusActivity, comments);
-    }
 }

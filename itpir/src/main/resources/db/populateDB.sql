@@ -45,7 +45,7 @@ INSERT INTO region (region, comments)
 VALUES ('77', 'Москва'),
   ('50', 'МО');
 
-INSERT INTO site (number, name, operator, region, date, city, street, building, comments)
+INSERT INTO site (number, name, operator, region, date_time, city, street, building, comments)
 VALUES ('1279', 'Будапешт', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Авиамоторная', '28С', ' БС 1279'),
   ('1280', 'Будапешт2', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Автозаводская', '18С', ' БС 1280'),
   ('1281', 'Будапешт3', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Лесная', '38С', ' БС 1281'),
@@ -125,7 +125,7 @@ INSERT INTO internal_number (number, project)
 VALUES ('3568999', 100035),
   ('3569997', 100036);
 
-INSERT INTO os (date, site, internal_number, curator, band, type_os, type_BS, type_AMS, type_AFS, status_os, comments)
+INSERT INTO os (date_time, site, internal_number, curator, band, type_os, type_BS, type_AMS, type_AFS, status_os, comments)
 VALUES (now(), 100015, 100065, 100037, 100040, 100047, 100052, 100058, 100063, 100043, 'МТС'),
   (now(), 100018, 100066, 100038, 100040, 100047, 100052, 100058, 100063, 100043, 'HW');
 
@@ -268,15 +268,15 @@ VALUES ('Запрос исходных данных', TRUE, FALSE, FALSE, FALSE,
   ('ИД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE),
   ('Согласование с АД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
 
-INSERT INTO activity (os, implementer, type_activity, date, plane_date, rating, status_activity)
+INSERT INTO activity (os, implementer, type_activity, date_time, plane_date_time, rating, status_activity)
 VALUES (100067, 100089, 100178, now(), now(), 1, 100169),
   (100068, 100089, 100179, now(), now(), 1, 100169);
 
-INSERT INTO date_change_status (activity, date, status_activity)
+INSERT INTO date_change_status (activity, date_time, status_activity)
 VALUES (100184, now(), 100168),
   (100185, now(), 100168);
 
-INSERT INTO task (activity, date, type_task, department, plane_date, right_on_time, approve, approve_date, result_task)
+INSERT INTO task (activity, date_time, type_task, department, plane_date_time, right_on_time, approve, approve_date_time, result_task)
 VALUES (100184, now(), 100115, 100157, now(), TRUE, TRUE, now(), 100140),
   (100184, now(), 100115, 100157, now(), TRUE, TRUE, now(), 100140),
   (100184, now(), 100115, 100157, now(), TRUE, TRUE, now(), 100140),

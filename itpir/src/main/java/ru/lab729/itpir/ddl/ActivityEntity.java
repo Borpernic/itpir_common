@@ -3,6 +3,7 @@ package ru.lab729.itpir.ddl;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -14,13 +15,13 @@ public class ActivityEntity {
     private int os;
     private int implementer;
     private int typeActivity;
-    private Timestamp date;
-    private Timestamp planeDate;
+    private LocalDateTime dateTime;
+    private LocalDateTime planeDateTime;
     private BigInteger rating;
     private Boolean accept;
-    private Timestamp acceptDate;
+    private LocalDateTime acceptDateTime;
     private int statusActivity;
-    private Timestamp dateChangeStatus;
+    private LocalDateTime dateChangeStatus;
     private String comments;
 
     @Id
@@ -64,23 +65,23 @@ public class ActivityEntity {
     }
 
     @Basic
-    @Column(name = "date", nullable = false)
-    public Timestamp getDate() {
-        return date;
+    @Column(name = "date_time", nullable = false)
+    public LocalDateTime getDate() {
+        return dateTime;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setDate(LocalDateTime date) {
+        this.dateTime = dateTime;
     }
 
     @Basic
-    @Column(name = "plane_date", nullable = false)
-    public Timestamp getPlaneDate() {
-        return planeDate;
+    @Column(name = "plane_date_time", nullable = false)
+    public LocalDateTime getPlaneDate() {
+        return planeDateTime;
     }
 
-    public void setPlaneDate(Timestamp planeDate) {
-        this.planeDate = planeDate;
+    public void setPlaneDate(LocalDateTime planeplaneDateTime) {
+        this.planeDateTime = planeDateTime;
     }
 
     @Basic
@@ -104,13 +105,13 @@ public class ActivityEntity {
     }
 
     @Basic
-    @Column(name = "accept_date", nullable = true)
-    public Timestamp getAcceptDate() {
-        return acceptDate;
+    @Column(name = "accept_date_time", nullable = true)
+    public LocalDateTime getAcceptDate() {
+        return acceptDateTime;
     }
 
-    public void setAcceptDate(Timestamp acceptDate) {
-        this.acceptDate = acceptDate;
+    public void setAcceptDate(LocalDateTime acceptDate) {
+        this.acceptDateTime = acceptDateTime;
     }
 
     @Basic
@@ -124,12 +125,12 @@ public class ActivityEntity {
     }
 
     @Basic
-    @Column(name = "date_change_status", nullable = true)
-    public Timestamp getDateChangeStatus() {
+    @Column(name = "date_time_change_status", nullable = true)
+    public LocalDateTime getDateChangeStatus() {
         return dateChangeStatus;
     }
 
-    public void setDateChangeStatus(Timestamp dateChangeStatus) {
+    public void setDateChangeStatus(LocalDateTime dateChangeStatus) {
         this.dateChangeStatus = dateChangeStatus;
     }
 
@@ -143,28 +144,5 @@ public class ActivityEntity {
         this.comments = comments;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ActivityEntity that = (ActivityEntity) o;
-        return id == that.id &&
-                os == that.os &&
-                implementer == that.implementer &&
-                typeActivity == that.typeActivity &&
-                statusActivity == that.statusActivity &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(planeDate, that.planeDate) &&
-                Objects.equals(rating, that.rating) &&
-                Objects.equals(accept, that.accept) &&
-                Objects.equals(acceptDate, that.acceptDate) &&
-                Objects.equals(dateChangeStatus, that.dateChangeStatus) &&
-                Objects.equals(comments, that.comments);
-    }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, os, implementer, typeActivity, date, planeDate, rating, accept, acceptDate, statusActivity, dateChangeStatus, comments);
-    }
 }

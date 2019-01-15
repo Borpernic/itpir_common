@@ -88,21 +88,21 @@ CREATE TABLE region
 
 CREATE TABLE site
 (
-  id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  number   VARCHAR                 NOT NULL,
-  name     TEXT                    NOT NULL,
-  operator INTEGER                 NOT NULL,
-  region   INTEGER                 NOT NULL,
-  date     TIMESTAMP DEFAULT now() NOT NULL,
-  city     TEXT                    NOT NULL,
-  street   TEXT                    NOT NULL,
-  building TEXT                    NOT NULL,
-  comments TEXT                    NOT NULL,
+  id        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  number    VARCHAR                 NOT NULL,
+  name      TEXT                    NOT NULL,
+  operator  INTEGER                 NOT NULL,
+  region    INTEGER                 NOT NULL,
+  date_time TIMESTAMP DEFAULT now() NOT NULL,
+  city      TEXT                    NOT NULL,
+  street    TEXT                    NOT NULL,
+  building  TEXT                    NOT NULL,
+  comments  TEXT                    NOT NULL,
   FOREIGN KEY (operator) REFERENCES operator (id),
   FOREIGN KEY (region) REFERENCES region (id)
 );
 CREATE UNIQUE INDEX site_site_number_name_operator_id_key
-  ON Site (number,name, operator);
+  ON Site (number, name, operator);
 
 CREATE TABLE status_contacts
 (
@@ -231,7 +231,7 @@ CREATE TABLE internal_number
 CREATE TABLE os
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  date            TIMESTAMP DEFAULT now() NOT NULL,
+  date_time       TIMESTAMP DEFAULT now() NOT NULL,
   site            INTEGER                 NOT NULL,
   internal_number INTEGER                 NOT NULL,
   curator         INTEGER                 NOT NULL,
@@ -240,16 +240,16 @@ CREATE TABLE os
   type_BS         INTEGER                 NOT NULL,
   type_AMS        INTEGER                 NOT NULL,
   type_AFS        INTEGER                 NOT NULL,
-  source_data     BOOLEAN,
-  source_RD       BOOLEAN,
-  RNS             BOOLEAN,
-  F1A             BOOLEAN,
-  survey          BOOLEAN,
-  SSR             BOOLEAN,
-  TSSR            BOOLEAN,
-  RD              BOOLEAN,
-  implDoc         BOOLEAN,
-  signedLL        BOOLEAN,
+  source_data     BOOLEAN             DEFAULT FALSE,
+  source_RD       BOOLEAN             DEFAULT FALSE,
+  RNS             BOOLEAN             DEFAULT FALSE,
+  F1A             BOOLEAN             DEFAULT FALSE,
+  survey          BOOLEAN             DEFAULT FALSE,
+  SSR             BOOLEAN             DEFAULT FALSE,
+  TSSR            BOOLEAN             DEFAULT FALSE,
+  RD              BOOLEAN             DEFAULT FALSE,
+  implDoc         BOOLEAN             DEFAULT FALSE,
+  signedLL        BOOLEAN             DEFAULT FALSE,
   status_os       INTEGER                 NOT NULL,
   comments        TEXT                    NOT NULL,
   FOREIGN KEY (site) REFERENCES site (id),
@@ -262,6 +262,9 @@ CREATE TABLE os
   FOREIGN KEY (type_AFS) REFERENCES type_AFS (id),
   FOREIGN KEY (status_os) REFERENCES status_os (id)
 );
+
+CREATE UNIQUE INDEX os_site_internal_number_id_key
+  ON os (site, internal_number);
 
 CREATE TABLE nomenclature_works
 (
@@ -367,18 +370,18 @@ CREATE TABLE type_activity
 
 CREATE TABLE activity
 (
-  id                 INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  os                 INTEGER                 NOT NULL,
-  implementer        INTEGER                 NOT NULL,
-  type_activity      INTEGER                 NOT NULL,
-  date               TIMESTAMP DEFAULT now() NOT NULL,
-  plane_date         TIMESTAMP               NOT NULL,
-  rating             NUMERIC                 NOT NULL,
-  accept             BOOLEAN,
-  accept_date        TIMESTAMP,
-  status_activity    INTEGER                 NOT NULL,
-  date_change_status TIMESTAMP,
-  comments           TEXT,
+  id                      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  os                      INTEGER                 NOT NULL,
+  implementer             INTEGER                 NOT NULL,
+  type_activity           INTEGER                 NOT NULL,
+  date_time               TIMESTAMP DEFAULT now() NOT NULL,
+  plane_date_time         TIMESTAMP               NOT NULL,
+  rating                  NUMERIC                 NOT NULL,
+  accept                  BOOLEAN,
+  accept_date_time        TIMESTAMP,
+  status_activity         INTEGER                 NOT NULL,
+  date_time_change_status TIMESTAMP,
+  comments                TEXT,
   CONSTRAINT activity_idx UNIQUE (os, type_activity, implementer),
   FOREIGN KEY (os) REFERENCES os (id),
   FOREIGN KEY (implementer) REFERENCES implementer (id),
@@ -390,7 +393,7 @@ CREATE TABLE date_change_status
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   activity        INTEGER   NOT NULL,
-  date            TIMESTAMP NOT NULL,
+  date_time       TIMESTAMP NOT NULL,
   status_activity INTEGER   NOT NULL,
   comments        TEXT,
   FOREIGN KEY (activity) REFERENCES activity (id),
@@ -399,17 +402,17 @@ CREATE TABLE date_change_status
 
 CREATE TABLE task
 (
-  id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  activity      INTEGER                 NOT NULL,
-  date          TIMESTAMP DEFAULT now() NOT NULL,
-  type_task     INTEGER                 NOT NULL,
-  department    INTEGER                 NOT NULL,
-  plane_date    TIMESTAMP               NOT NULL,
-  right_on_time BOOLEAN,
-  approve       BOOLEAN,
-  approve_date  TIMESTAMP,
-  result_task   INTEGER                 NOT NULL,
-  comments      TEXT,
+  id                INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  activity          INTEGER                 NOT NULL,
+  date_time         TIMESTAMP DEFAULT now() NOT NULL,
+  type_task         INTEGER                 NOT NULL,
+  department        INTEGER                 NOT NULL,
+  plane_date_time   TIMESTAMP               NOT NULL,
+  right_on_time     BOOLEAN,
+  approve           BOOLEAN,
+  approve_date_time TIMESTAMP,
+  result_task       INTEGER                 NOT NULL,
+  comments          TEXT,
   FOREIGN KEY (activity) REFERENCES activity (id),
   FOREIGN KEY (type_task) REFERENCES type_task (id),
   FOREIGN KEY (department) REFERENCES department (id),
