@@ -1,5 +1,6 @@
 package ru.lab729.itpir.model;
 
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
 import ru.lab729.itpir.annotation.Phone;
@@ -61,7 +62,9 @@ public class ImplementerEntity extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private TypeImplementerEntity type;
 
-    @Digits(integer = 6, fraction = 2)
+    @Column(name = "rating", nullable = false)
+    @Range(min = 0, max = 100)
+    @NotNull
     private BigInteger rating;
 
     @NotBlank
