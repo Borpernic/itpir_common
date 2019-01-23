@@ -34,7 +34,6 @@ public class StatusActivityEntity extends AbstractBaseEntity {
     @Column(name = "status", nullable = false, length = 50, unique = true)
     private String status;
 
-
     public String getStatus() {
         return status;
     }
@@ -42,7 +41,6 @@ public class StatusActivityEntity extends AbstractBaseEntity {
     public void setStatus(String status) {
         this.status = status;
     }
-
 
     public StatusActivityEntity() {
 

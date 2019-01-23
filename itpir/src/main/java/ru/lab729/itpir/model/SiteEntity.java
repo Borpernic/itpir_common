@@ -98,7 +98,6 @@ public class SiteEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
-
     public String getNumber() {
         return number;
     }
@@ -106,7 +105,6 @@ public class SiteEntity extends AbstractBaseEntity {
     public void setNumber(String number) {
         this.number = number;
     }
-
 
     public String getName() {
         return name;
@@ -140,7 +138,6 @@ public class SiteEntity extends AbstractBaseEntity {
         this.dateTime = dateTime;
     }
 
-
     public String getCity() {
         return city;
     }
@@ -149,7 +146,6 @@ public class SiteEntity extends AbstractBaseEntity {
         this.city = city;
     }
 
-
     public String getStreet() {
         return street;
     }
@@ -157,7 +153,6 @@ public class SiteEntity extends AbstractBaseEntity {
     public void setStreet(String street) {
         this.street = street;
     }
-
 
     public String getBuilding() {
         return building;
@@ -184,7 +179,6 @@ public class SiteEntity extends AbstractBaseEntity {
 
     public SiteEntity() {
     }
-
 
     public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
         this(null, number, name, operator, region, dateTime, city, street, building, comments);

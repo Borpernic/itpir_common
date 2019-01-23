@@ -18,7 +18,6 @@ import java.util.Objects;
         @NamedQuery(name = TypeActivityEntity.GET, query = "SELECT t FROM TypeActivityEntity t WHERE t.id=:id"),
 })
 
-
 @Entity
 @Table(name = "type_activity", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"type"}, name = "type_activity_type_idx")})
 public class TypeActivityEntity extends AbstractBaseEntity {
@@ -85,7 +84,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
-
     public String getType() {
         return type;
     }
@@ -126,7 +124,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
         this.f1A = f1A;
     }
 
-
     public boolean isSurvey() {
         return survey;
     }
@@ -143,7 +140,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
         this.ssr = ssr;
     }
 
-
     public boolean isTssr() {
         return tssr;
     }
@@ -151,7 +147,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     public void setTssr(boolean tssr) {
         this.tssr = tssr;
     }
-
 
     public boolean isRd() {
         return rd;
@@ -161,7 +156,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
         this.rd = rd;
     }
 
-
     public boolean isImpldoc() {
         return impldoc;
     }
@@ -169,7 +163,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     public void setImpldoc(boolean impldoc) {
         this.impldoc = impldoc;
     }
-
 
     public boolean isSignedll() {
         return signedll;

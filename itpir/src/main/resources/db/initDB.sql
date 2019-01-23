@@ -413,6 +413,7 @@ CREATE TABLE task
   approve_date_time TIMESTAMP,
   result_task       INTEGER                 NOT NULL,
   comments          TEXT,
+  /*CONSTRAINT task_activity_type_task_department_idx UNIQUE (activity, type_task, department),*/
   FOREIGN KEY (activity) REFERENCES activity (id),
   FOREIGN KEY (type_task) REFERENCES type_task (id),
   FOREIGN KEY (department) REFERENCES department (id),

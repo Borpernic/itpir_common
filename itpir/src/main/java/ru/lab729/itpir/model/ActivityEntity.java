@@ -42,7 +42,6 @@ public class ActivityEntity extends AbstractBaseEntity {
     public static final String DELETE_BY_OS_ALL = "ActivityEntity.deleteByOsAll";
     public static final String GET = "ActivityEntity.get";
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "os", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -73,7 +72,6 @@ public class ActivityEntity extends AbstractBaseEntity {
     @Range(min = 0, max = 100)
     @NotNull
     private BigInteger rating;
-
 
     private Boolean accept;
 
@@ -200,7 +198,6 @@ public class ActivityEntity extends AbstractBaseEntity {
         this.rating = rating;
         this.statusActivity = statusActivity;
     }
-
 
     public ActivityEntity(OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
                           LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
