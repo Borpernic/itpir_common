@@ -31,40 +31,51 @@ public class CuratorEntity extends AbstractBaseEntity {
     public static final String DELETE = "CuratorEntity.delete";
     public static final String DELETE_ALL = "CuratorEntity.deleteAll";
     public static final String GET = "CuratorEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curator")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "operator", nullable = false)
     @NotNull(groups = View.Persist.class)
     private OperatorEntity operator;
-
-
     @Basic
     @NotBlank
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "curator", nullable = true, length = 50, unique = true)
     private String curator;
-
     @Phone
     @Size(min = 12, max = 12)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "phone", nullable = true, length = 12)
     private String phone;
-
     @Email
     @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "email", nullable = true, length = 100)
     private String email;
-
     @Size(min = 3, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = true, length = 100)
     private String comments;
 
+    public CuratorEntity() {
+
+    }
+
+    public CuratorEntity(OperatorEntity operator, String curator) {
+        this(null, operator, curator);
+    }
+
+    public CuratorEntity(Integer id, OperatorEntity operator, String curator) {
+        super(id);
+        this.operator = operator;
+        this.curator = curator;
+    }
 
     public OperatorEntity getOperator() {
         return operator;
@@ -90,13 +101,12 @@ public class CuratorEntity extends AbstractBaseEntity {
         return phone;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curator")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("id DESC")
-//    @JsonIgnore
-    protected List<OsEntity> osEntities;
-
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<OsEntity> getOsEntities() {
+        return osEntities;
     }
 
     public String getEmail() {
@@ -113,19 +123,5 @@ public class CuratorEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public CuratorEntity() {
-
-    }
-
-    public CuratorEntity(OperatorEntity operator, String curator) {
-        this(null, operator, curator);
-    }
-
-    public CuratorEntity(Integer id, OperatorEntity operator, String curator) {
-        super(id);
-        this.operator = operator;
-        this.curator = curator;
     }
 }

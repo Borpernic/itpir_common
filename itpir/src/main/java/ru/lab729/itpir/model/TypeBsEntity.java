@@ -25,28 +25,17 @@ public class TypeBsEntity extends AbstractBaseEntity {
     public static final String DELETE = "TypeBsEntity.delete";
     public static final String DELETE_ALL = "TypeBsEntity.deleteAll";
     public static final String GET = "TypeBsEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeBs")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
     @Basic
     @NotBlank
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeBs")
-//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("id DESC")
-//    @JsonIgnore
-    protected List<OsEntity> osEntities;
-
 
     public TypeBsEntity() {
 
@@ -59,5 +48,17 @@ public class TypeBsEntity extends AbstractBaseEntity {
     public TypeBsEntity(Integer id, String type) {
         super(id);
         this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<OsEntity> getOsEntities() {
+        return osEntities;
     }
 }

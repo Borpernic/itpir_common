@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigInteger;
-import java.util.Objects;
 
 @NamedQueries({
         @NamedQuery(name = TzpEntity.ALL_SORTED, query = "SELECT t FROM TzpEntity t ORDER BY t.tzp ASC"),
@@ -67,6 +66,24 @@ public class TzpEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public TzpEntity() {
+
+    }
+
+    public TzpEntity(String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer) {
+        this(null, tzp, razmernost, price, typeOs, typeImplementer);
+
+    }
+
+    public TzpEntity(Integer id, String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer) {
+        super(id);
+        this.tzp = tzp;
+        this.razmernost = razmernost;
+        this.price = price;
+        this.typeOs = typeOs;
+        this.typeImplementer = typeImplementer;
+        this.comments = comments;
+    }
 
     public String getTzp() {
         return tzp;
@@ -76,7 +93,6 @@ public class TzpEntity extends AbstractBaseEntity {
         this.tzp = tzp;
     }
 
-
     public String getRazmernost() {
         return razmernost;
     }
@@ -84,7 +100,6 @@ public class TzpEntity extends AbstractBaseEntity {
     public void setRazmernost(String razmernost) {
         this.razmernost = razmernost;
     }
-
 
     public BigInteger getPrice() {
         return price;
@@ -94,7 +109,6 @@ public class TzpEntity extends AbstractBaseEntity {
         this.price = price;
     }
 
-
     public TypeOsEntity getTypeOs() {
         return typeOs;
     }
@@ -102,7 +116,6 @@ public class TzpEntity extends AbstractBaseEntity {
     public void setTypeOs(TypeOsEntity typeOs) {
         this.typeOs = typeOs;
     }
-
 
     public TypeImplementerEntity getTypeImplementer() {
         return typeImplementer;
@@ -112,7 +125,6 @@ public class TzpEntity extends AbstractBaseEntity {
         this.typeImplementer = typeImplementer;
     }
 
-
     public String getComments() {
         return comments;
     }
@@ -120,26 +132,4 @@ public class TzpEntity extends AbstractBaseEntity {
     public void setComments(String comments) {
         this.comments = comments;
     }
-
-    public TzpEntity() {
-
-    }
-    public
-        TzpEntity(String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer)
-        {
-            this(null, tzp, razmernost, price, typeOs, typeImplementer);
-
-        }
-
-    public
-        TzpEntity(Integer id, String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer)
-        {
-            super(id);
-            this.tzp = tzp;
-            this.razmernost = razmernost;
-            this.price = price;
-            this.typeOs = typeOs;
-            this.typeImplementer = typeImplementer;
-            this.comments = comments;
-        }
-    }
+}

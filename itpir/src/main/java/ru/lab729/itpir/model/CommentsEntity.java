@@ -11,10 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Objects;
-
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -26,7 +23,6 @@ import java.util.Objects;
         @NamedQuery(name = CommentsEntity.DELETE_BY_OS_ALL, query = "DELETE FROM CommentsEntity c where c.os.id=?1"),
         @NamedQuery(name = CommentsEntity.GET, query = "SELECT c FROM CommentsEntity c WHERE c.id=:id"),
 })
-
 
 @Entity
 @Table(name = "comments", schema = "public", catalog = "itpirdb")
@@ -51,7 +47,6 @@ public class CommentsEntity extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private ImplementerEntity implementer;
 
-
     @Column(name = "date_time", nullable = false)
     @NotNull
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
@@ -64,7 +59,21 @@ public class CommentsEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public CommentsEntity(OsEntity os, ImplementerEntity implementer, LocalDateTime dateTime, String comments) {
+        this(null, os, implementer, dateTime, comments);
+    }
 
+    public CommentsEntity(Integer id, OsEntity os, ImplementerEntity implementer, LocalDateTime dateTime, String comments) {
+        super(id);
+        this.os = os;
+        this.implementer = implementer;
+        this.dateTime = dateTime;
+        this.comments = comments;
+    }
+
+    public CommentsEntity() {
+
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -74,7 +83,6 @@ public class CommentsEntity extends AbstractBaseEntity {
         this.dateTime = dateTime;
     }
 
-
     public String getComments() {
         return comments;
     }
@@ -83,4 +91,19 @@ public class CommentsEntity extends AbstractBaseEntity {
         this.comments = comments;
     }
 
+    public OsEntity getOs() {
+        return os;
+    }
+
+    public void setOs(OsEntity os) {
+        this.os = os;
+    }
+
+    public ImplementerEntity getImplementer() {
+        return implementer;
+    }
+
+    public void setImplementer(ImplementerEntity implementer) {
+        this.implementer = implementer;
+    }
 }

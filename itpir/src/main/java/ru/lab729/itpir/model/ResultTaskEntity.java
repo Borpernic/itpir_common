@@ -6,7 +6,7 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -25,20 +25,39 @@ public class ResultTaskEntity extends AbstractBaseEntity {
     public static final String DELETE = "ResultTaskEntity.delete";
     public static final String DELETE_ALL = "ResultTaskEntity.deleteAll";
     public static final String GET = "ResultTaskEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resultTask")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+//    @JsonIgnore
+    protected List<TaskEntity> taskEntities;
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "result", nullable = false, length = 50, unique = true)
     private String result;
-
     @NotBlank
     @Size(min = 2, max = 150)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
+
+    public ResultTaskEntity() {
+
+    }
+
+    public ResultTaskEntity(String result) {
+        this(null, result);
+    }
+
+    public ResultTaskEntity(Integer id, String result) {
+        super(id);
+        this.result = result;
+    }
+
+    public List<TaskEntity> getTaskEntities() {
+        return taskEntities;
+    }
 
     public String getResult() {
         return result;
@@ -54,18 +73,5 @@ public class ResultTaskEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public ResultTaskEntity() {
-
-    }
-
-    public ResultTaskEntity(String result) {
-        this(null, result);
-    }
-
-    public ResultTaskEntity(Integer id, String result) {
-        super(id);
-        this.result = result;
     }
 }

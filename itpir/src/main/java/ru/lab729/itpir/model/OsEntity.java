@@ -9,11 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Objects;
-
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = OsEntity.ALL_OPERATOR_NUMBER_SORTED, query = "SELECT o FROM OsEntity o JOIN FETCH SiteEntity s ORDER BY s.id, s.number ASC"),
@@ -37,97 +34,80 @@ public class OsEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL_BY_SITE = "OsEntity.deleteBySite";
     public static final String DELETE_ALL = "OsEntity.deleteAll";
     public static final String GET = "OsEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "os")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+//    @JsonIgnore
+    protected List<ActivityEntity> activityEntities;
     @Basic
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime dateTime = LocalDateTime.now();
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "site", nullable = false)
     @NotNull(groups = View.Persist.class)
     private SiteEntity site;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "internal_number", nullable = false)
     @NotNull(groups = View.Persist.class)
     private InternalNumberEntity internalNumber;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curator", nullable = false)
     @NotNull(groups = View.Persist.class)
     private CuratorEntity curator;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "band", nullable = false)
     @NotNull(groups = View.Persist.class)
     private BandEntity band;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_os", nullable = false)
     @NotNull(groups = View.Persist.class)
     private TypeOsEntity typeOs;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_bs", nullable = false)
     @NotNull(groups = View.Persist.class)
     private TypeBsEntity typeBs;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_ams", nullable = false)
     @NotNull(groups = View.Persist.class)
     private TypeAmsEntity typeAms;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_afs", nullable = false)
     @NotNull(groups = View.Persist.class)
     private TypeAfsEntity typeAfs;
-
     @Basic
     @Column(name = "source_data", nullable = true, columnDefinition = "boolean default false")
     private Boolean sourceData = false;
-
     @Basic
     @Column(name = "source_rd", nullable = true, columnDefinition = "boolean default false")
     private Boolean sourceRd = false;
-
     @Basic
     @Column(name = "rns", nullable = true, columnDefinition = "boolean default false")
     private Boolean rns = false;
-
     @Basic
     @Column(name = "f1a", nullable = true, columnDefinition = "boolean default false")
     private Boolean f1A = false;
-
     @Basic
     @Column(name = "survey", nullable = true, columnDefinition = "boolean default false")
     private Boolean survey = false;
-
     @Basic
     @Column(name = "ssr", nullable = true, columnDefinition = "boolean default false")
     private Boolean ssr = false;
-
     @Basic
     @Column(name = "tssr", nullable = true, columnDefinition = "boolean default false")
     private Boolean tssr = false;
-
     @Basic
     @Column(name = "rd", nullable = true, columnDefinition = "boolean default false")
     private Boolean rd = false;
-
     @Basic
     @Column(name = "impldoc", nullable = true, columnDefinition = "boolean default false")
     private Boolean impldoc = false;
-
     @Basic
     @Column(name = "signedll", nullable = true, columnDefinition = "boolean default false")
     private Boolean signedll = false;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_os", nullable = false)
     @NotNull(groups = View.Persist.class)
     private StatusOsEntity statusOs;
-
     @Basic
     @Size(max = 150)
     @SafeHtml(groups = {View.Web.class})
@@ -135,6 +115,9 @@ public class OsEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public List<ActivityEntity> getActivityEntities() {
+        return activityEntities;
+    }
 
     public LocalDateTime getDate() {
         return dateTime;
@@ -144,7 +127,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.dateTime = dateTime;
     }
 
-
     public SiteEntity getSite() {
         return site;
     }
@@ -152,7 +134,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setSite(SiteEntity site) {
         this.site = site;
     }
-
 
     public InternalNumberEntity getInternalNumber() {
         return internalNumber;
@@ -162,7 +143,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.internalNumber = internalNumber;
     }
 
-
     public CuratorEntity getCurator() {
         return curator;
     }
@@ -170,7 +150,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setCurator(CuratorEntity curator) {
         this.curator = curator;
     }
-
 
     public BandEntity getBand() {
         return band;
@@ -180,7 +159,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.band = band;
     }
 
-
     public TypeOsEntity getTypeOs() {
         return typeOs;
     }
@@ -188,7 +166,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setTypeOs(TypeOsEntity typeOs) {
         this.typeOs = typeOs;
     }
-
 
     public TypeBsEntity getTypeBs() {
         return typeBs;
@@ -198,7 +175,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.typeBs = typeBs;
     }
 
-
     public TypeAmsEntity getTypeAms() {
         return typeAms;
     }
@@ -206,7 +182,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setTypeAms(TypeAmsEntity typeAms) {
         this.typeAms = typeAms;
     }
-
 
     public TypeAfsEntity getTypeAfs() {
         return typeAfs;
@@ -216,7 +191,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.typeAfs = typeAfs;
     }
 
-
     public Boolean getSourceData() {
         return sourceData;
     }
@@ -224,7 +198,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setSourceData(Boolean sourceData) {
         this.sourceData = sourceData;
     }
-
 
     public Boolean getSourceRd() {
         return sourceRd;
@@ -234,7 +207,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.sourceRd = sourceRd;
     }
 
-
     public Boolean getRns() {
         return rns;
     }
@@ -242,7 +214,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setRns(Boolean rns) {
         this.rns = rns;
     }
-
 
     public Boolean getF1A() {
         return f1A;
@@ -252,7 +223,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.f1A = f1A;
     }
 
-
     public Boolean getSurvey() {
         return survey;
     }
@@ -260,7 +230,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setSurvey(Boolean survey) {
         this.survey = survey;
     }
-
 
     public Boolean getSsr() {
         return ssr;
@@ -270,7 +239,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.ssr = ssr;
     }
 
-
     public Boolean getTssr() {
         return tssr;
     }
@@ -278,7 +246,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setTssr(Boolean tssr) {
         this.tssr = tssr;
     }
-
 
     public Boolean getRd() {
         return rd;
@@ -288,7 +255,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.rd = rd;
     }
 
-
     public Boolean getImpldoc() {
         return impldoc;
     }
@@ -296,7 +262,6 @@ public class OsEntity extends AbstractBaseEntity {
     public void setImpldoc(Boolean impldoc) {
         this.impldoc = impldoc;
     }
-
 
     public Boolean getSignedll() {
         return signedll;
@@ -306,7 +271,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.signedll = signedll;
     }
 
-
     public StatusOsEntity getStatusOs() {
         return statusOs;
     }
@@ -315,7 +279,6 @@ public class OsEntity extends AbstractBaseEntity {
         this.statusOs = statusOs;
     }
 
-
     public String getComments() {
         return comments;
     }
@@ -323,6 +286,5 @@ public class OsEntity extends AbstractBaseEntity {
     public void setComments(String comments) {
         this.comments = comments;
     }
-
 
 }

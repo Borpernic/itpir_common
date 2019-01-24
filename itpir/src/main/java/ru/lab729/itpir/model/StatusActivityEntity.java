@@ -6,7 +6,7 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -27,20 +27,24 @@ public class StatusActivityEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL = "StatusActivityEntity.deleteAll";
     public static final String GET = "StatusActivityEntity.get";
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "statusActivity")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+//    @JsonIgnore
+    protected List<ActivityEntity> activityEntities;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "statusActivity")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<DateChangeStatusEntity> dateChangeStatusEntities;
+
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "status", nullable = false, length = 50, unique = true)
     private String status;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public StatusActivityEntity() {
 
@@ -52,6 +56,18 @@ public class StatusActivityEntity extends AbstractBaseEntity {
 
     public StatusActivityEntity(Integer id, String status) {
         super(id);
+        this.status = status;
+    }
+
+    public List<ActivityEntity> getActivityEntities() {
+        return activityEntities;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
     }
 }

@@ -27,7 +27,6 @@ public class OperatorEntity extends AbstractBaseEntity {
     public static final String GET = "operator.get";
     public static final String GET_BY_COMMENTS = "operator.getByComments";
 
-
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
@@ -42,22 +41,21 @@ public class OperatorEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public OperatorEntity() {
+    }
 
+    public OperatorEntity(String operator, String comments) {
+        this(null, operator, comments);
+    }
+
+    public OperatorEntity(Integer id, String operator, String comments) {
+        super(id);
+        this.operator = operator;
+        this.comments = comments;
+    }
 
     public String getOperator() {
         return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 
     /*@Override
@@ -76,16 +74,15 @@ public class OperatorEntity extends AbstractBaseEntity {
         return Objects.hash(id, operator, comments);
     }*/
 
-    public OperatorEntity() {
-    }
-
-    public OperatorEntity(String operator, String comments) {
-        this(null, operator, comments);
-    }
-
-    public OperatorEntity(Integer id, String operator, String comments) {
-        super(id);
+    public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
         this.comments = comments;
     }
 

@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
         @NamedQuery(name = StatusContactsEntity.GET, query = "SELECT s FROM StatusContactsEntity s WHERE s.id=:id"),
 })
 
-
 @Entity
 @Table(name = "status_contacts", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"status"}, name = "status_contacts_status_idx")})
 public class StatusContactsEntity extends AbstractBaseEntity {
@@ -33,12 +32,11 @@ public class StatusContactsEntity extends AbstractBaseEntity {
     @Column(name = "status", nullable = false, length = 15, unique = true)
     private String status;
 
-    public String getStatus() {
-        return status;
+    public StatusContactsEntity() {
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public StatusContactsEntity(String status) {
+        this(null, status);
     }
 
 /*    @Override
@@ -56,16 +54,16 @@ public class StatusContactsEntity extends AbstractBaseEntity {
         return Objects.hash(id, status);
     }*/
 
-    public StatusContactsEntity() {
-    }
-
-
-    public StatusContactsEntity(String status) {
-        this(null, status);
-    }
-
     public StatusContactsEntity(Integer id, String status) {
         super(id);
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
     }
 }

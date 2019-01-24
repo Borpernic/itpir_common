@@ -9,14 +9,12 @@ import ru.lab729.itpir.View;
 import ru.lab729.itpir.util.DateTimeUtil;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -41,6 +39,16 @@ public class ActivityEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL = "ActivityEntity.deleteAll";
     public static final String DELETE_BY_OS_ALL = "ActivityEntity.deleteByOsAll";
     public static final String GET = "ActivityEntity.get";
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<TaskEntity> taskEntities;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<DateChangeStatusEntity> dateChangeStatusEntities;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "os", nullable = false)
@@ -95,6 +103,31 @@ public class ActivityEntity extends AbstractBaseEntity {
     @NotBlank
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
+
+    public ActivityEntity() {
+    }
+
+    public ActivityEntity(Integer id, OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
+                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
+        super(id);
+        this.os = os;
+        this.implementer = implementer;
+        this.typeActivity = typeActivity;
+        this.dateTime = dateTime;
+        this.planeDateTime = planeDateTime;
+        this.rating = rating;
+        this.statusActivity = statusActivity;
+    }
+
+    public ActivityEntity(OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
+                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
+        this(null, os, implementer, typeActivity, dateTime, planeDateTime, rating, statusActivity);
+
+    }
+
+    public List<TaskEntity> getTaskEntities() {
+        return taskEntities;
+    }
 
     public OsEntity getOs() {
         return os;
@@ -184,25 +217,8 @@ public class ActivityEntity extends AbstractBaseEntity {
         this.comments = comments;
     }
 
-    public ActivityEntity() {
-    }
-
-    public ActivityEntity(Integer id, OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
-                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
-        super(id);
-        this.os = os;
-        this.implementer = implementer;
-        this.typeActivity = typeActivity;
-        this.dateTime = dateTime;
-        this.planeDateTime = planeDateTime;
-        this.rating = rating;
-        this.statusActivity = statusActivity;
-    }
-
-    public ActivityEntity(OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
-                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
-        this(null, os, implementer, typeActivity, dateTime, planeDateTime, rating, statusActivity);
-
+    public List<DateChangeStatusEntity> getDateChangeStatusEntities() {
+        return dateChangeStatusEntities;
     }
 }
 

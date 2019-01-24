@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @NamedQueries({
@@ -39,64 +38,79 @@ public class SiteEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL_BY_OPERATOR = "SiteEntity.deleteAllByOperator";
     public static final String GET = "SiteEntity.get";
     public static final String GET_BY_NUMBER_NAME_OPERATOR = "SiteEntity.getByNumberNameOperator";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
     @Basic
     @Size(max = 5)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "number", nullable = false)
     private String number;
-
     @Basic
     @Size(max = 50)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "name", nullable = false, length = 50)
     private String name;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "operator", nullable = false)
     @NotNull(groups = View.Persist.class)
     private OperatorEntity operator;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region", nullable = false)
     @NotNull(groups = View.Persist.class)
     //@Column(name = "region", nullable = false)
     private RegionEntity region;
-
     @Basic
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime dateTime = LocalDateTime.now();
-
     @Basic
     @Size(max = 20)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "city", nullable = false, length = 20)
     private String city;
-
     @Basic
     @Size(max = 50)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "street", nullable = false, length = 50)
     private String street;
-
     @Basic
     @Size(max = 5)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "building", nullable = false, length = 5)
     private String building;
-
     @Basic
     @Size(max = 150)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
+
+    public SiteEntity() {
+    }
+
+    public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
+        this(null, number, name, operator, region, dateTime, city, street, building, comments);
+    }
+
+    public SiteEntity(Integer id, String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
+        super(id);
+        this.number = number;
+        this.name = name;
+        this.operator = operator;
+        this.region = region;
+        this.dateTime = dateTime;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.comments = comments;
+    }
 
     public String getNumber() {
         return number;
@@ -172,28 +186,7 @@ public class SiteEntity extends AbstractBaseEntity {
         this.comments = comments;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("id DESC")
-//    @JsonIgnore
-    protected List<OsEntity> osEntities;
-
-    public SiteEntity() {
-    }
-
-    public SiteEntity(String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
-        this(null, number, name, operator, region, dateTime, city, street, building, comments);
-    }
-
-    public SiteEntity(Integer id, String number, String name, OperatorEntity operator, RegionEntity region, LocalDateTime dateTime, String city, String street, String building, String comments) {
-        super(id);
-        this.number = number;
-        this.name = name;
-        this.operator = operator;
-        this.region = region;
-        this.dateTime = dateTime;
-        this.city = city;
-        this.street = street;
-        this.building = building;
-        this.comments = comments;
+    public List<OsEntity> getOsEntities() {
+        return osEntities;
     }
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -27,7 +27,10 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     public static final String DELETE = "TypeActivityEntity.delete";
     public static final String DELETE_ALL = "TypeActivityEntity.deleteAll";
     public static final String GET = "TypeActivityEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeActivity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+//    @JsonIgnore
+    protected List<ActivityEntity> activityEntities;
     @NotBlank
     @NotNull
     @Size(min = 2, max = 50)
@@ -35,7 +38,6 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     @Basic
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
-
     @Basic
     @Column(name = "source_data", nullable = false)
     @NotNull
@@ -76,13 +78,41 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     @Column(name = "signedll", nullable = false)
     @NotNull
     private boolean signedll;
-
     @Basic
     @Size(max = 150)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
+
+    public TypeActivityEntity() {
+
+    }
+
+    public TypeActivityEntity(String type, boolean sourceData, boolean sourceRd, boolean rns, boolean f1A,
+                              boolean survey, boolean ssr, boolean tssr, boolean rd, boolean impldoc, boolean signedll) {
+        this(null, type, sourceData, sourceRd, rns, f1A, survey, ssr, tssr, rd, impldoc, signedll);
+    }
+
+    public TypeActivityEntity(Integer id, String type, boolean sourceData, boolean sourceRd, boolean rns, boolean f1A,
+                              boolean survey, boolean ssr, boolean tssr, boolean rd, boolean impldoc, boolean signedll) {
+        super(id);
+        this.type = type;
+        this.sourceData = sourceData;
+        this.sourceRd = sourceRd;
+        this.rns = rns;
+        this.f1A = f1A;
+        this.survey = survey;
+        this.ssr = ssr;
+        this.tssr = tssr;
+        this.rd = rd;
+        this.impldoc = impldoc;
+        this.signedll = signedll;
+    }
+
+    public List<ActivityEntity> getActivityEntities() {
+        return activityEntities;
+    }
 
     public String getType() {
         return type;
@@ -178,30 +208,5 @@ public class TypeActivityEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public TypeActivityEntity() {
-
-    }
-
-    public TypeActivityEntity(String type, boolean sourceData, boolean sourceRd, boolean rns, boolean f1A,
-                              boolean survey, boolean ssr, boolean tssr, boolean rd, boolean impldoc, boolean signedll) {
-        this(null, type, sourceData, sourceRd, rns, f1A, survey, ssr, tssr, rd, impldoc, signedll);
-    }
-
-    public TypeActivityEntity(Integer id, String type, boolean sourceData, boolean sourceRd, boolean rns, boolean f1A,
-                              boolean survey, boolean ssr, boolean tssr, boolean rd, boolean impldoc, boolean signedll) {
-        super(id);
-        this.type = type;
-        this.sourceData = sourceData;
-        this.sourceRd = sourceRd;
-        this.rns = rns;
-        this.f1A = f1A;
-        this.survey = survey;
-        this.ssr = ssr;
-        this.tssr = tssr;
-        this.rd = rd;
-        this.impldoc = impldoc;
-        this.signedll = signedll;
     }
 }

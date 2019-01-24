@@ -6,7 +6,7 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -26,14 +26,17 @@ public class TypeTaskEntity extends AbstractBaseEntity {
     public static final String DELETE = "TypeTaskEntity.delete";
     public static final String DELETE_ALL = "TypeTaskEntity.deleteAll";
     public static final String GET = "TypeTaskEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typeTask")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+//    @JsonIgnore
+    protected List<TaskEntity> taskEntities;
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
-
     @NotBlank
     @Size(min = 2, max = 150)
     @SafeHtml(groups = {View.Web.class})
@@ -41,6 +44,22 @@ public class TypeTaskEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public TypeTaskEntity() {
+
+    }
+
+    public TypeTaskEntity(String type) {
+        this(null, type);
+    }
+
+    public TypeTaskEntity(Integer id, String type) {
+        super(id);
+        this.type = type;
+    }
+
+    public List<TaskEntity> getTaskEntities() {
+        return taskEntities;
+    }
 
     public String getType() {
         return type;
@@ -56,18 +75,5 @@ public class TypeTaskEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public TypeTaskEntity() {
-
-    }
-
-    public TypeTaskEntity(String type) {
-        this(null, type);
-    }
-
-    public TypeTaskEntity(Integer id, String type) {
-        super(id);
-        this.type = type;
     }
 }

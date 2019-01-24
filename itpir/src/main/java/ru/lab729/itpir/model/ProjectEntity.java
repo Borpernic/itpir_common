@@ -34,72 +34,30 @@ public class ProjectEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL_BY_CUSTOMER = "ProjectEntity.deleteAllByCustomer";
     public static final String DELETE_ALL = "ProjectEntity.deleteAll";
     public static final String GET = "ProjectEntity.get";
-
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("number ASC")
+//    @JsonIgnore
+    protected List<InternalNumberEntity> internalNumberEntities;
     @Basic
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "project", nullable = false, length = 50, unique = true)
     private String project;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pm", nullable = false)
     @NotNull(groups = View.Persist.class)
     private PmEntity pm;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer", nullable = false)
     @NotNull(groups = View.Persist.class)
     private CustomerEntity customer;
-
     @Basic
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "comments", nullable = false, length = 50)
     private String comments;
-
-    public String getProject() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project = project;
-    }
-
-
-    public PmEntity getPm() {
-        return pm;
-    }
-
-    public void setPm(PmEntity pm) {
-        this.pm = pm;
-    }
-
-
-    public CustomerEntity getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
-    }
-
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("number ASC")
-//    @JsonIgnore
-    protected List<InternalNumberEntity> internalNumberEntities;
 
     public ProjectEntity() {
 
@@ -114,5 +72,41 @@ public class ProjectEntity extends AbstractBaseEntity {
         this.project = project;
         this.pm = pm;
         this.customer = customer;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public PmEntity getPm() {
+        return pm;
+    }
+
+    public void setPm(PmEntity pm) {
+        this.pm = pm;
+    }
+
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public List<InternalNumberEntity> getInternalNumberEntities() {
+        return internalNumberEntities;
     }
 }

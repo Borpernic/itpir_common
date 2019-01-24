@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @NamedQueries({
         @NamedQuery(name = ContactsAdEntity.ALL_SORTED, query = "SELECT c FROM ContactsAdEntity c ORDER BY c.id ASC"),
         @NamedQuery(name = ContactsAdEntity.ALL_SURNAME_SORTED, query = "SELECT c FROM ContactsAdEntity c ORDER BY c.surname, c.name, c.middlename ASC"),
@@ -23,7 +22,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "contacts_ad", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "contacts_ad_email_idx")})
 public class ContactsAdEntity extends AbstractBaseEntity {
-
 
     public static final String ALL_SORTED = "ContactsAdEntity.getAllSorted";
     public static final String ALL_SURNAME_SORTED = "ContactsAdEntity.getAllSurnameSorted";
@@ -118,6 +116,25 @@ public class ContactsAdEntity extends AbstractBaseEntity {
     @Column(name = "building", nullable = true, length = 50)
     private String building;
 
+    public ContactsAdEntity() {
+    }
+
+    public ContactsAdEntity(SiteEntity site, String surname, String name, String phone1,
+                            StatusContactsEntity status, boolean confirmed) {
+        this(null, site, surname, name, phone1, status, confirmed);
+    }
+
+    public ContactsAdEntity(Integer id, SiteEntity site, String surname, String name, String phone1,
+                            StatusContactsEntity status, boolean confirmed) {
+        this.id = id;
+        this.site = site;
+        this.surname = surname;
+        this.name = name;
+        this.phone1 = phone1;
+        this.status = status;
+        this.confirmed = confirmed;
+    }
+
     public SiteEntity getSite() {
         return site;
     }
@@ -182,7 +199,6 @@ public class ContactsAdEntity extends AbstractBaseEntity {
         this.email = email;
     }
 
-
     public StatusContactsEntity getStatus() {
         return status;
     }
@@ -190,7 +206,6 @@ public class ContactsAdEntity extends AbstractBaseEntity {
     public void setStatus(StatusContactsEntity status) {
         this.status = status;
     }
-
 
     public String getComments() {
         return comments;
@@ -230,24 +245,5 @@ public class ContactsAdEntity extends AbstractBaseEntity {
 
     public void setBuilding(String building) {
         this.building = building;
-    }
-
-    public ContactsAdEntity() {
-        }
-
-    public ContactsAdEntity(SiteEntity site, String surname, String name, String phone1,
-                            StatusContactsEntity status, boolean confirmed) {
-        this(null, site, surname, name, phone1, status, confirmed);
-    }
-
-    public ContactsAdEntity(Integer id, SiteEntity site, String surname, String name, String phone1,
-                            StatusContactsEntity status, boolean confirmed) {
-        this.id = id;
-        this.site = site;
-        this.surname = surname;
-        this.name = name;
-        this.phone1 = phone1;
-        this.status = status;
-        this.confirmed = confirmed;
     }
 }

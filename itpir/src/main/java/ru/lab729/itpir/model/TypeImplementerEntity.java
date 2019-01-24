@@ -6,7 +6,6 @@ import ru.lab729.itpir.View;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -29,7 +28,6 @@ public class TypeImplementerEntity extends AbstractBaseEntity {
     public static final String GET = "TypeImplementerEntity.get";
     public static final String GET_BY_COMMENTS = "TypeImplementerEntity.getByComments";
 
-
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
@@ -37,13 +35,25 @@ public class TypeImplementerEntity extends AbstractBaseEntity {
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
 
-
     @NotBlank
     @Size(min = 2, max = 150)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
+
+    public TypeImplementerEntity() {
+
+    }
+
+    public TypeImplementerEntity(String type) {
+        this(null, type);
+    }
+
+    public TypeImplementerEntity(Integer id, String type) {
+        super(id);
+        this.type = type;
+    }
 
     public String getType() {
         return type;
@@ -59,19 +69,5 @@ public class TypeImplementerEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-
-    public TypeImplementerEntity() {
-
-    }
-
-    public TypeImplementerEntity(String type) {
-        this(null, type);
-    }
-
-    public TypeImplementerEntity(Integer id, String type) {
-        super(id);
-        this.type = type;
     }
 }

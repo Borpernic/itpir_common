@@ -25,42 +25,21 @@ public class CustomerEntity extends AbstractBaseEntity {
     public static final String DELETE = "CustomerEntity.delete";
     public static final String DELETE_ALL = "CustomerEntity.deleteAll";
     public static final String GET = "CustomerEntity.get";
-
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("project ASC")
+//    @JsonIgnore
+    protected List<ProjectEntity> projectEntityList;
     @NotBlank
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "customer", nullable = false, length = 50, unique = true)
     private String customer;
-
     @Basic
     @Size(min = 3, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "comments", nullable = true, length = 100)
     private String comments;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("project ASC")
-//    @JsonIgnore
-    protected List<ProjectEntity> projectEntityList;
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public CustomerEntity() {
     }
@@ -72,5 +51,25 @@ public class CustomerEntity extends AbstractBaseEntity {
     public CustomerEntity(Integer id, String customer) {
         super(id);
         this.customer = customer;
+    }
+
+    public List<ProjectEntity> getProjectEntityList() {
+        return projectEntityList;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

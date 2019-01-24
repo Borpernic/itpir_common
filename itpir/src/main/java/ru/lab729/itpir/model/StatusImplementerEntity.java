@@ -28,7 +28,6 @@ public class StatusImplementerEntity extends AbstractBaseEntity {
     public static final String GET = "StatusImplementerEntity.get";
     public static final String GET_BY_COMMENTS = "StatusImplementerEntity.getByComments";
 
-
     @NotBlank
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
@@ -43,6 +42,18 @@ public class StatusImplementerEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public StatusImplementerEntity() {
+
+    }
+
+    public StatusImplementerEntity(Integer id, String status) {
+        super(id);
+        this.status = status;
+    }
+
+    public StatusImplementerEntity(String comments) {
+        this(null, comments);
+    }
 
     public String getStatus() {
         return status;
@@ -58,18 +69,5 @@ public class StatusImplementerEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public StatusImplementerEntity() {
-
-    }
-
-    public StatusImplementerEntity(Integer id, String status) {
-        super(id);
-        this.status = status;
-    }
-
-    public StatusImplementerEntity(String comments) {
-        this(null, comments);
     }
 }

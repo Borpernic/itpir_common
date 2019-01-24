@@ -25,41 +25,21 @@ public class BandEntity extends AbstractBaseEntity {
     public static final String DELETE = "BandEntity.delete";
     public static final String DELETE_ALL = "BandEntity.deleteAll";
     public static final String GET = "BandEntity.get";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "band")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
+//    @JsonIgnore
+    protected List<OsEntity> osEntities;
     @Basic
     @NotBlank
     @Size(min = 3, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "band", nullable = false, length = 100, unique = true)
     private String band;
-
     @Size(min = 3, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = true, length = 100)
     private String comments;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "band")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("id DESC")
-//    @JsonIgnore
-    protected List<OsEntity> osEntities;
-
-    public String getBand() {
-        return band;
-    }
-
-    public void setBand(String band) {
-        this.band = band;
-    }
-
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public BandEntity() {
 
@@ -72,5 +52,25 @@ public class BandEntity extends AbstractBaseEntity {
     public BandEntity(Integer id, String band) {
         super(id);
         this.band = band;
+    }
+
+    public List<OsEntity> getOsEntities() {
+        return osEntities;
+    }
+
+    public String getBand() {
+        return band;
+    }
+
+    public void setBand(String band) {
+        this.band = band;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
