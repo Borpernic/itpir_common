@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS meals;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;;
 DROP TABLE IF EXISTS operator CASCADE;
 DROP TABLE IF EXISTS region CASCADE;
 DROP TABLE IF EXISTS site CASCADE;
@@ -73,8 +73,10 @@ CREATE UNIQUE INDEX meals_unique_user_datetime_idx
 CREATE TABLE operator
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  operator TEXT NOT NULL,
-  comments TEXT NOT NULL,
+  operator TEXT    NOT NULL,
+  comments TEXT    NOT NULL,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT operator_operator_idx UNIQUE (operator)
 
 );
@@ -82,9 +84,12 @@ CREATE TABLE operator
 CREATE TABLE region
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  region   TEXT NOT NULL,
-  comments TEXT NOT NULL,
+  region   TEXT    NOT NULL,
+  comments TEXT    NOT NULL,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT region_region_idx UNIQUE (region)
+
 );
 
 CREATE TABLE site
@@ -99,17 +104,21 @@ CREATE TABLE site
   street    TEXT                    NOT NULL,
   building  TEXT                    NOT NULL,
   comments  TEXT                    NOT NULL,
+  user_id   INTEGER                 NOT NULL,
   FOREIGN KEY (operator) REFERENCES operator (id),
-  FOREIGN KEY (region) REFERENCES region (id)
+  FOREIGN KEY (region) REFERENCES region (id),
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX site_site_number_name_operator_id_key
   ON Site (number, name, operator);
 
 CREATE TABLE status_contacts
 (
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
-  CONSTRAINT status_contacts_status_idx UNIQUE (status)
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  status  TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  CONSTRAINT status_contacts_status_idx UNIQUE (status),
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
 CREATE TABLE contacts_ad
@@ -129,17 +138,21 @@ CREATE TABLE contacts_ad
   city       TEXT,
   street     TEXT,
   building   TEXT,
+  user_id    INTEGER NOT NULL,
 
   FOREIGN KEY (site_id) REFERENCES site (id) ON DELETE CASCADE,
   FOREIGN KEY (status) REFERENCES status_contacts (id),
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT contacts_ad_email_idx UNIQUE (email)
 );
 
 CREATE TABLE pm
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  pm       TEXT NOT NULL,
+  pm       TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT pm_pm_idx UNIQUE (pm)
 );
 
@@ -148,6 +161,8 @@ CREATE TABLE customer
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   customer VARCHAR NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT customer_customer_idx UNIQUE (customer)
 );
 
@@ -158,8 +173,10 @@ CREATE TABLE project
   pm       INTEGER NOT NULL,
   customer INTEGER NOT NULL,
   comments TEXT    NOT NULL,
+  user_id  INTEGER NOT NULL,
   FOREIGN KEY (pm) REFERENCES pm (id),
   FOREIGN KEY (customer) REFERENCES customer (id),
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT project_project_idx UNIQUE (project)
 
 );
@@ -172,50 +189,64 @@ CREATE TABLE curator
   phone    TEXT,
   email    TEXT,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
   CONSTRAINT curator_curator_idx UNIQUE (curator),
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (operator) REFERENCES operator (id)
 );
 
 CREATE TABLE band
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  band     TEXT NOT NULL,
+  band     TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT band_band_idx UNIQUE (band)
 );
 
 CREATE TABLE status_os
 (
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  status  TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT status_os_status_idx UNIQUE (status)
 );
 
 CREATE TABLE type_os
 (
-  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type TEXT NOT NULL,
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type    TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_os_type_idx UNIQUE (type)
 );
 
 CREATE TABLE type_BS
 (
-  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type TEXT NOT NULL,
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type    TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_BS_type_idx UNIQUE (type)
 );
 
 CREATE TABLE type_AMS
 (
-  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type TEXT NOT NULL,
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type    TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_AMS_type_idx UNIQUE (type)
 );
 
 CREATE TABLE type_AFS
 (
-  id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type TEXT NOT NULL,
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  type    TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_AFS_type_idx UNIQUE (type)
 );
 
@@ -225,6 +256,8 @@ CREATE TABLE internal_number
   project  INTEGER NOT NULL,
   number   TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT internal_number_number_idx UNIQUE (number),
   FOREIGN KEY (project) REFERENCES project (id)
 );
@@ -253,6 +286,8 @@ CREATE TABLE os
   signedLL        BOOLEAN             DEFAULT FALSE,
   status_os       INTEGER                 NOT NULL,
   comments        TEXT                    NOT NULL,
+  user_id         INTEGER                 NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (site) REFERENCES site (id),
   FOREIGN KEY (internal_number) REFERENCES internal_number (id),
   FOREIGN KEY (curator) REFERENCES curator (id),
@@ -270,24 +305,30 @@ CREATE UNIQUE INDEX os_site_internal_number_id_key
 CREATE TABLE nomenclature_works
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  works    TEXT NOT NULL,
+  works    TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT nomenclature_works_works_idx UNIQUE (works)
 );
 
 CREATE TABLE type_implementer
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type     TEXT NOT NULL,
+  type     TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_implementer_type_idx UNIQUE (type)
 );
 
 CREATE TABLE status_implementer
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status   TEXT NOT NULL,
+  status   TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT status_implementer_status_idx UNIQUE (status)
 );
 
@@ -301,6 +342,8 @@ CREATE TABLE implementer
   type        INTEGER NOT NULL,
   rating      NUMERIC NOT NULL,
   comments    TEXT,
+  user_id     INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT implementer_implementer_idx UNIQUE (implementer),
   FOREIGN KEY (status) REFERENCES status_implementer (id),
   FOREIGN KEY (type) REFERENCES type_implementer (id)
@@ -314,39 +357,48 @@ CREATE TABLE tzp
   price            NUMERIC NOT NULL,
   type_os          INTEGER NOT NULL,
   type_implementer INTEGER NOT NULL,
-
   comments         TEXT,
+  user_id          INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT tzp_tzp_idx UNIQUE (tzp)
 );
 
 CREATE TABLE type_task
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  type     TEXT NOT NULL,
+  type     TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_task_type_idx UNIQUE (type)
 );
 
 CREATE TABLE result_task
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  result   TEXT NOT NULL,
+  result   TEXT    NOT NULL,
   comments TEXT,
+  user_id  INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT result_task_result_idx UNIQUE (result)
 );
 
 CREATE TABLE department
 (
   id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  department TEXT NOT NULL,
+  department TEXT    NOT NULL,
   comments   TEXT,
+  user_id    INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT department_department_idx UNIQUE (department)
 );
 
 CREATE TABLE status_activity
 (
-  id     INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  status TEXT NOT NULL,
+  id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  status  TEXT    NOT NULL,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT status_activity_status_idx UNIQUE (status)
 );
 
@@ -366,6 +418,8 @@ CREATE TABLE type_activity
   implDoc     BOOLEAN NOT NULL,
   signedLL    BOOLEAN NOT NULL,
   comments    TEXT,
+  user_id     INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT type_activity_type_idx UNIQUE (type)
 );
 
@@ -383,6 +437,8 @@ CREATE TABLE activity
   status_activity         INTEGER                 NOT NULL,
   date_time_change_status TIMESTAMP,
   comments                TEXT,
+  user_id                 INTEGER                 NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT activity_idx UNIQUE (os, type_activity, implementer),
   FOREIGN KEY (os) REFERENCES os (id),
   FOREIGN KEY (implementer) REFERENCES implementer (id),
@@ -397,6 +453,8 @@ CREATE TABLE date_change_status
   date_time       TIMESTAMP NOT NULL,
   status_activity INTEGER   NOT NULL,
   comments        TEXT,
+  user_id         INTEGER   NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (activity) REFERENCES activity (id),
   FOREIGN KEY (status_activity) REFERENCES status_activity (id)
 );
@@ -414,6 +472,8 @@ CREATE TABLE task
   approve_date_time TIMESTAMP,
   result_task       INTEGER                 NOT NULL,
   comments          TEXT,
+  user_id           INTEGER                 NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   /*CONSTRAINT task_activity_type_task_department_idx UNIQUE (activity, type_task, department),*/
   FOREIGN KEY (activity) REFERENCES activity (id),
   FOREIGN KEY (type_task) REFERENCES type_task (id),
@@ -428,6 +488,8 @@ CREATE TABLE comments
   implementer INTEGER                 NOT NULL,
   date_time   TIMESTAMP DEFAULT now() NOT NULL,
   comments    TEXT,
+  user_id     INTEGER                 NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (os) REFERENCES os (id),
   FOREIGN KEY (implementer) REFERENCES implementer (id)
 );
