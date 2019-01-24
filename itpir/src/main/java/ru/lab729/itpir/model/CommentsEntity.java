@@ -18,13 +18,13 @@ import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
-        @NamedQuery(name = CommentsEntity.ALL_SORTED, query = "SELECT a FROM ActivityEntity a LEFT JOIN FETCH a.os ORDER BY a.os.site.operator.operator, a.os.site.number ASC"),
-        @NamedQuery(name = CommentsEntity.ALL, query = "SELECT a FROM ActivityEntity a ORDER BY a.id ASC"),
-        @NamedQuery(name = CommentsEntity.ALL_BY_OS, query = "SELECT a FROM ActivityEntity a WHERE a.os.id=?1 ORDER BY a.id ASC"),
-        @NamedQuery(name = CommentsEntity.DELETE, query = "DELETE FROM ActivityEntity a WHERE a.id=:id"),
-        @NamedQuery(name = CommentsEntity.DELETE_ALL, query = "DELETE FROM ActivityEntity a"),
-        @NamedQuery(name = CommentsEntity.DELETE_BY_OS_ALL, query = "DELETE FROM ActivityEntity a where a.os.id=?1"),
-        @NamedQuery(name = CommentsEntity.GET, query = "SELECT a FROM ActivityEntity a WHERE a.id=:id"),
+        @NamedQuery(name = CommentsEntity.ALL_SORTED, query = "SELECT c FROM CommentsEntity c LEFT JOIN FETCH c.os ORDER BY c.os.site.operator.operator ASC , c.os.site.number ASC, c.dateTime DESC "),
+        @NamedQuery(name = CommentsEntity.ALL, query = "SELECT c FROM CommentsEntity c ORDER BY c.id ASC"),
+        @NamedQuery(name = CommentsEntity.ALL_BY_OS, query = "SELECT c FROM CommentsEntity c WHERE c.os.id=?1 ORDER BY c.dateTime DESC"),
+        @NamedQuery(name = CommentsEntity.DELETE, query = "DELETE FROM CommentsEntity c WHERE c.id=:id"),
+        @NamedQuery(name = CommentsEntity.DELETE_ALL, query = "DELETE FROM CommentsEntity c"),
+        @NamedQuery(name = CommentsEntity.DELETE_BY_OS_ALL, query = "DELETE FROM CommentsEntity c where c.os.id=?1"),
+        @NamedQuery(name = CommentsEntity.GET, query = "SELECT c FROM CommentsEntity c WHERE c.id=:id"),
 })
 
 
