@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS type_activity CASCADE;
 DROP TABLE IF EXISTS activity CASCADE;
 DROP TABLE IF EXISTS date_change_status CASCADE;
 DROP TABLE IF EXISTS task CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
 
 DROP SEQUENCE IF EXISTS global_seq CASCADE;
 
@@ -419,3 +420,15 @@ CREATE TABLE task
   FOREIGN KEY (department) REFERENCES department (id),
   FOREIGN KEY (result_task) REFERENCES result_task (id)
 );
+
+CREATE TABLE comments
+(
+  id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  os          INTEGER                 NOT NULL,
+  implementer INTEGER                 NOT NULL,
+  date_time   TIMESTAMP DEFAULT now() NOT NULL,
+  comments    TEXT,
+  FOREIGN KEY (os) REFERENCES os (id),
+  FOREIGN KEY (implementer) REFERENCES implementer (id)
+);
+
