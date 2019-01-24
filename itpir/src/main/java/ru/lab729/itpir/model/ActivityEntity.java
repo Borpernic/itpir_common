@@ -40,7 +40,7 @@ public class ActivityEntity extends AbstractBaseEntity {
     public static final String DELETE_BY_OS_ALL = "ActivityEntity.deleteByOsAll";
     public static final String GET = "ActivityEntity.get";
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("id DESC")
 //    @JsonIgnore
     protected List<TaskEntity> taskEntities;
