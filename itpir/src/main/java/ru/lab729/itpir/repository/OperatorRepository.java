@@ -7,20 +7,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OperatorRepository {
-    // null if updated meal do not belong to userId
-    OperatorEntity save(OperatorEntity operator, int userId);
+    // null if updated operator do not belong to userId when enable save mode
+    OperatorEntity save(OperatorEntity operator, int userId, boolean saveMode);
 
-    // false if meal do not belong to userId
-    boolean delete(int id, int userId);
+    // false if operator do not belong to userId when enable save mode
+    boolean delete(int id, int userId, boolean saveMode);
 
-    // null if meal do not belong to userId
-    OperatorEntity get(int id, int userId);
+    // false if operator do not belong to userId when enable save mode
+    boolean deleteAll(int id, int userId, boolean saveMode);
 
-    // ORDERED dateTime desc
-    List<OperatorEntity> getAll(int userId);
+    // false if operator do not belong to userId when enable save mode
+    boolean deleteAllByUser(int id, int userId, boolean saveMode);
 
-    // ORDERED dateTime desc
-    List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+    // null if operator do not belong to userId when enable save mode
+    OperatorEntity get(int id, int userId, boolean saveMode);
+
+    // ORDERED id ASC
+    List<OperatorEntity> getAllByUser(int userId);
+
+    // ORDERED id ASC
+    List<OperatorEntity> getAll();
 
     default OperatorEntity getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();
