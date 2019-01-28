@@ -17,8 +17,8 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Meal m WHERE m.id=:id AND m.user.id=:userId")
-    int delete(@Param("id") int id, @Param("userId") int userId);
+    @Query("DELETE FROM OperatorEntity o WHERE o.id=:id")
+    int delete(@Param("id") int id);
 
     @Modifying
     @Transactional
@@ -28,20 +28,22 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
     @Override
     @Modifying
     @Transactional
-    @Query("DELETE FROM OperatorEntity o ")
+    @Query("DELETE FROM OperatorEntity o")
     void deleteAll();
 
     @Override
     @Transactional
     OperatorEntity save(OperatorEntity item);
 
-    @Query("SELECT o FROM OperatorEntity o WHERE o.user.id=:userId ORDER BY o.operator ASC")
-    List<Meal> getAll(@Param("userId") int userId);
+    @Query("SELECT o FROM OperatorEntity o WHERE o.id=:id ORDER BY o.operator ASC")
+    List<OperatorEntity> get(@Param("id") int id);
 
-    @SuppressWarnings("JpaQlInspection")
-    @Query("SELECT m from Meal m WHERE m.user.id=:userId AND m.dateTime BETWEEN :startDate AND :endDate ORDER BY m.dateTime DESC")
-    List<Meal> getBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("userId") int userId);
+    @Query("SELECT o FROM OperatorEntity o  ORDER BY o.operator  ASC")
+    List<OperatorEntity> getAll();
 
-    @Query("SELECT m FROM Meal m JOIN FETCH m.user WHERE m.id = ?1 and m.user.id = ?2")
-    Meal getWithUser(int id, int userId);
+    @Query("SELECT o FROM OperatorEntity o where o.user.id=:userId ORDER BY o.operator  ASC")
+    List<OperatorEntity> getAllByUserId(@Param("userId") int userId);
+
+    @Query("SELECT o FROM OperatorEntity o JOIN FETCH o.user WHERE o.id = ?1 and o.user.id = ?2")
+    OperatorEntity getWithUser(int id, int userId);
 }
