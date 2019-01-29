@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -53,6 +54,12 @@ public class OperatorEntity extends AbstractBaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(groups = View.Persist.class)
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "operator")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+//    @JsonIgnore
+    protected List<SiteEntity> siteEntities;
+
 
     public OperatorEntity() {
     }

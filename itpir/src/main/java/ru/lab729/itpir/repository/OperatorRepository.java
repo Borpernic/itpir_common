@@ -1,31 +1,38 @@
 package ru.lab729.itpir.repository;
 
-import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OperatorRepository {
-    // null if updated operator do not belong to userId when enable save mode
-    OperatorEntity save(OperatorEntity operator, int userId, boolean saveMode);
 
-    // false if operator do not belong to userId when enable save mode
-    boolean delete(int id, int userId, boolean saveMode);
+    // null if updated operator do not belong to userId
+    OperatorEntity saveWithUserId(OperatorEntity operator, int userId);
 
-    // false if operator do not belong to userId when enable save mode
-    boolean deleteAll(int id, int userId, boolean saveMode);
+    OperatorEntity save(OperatorEntity operator);
 
-    // false if operator do not belong to userId when enable save mode
-    boolean deleteAllByUser(int id, int userId, boolean saveMode);
+    // false if not found
+    boolean delete(int id);
 
-    // null if operator do not belong to userId when enable save mode
-    OperatorEntity get(int id, int userId, boolean saveMode);
+    // false if not found
+    boolean deleteByIdAndUserId(int id, int userId);
 
-    // ORDERED id ASC
-    List<OperatorEntity> getAllByUser(int userId);
+    // false if operators wasn't deleted
+    boolean deleteAllByUserId(int userId);
 
-    // ORDERED id ASC
+    // false if operators wasn't deleted
+    boolean deleteAll();
+
+    // false if not found
+    OperatorEntity get(int id);
+
+    // null if operator do not belong to userId
+    OperatorEntity getByIdAndUserId(int id, int userId);
+
+    // ORDERED Operator ASC
+    List<OperatorEntity> getAllByUserId(int userId);
+
+    // ORDERED Operator ASC
     List<OperatorEntity> getAll();
 
     default OperatorEntity getWithUser(int id, int userId) {

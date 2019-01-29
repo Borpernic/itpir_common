@@ -30,6 +30,7 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
         return crudOperatorRepository.save(operator);
     }
 
+
     @Override
     public boolean delete(int id, int userId) {
         return crudMealRepository.delete(id, userId) != 0;
