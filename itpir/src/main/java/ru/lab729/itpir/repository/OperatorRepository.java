@@ -1,5 +1,6 @@
 package ru.lab729.itpir.repository;
 
+import org.springframework.data.repository.query.Param;
 import ru.lab729.itpir.model.OperatorEntity;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface OperatorRepository {
 
     // false if operators wasn't deleted
     boolean deleteAll();
+
+
 
     // false if not found
     OperatorEntity get(int id);

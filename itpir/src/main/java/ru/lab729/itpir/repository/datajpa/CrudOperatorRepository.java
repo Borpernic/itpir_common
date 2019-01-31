@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, Integer> {
-dsafsdfsdfsdfsdf
+
     @Modifying
     @Transactional
     @Query("DELETE FROM OperatorEntity o WHERE o.id=:id")
@@ -23,7 +23,7 @@ dsafsdfsdfsdfsdf
     @Modifying
     @Transactional
     @Query("DELETE FROM OperatorEntity o WHERE o.id=:id AND o.user.id=:userId")
-    int deleteByIdAndUserId(@Param("id") int id);
+    int deleteByIdAndUserId(@Param("id") int id, @Param("userId") int userId);
 
     @Override
     @Modifying
@@ -33,11 +33,16 @@ dsafsdfsdfsdfsdf
     @Modifying
     @Transactional
     @Query("DELETE FROM OperatorEntity o WHERE o.user.id=:userId")
-    int deleteAllByUserId(@Param("id") int id, @Param("userId") int userId);
+    int deleteAllByUserId(@Param("userId") int userId);
 
     @Override
     @Transactional
     OperatorEntity save(OperatorEntity item);
+
+    88888888888888
+    @Transactional
+    @Modifying
+    OperatorEntity saveWithUserId(OperatorEntity operator, int userId);
 
     @Override
     Optional<OperatorEntity> findById(Integer id);
