@@ -39,7 +39,6 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
     @Transactional
     OperatorEntity save(OperatorEntity item);
 
-    88888888888888
     @Transactional
     @Modifying
     OperatorEntity saveWithUserId(OperatorEntity operator, int userId);
