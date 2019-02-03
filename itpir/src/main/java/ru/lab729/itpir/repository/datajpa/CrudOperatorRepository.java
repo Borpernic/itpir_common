@@ -39,9 +39,10 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
     @Transactional
     OperatorEntity save(OperatorEntity item);
 
+    /*
     @Transactional
     @Modifying
-    OperatorEntity saveWithUserId(OperatorEntity operator, int userId);
+    OperatorEntity saveWithUserId(OperatorEntity operator, int userId);*/
 
     @Override
     Optional<OperatorEntity> findById(Integer id);
@@ -58,5 +59,5 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
     //    https://stackoverflow.com/a/46013654/548473
     @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT o FROM OperatorEntity o WHERE o.id=?1")
-    User getWithMeals(int id);
+    OperatorEntity getWithUser(int id, int userId);
 }
