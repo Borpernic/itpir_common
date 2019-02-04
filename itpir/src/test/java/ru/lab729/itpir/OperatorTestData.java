@@ -17,7 +17,7 @@ public class OperatorTestData {
     public static final OperatorEntity OPERATOR2 = new OperatorEntity(OPERATOR1_ID + 1, "'Билайн'", "Оператор Билайн");
     public static final OperatorEntity ADMIN_OPERATOR3 = new OperatorEntity(ADMIN_OPERATOR_ID, "МТС", "Оператор МегаФон");
 
-    public static final List<OperatorEntity> OPERATOR = Arrays.asList(OPERATOR2, OPERATOR1);
+    public static final List<OperatorEntity> OPERATORS = Arrays.asList(OPERATOR2, OPERATOR1);
 
     public static OperatorEntity getCreated() {
         return new OperatorEntity(null, "Созданный оператор", "Созданный оператор комментарий");

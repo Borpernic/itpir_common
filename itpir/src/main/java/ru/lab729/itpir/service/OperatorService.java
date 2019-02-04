@@ -12,7 +12,7 @@ public interface OperatorService {
 
     List<OperatorEntity> getAll();
 
-    List<OperatorEntity> getAllByUserId(int userId);
+    List<OperatorEntity> getAll(int userId);
 
     void delete(int id) throws NotFoundException;
 

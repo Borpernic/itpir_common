@@ -42,19 +42,19 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
     /*
     @Transactional
     @Modifying
-    OperatorEntity saveWithUserId(OperatorEntity operator, int userId);*/
+    OperatorEntity save(OperatorEntity operator, int userId);*/
 
     @Override
     Optional<OperatorEntity> findById(Integer id);
 
     @Query("SELECT o FROM OperatorEntity o WHERE o.id=:id AND o.user.id=:userId")
-    List<OperatorEntity> getByIdAndUserId(@Param("id") int id, @Param("userId") int userId);
+    List<OperatorEntity> get(@Param("id") int id, @Param("userId") int userId);
 
     @Query("SELECT o FROM OperatorEntity o  ORDER BY o.operator  ASC")
     List<OperatorEntity> getAll();
 
     @Query("SELECT o FROM OperatorEntity o where o.user.id=:userId ORDER BY o.operator  ASC")
-    List<OperatorEntity> getAllByUserId(@Param("userId") int userId);
+    List<OperatorEntity> getAll(@Param("userId") int userId);
 
     //    https://stackoverflow.com/a/46013654/548473
     @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)

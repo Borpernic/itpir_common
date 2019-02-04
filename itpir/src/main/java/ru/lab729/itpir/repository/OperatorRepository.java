@@ -8,7 +8,7 @@ import java.util.List;
 public interface OperatorRepository {
 
     // null if updated operator do not belong to userId
-    OperatorEntity saveWithUserId(OperatorEntity operator, int userId);
+    OperatorEntity save(OperatorEntity operator, int userId);
 
     OperatorEntity save(OperatorEntity operator);
 
@@ -16,10 +16,10 @@ public interface OperatorRepository {
     boolean delete(int id);
 
     // false if not found
-    boolean deleteByIdAndUserId(int id, int userId);
+    boolean delete(int id, int userId);
 
     // false if operators wasn't deleted
-    boolean deleteAllByUserId(int userId);
+    boolean deleteAll(int userId);
 
     // false if operators wasn't deleted
     boolean deleteAll();
@@ -30,10 +30,10 @@ public interface OperatorRepository {
     OperatorEntity get(int id);
 
     // null if operator do not belong to userId
-    OperatorEntity getByIdAndUserId(int id, int userId);
+    OperatorEntity get(int id, int userId);
 
     // ORDERED Operator ASC
-    List<OperatorEntity> getAllByUserId(int userId);
+    List<OperatorEntity> getAll(int userId);
 
     // ORDERED Operator ASC
     List<OperatorEntity> getAll();

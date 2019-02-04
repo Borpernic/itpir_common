@@ -19,8 +19,8 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     @Transactional
-    public OperatorEntity saveWithUserId(OperatorEntity operator, int userId) {
-        if (!operator.isNew() && getByIdAndUserId(operator.getId(), userId) == null) {
+    public OperatorEntity save(OperatorEntity operator, int userId) {
+        if (!operator.isNew() && get(operator.getId(), userId) == null) {
             return null;
         }
         operator.setUser(crudUserRepository.getOne(userId));
@@ -43,7 +43,7 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public boolean deleteByIdAndUserId(int id, int userId) {
+    public boolean delete(int id, int userId) {
         return crudOperatorRepository.deleteByIdAndUserId(id, userId) != 0;
     }
 
@@ -53,7 +53,7 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public OperatorEntity getByIdAndUserId(int id, int userId) {
+    public OperatorEntity get(int id, int userId) {
         return crudOperatorRepository.findById(id).filter(operatorEntity -> operatorEntity.getUser().getId() == userId).orElse(null);
     }
 
@@ -69,7 +69,7 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public boolean deleteAllByUserId(int userId) {
+    public boolean deleteAll(int userId) {
         return false;
     }
 
@@ -79,7 +79,7 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public List<OperatorEntity> getAllByUserId(int userId) {
+    public List<OperatorEntity> getAll(int userId) {
         return null;
     }
 }
