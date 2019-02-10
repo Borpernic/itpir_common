@@ -10,7 +10,56 @@ import java.util.List;
 
 @Repository
 public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
+    @Override
+    public OperatorEntity save(OperatorEntity operator, int userId) {
+        return null;
+    }
 
+    @Override
+    public OperatorEntity save(OperatorEntity operator) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id, int userId) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAll(int userId) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        return false;
+    }
+
+    @Override
+    public OperatorEntity get(int id) {
+        return null;
+    }
+
+    @Override
+    public OperatorEntity get(int id, int userId) {
+        return null;
+    }
+
+    @Override
+    public List<OperatorEntity> getAll(int userId) {
+        return null;
+    }
+
+    @Override
+    public List<OperatorEntity> getAll() {
+        return null;
+    }
+/*
     @Autowired
     private CrudOperatorRepository crudOperatorRepository;
 
@@ -81,5 +130,5 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     @Override
     public List<OperatorEntity> getAll(int userId) {
         return null;
-    }
+    }*/
 }

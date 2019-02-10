@@ -3,6 +3,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/itpir/src/main/resources/db/initDB.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/itpir/src/main/resources/db/initDB_hsql.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/itpir/src/main/resources/db/populateDB.sql" dialect="PostgreSQL" />
     <file url="PROJECT" dialect="PostgreSQL" />
   </component>
 </project>

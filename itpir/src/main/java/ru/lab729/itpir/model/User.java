@@ -34,28 +34,34 @@ public class User extends AbstractNamedEntity {
     public static final String DELETE = "User.delete";
     public static final String BY_EMAIL = "User.getByEmail";
     public static final String ALL_SORTED = "User.getAllSorted";
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("dateTime DESC")
 //    @JsonIgnore
     protected List<Meal> meals;
+
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
     @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})  // https://stackoverflow.com/questions/17480809
     private String email;
+
     @Column(name = "password", nullable = false)
     @NotBlank
     @Size(min = 5, max = 100)
     // https://stackoverflow.com/a/12505165/548473
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled = true;
+
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
+
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -64,6 +70,7 @@ public class User extends AbstractNamedEntity {
 //    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
     private Set<Role> roles;
+
     @Column(name = "calories_per_day", columnDefinition = "int default 2000")
     @Range(min = 10, max = 10000)
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;

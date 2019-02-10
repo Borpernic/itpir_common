@@ -417,4 +417,3 @@ VALUES (100184, now(), 100115, 100157, now(), TRUE, TRUE, now(), 100140, 100001)
 INSERT INTO comments (os, implementer, date_time, comments, user_id)
 VALUES (100067, 100089, now(), 'АД просит увеличения арендной платы.', 100001),
        (100068, 100089, now(), 'Закзчик просит связаться с АД.', 100001);
-

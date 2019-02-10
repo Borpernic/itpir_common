@@ -86,12 +86,12 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
                 LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
     }*/
 
-    @Test
+   /* @Test
     void testValidation() {
         assumeTrue(isJpaBased());
         validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
-    }
+    }*/
 }

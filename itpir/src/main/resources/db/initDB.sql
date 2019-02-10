@@ -41,12 +41,12 @@ CREATE SEQUENCE global_seq
 CREATE TABLE users
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name             VARCHAR                 NOT NULL,
-  email            VARCHAR                 NOT NULL,
-  password         VARCHAR                 NOT NULL,
-  registered       TIMESTAMP DEFAULT now() NOT NULL,
-  enabled          BOOL DEFAULT TRUE       NOT NULL,
-  calories_per_day INTEGER DEFAULT 2000    NOT NULL
+  name             VARCHAR                           NOT NULL,
+  email            VARCHAR                           NOT NULL,
+  password         VARCHAR                           NOT NULL,
+  registered       TIMESTAMP           DEFAULT now() NOT NULL,
+  enabled          BOOL                DEFAULT TRUE  NOT NULL,
+  calories_per_day INTEGER             DEFAULT 2000  NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx
   ON users (email);
@@ -59,7 +59,8 @@ CREATE TABLE user_roles
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE meals (
+CREATE TABLE meals
+(
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   user_id     INTEGER   NOT NULL,
   date_time   TIMESTAMP NOT NULL,
@@ -95,18 +96,18 @@ CREATE TABLE region
 CREATE TABLE site
 (
   id        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  number    VARCHAR                 NOT NULL,
-  name      TEXT                    NOT NULL,
-  operator  INTEGER                 NOT NULL,
-  region    INTEGER                 NOT NULL,
-  date_time TIMESTAMP DEFAULT now() NOT NULL,
-  city      TEXT                    NOT NULL,
-  street    TEXT                    NOT NULL,
-  building  TEXT                    NOT NULL,
-  comments  TEXT                    NOT NULL,
-  user_id   INTEGER                 NOT NULL,
-  FOREIGN KEY (operator) REFERENCES operator (id),
-  FOREIGN KEY (region) REFERENCES region (id),
+  number    VARCHAR                           NOT NULL,
+  name      TEXT                              NOT NULL,
+  operator  INTEGER                           NOT NULL,
+  region    INTEGER                           NOT NULL,
+  date_time TIMESTAMP           DEFAULT now() NOT NULL,
+  city      TEXT                              NOT NULL,
+  street    TEXT                              NOT NULL,
+  building  TEXT                              NOT NULL,
+  comments  TEXT                              NOT NULL,
+  user_id   INTEGER                           NOT NULL,
+  FOREIGN KEY (operator) REFERENCES operator (id) ON DELETE CASCADE,
+  FOREIGN KEY (region) REFERENCES region (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX site_site_number_name_operator_id_key
@@ -192,7 +193,7 @@ CREATE TABLE curator
   user_id  INTEGER NOT NULL,
   CONSTRAINT curator_curator_idx UNIQUE (curator),
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  FOREIGN KEY (operator) REFERENCES operator (id)
+  FOREIGN KEY (operator) REFERENCES operator (id) ON DELETE CASCADE
 );
 
 CREATE TABLE band
@@ -265,15 +266,15 @@ CREATE TABLE internal_number
 CREATE TABLE os
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  date_time       TIMESTAMP DEFAULT now() NOT NULL,
-  site            INTEGER                 NOT NULL,
-  internal_number INTEGER                 NOT NULL,
-  curator         INTEGER                 NOT NULL,
-  band            INTEGER                 NOT NULL,
-  type_os         INTEGER                 NOT NULL,
-  type_BS         INTEGER                 NOT NULL,
-  type_AMS        INTEGER                 NOT NULL,
-  type_AFS        INTEGER                 NOT NULL,
+  date_time       TIMESTAMP           DEFAULT now() NOT NULL,
+  site            INTEGER                           NOT NULL,
+  internal_number INTEGER                           NOT NULL,
+  curator         INTEGER                           NOT NULL,
+  band            INTEGER                           NOT NULL,
+  type_os         INTEGER                           NOT NULL,
+  type_BS         INTEGER                           NOT NULL,
+  type_AMS        INTEGER                           NOT NULL,
+  type_AFS        INTEGER                           NOT NULL,
   source_data     BOOLEAN             DEFAULT FALSE,
   source_RD       BOOLEAN             DEFAULT FALSE,
   RNS             BOOLEAN             DEFAULT FALSE,
@@ -284,19 +285,19 @@ CREATE TABLE os
   RD              BOOLEAN             DEFAULT FALSE,
   implDoc         BOOLEAN             DEFAULT FALSE,
   signedLL        BOOLEAN             DEFAULT FALSE,
-  status_os       INTEGER                 NOT NULL,
-  comments        TEXT                    NOT NULL,
-  user_id         INTEGER                 NOT NULL,
+  status_os       INTEGER                           NOT NULL,
+  comments        TEXT                              NOT NULL,
+  user_id         INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  FOREIGN KEY (site) REFERENCES site (id),
+  FOREIGN KEY (site) REFERENCES site (id) ON DELETE CASCADE,
   FOREIGN KEY (internal_number) REFERENCES internal_number (id),
-  FOREIGN KEY (curator) REFERENCES curator (id),
-  FOREIGN KEY (band) REFERENCES band (id),
-  FOREIGN KEY (type_os) REFERENCES type_os (id),
-  FOREIGN KEY (type_BS) REFERENCES type_BS (id),
-  FOREIGN KEY (type_AMS) REFERENCES type_AMS (id),
-  FOREIGN KEY (type_AFS) REFERENCES type_AFS (id),
-  FOREIGN KEY (status_os) REFERENCES status_os (id)
+  FOREIGN KEY (curator) REFERENCES curator (id) ON DELETE CASCADE,
+  FOREIGN KEY (band) REFERENCES band (id) ON DELETE CASCADE,
+  FOREIGN KEY (type_os) REFERENCES type_os (id) ON DELETE CASCADE,
+  FOREIGN KEY (type_BS) REFERENCES type_BS (id) ON DELETE CASCADE,
+  FOREIGN KEY (type_AMS) REFERENCES type_AMS (id) ON DELETE CASCADE,
+  FOREIGN KEY (type_AFS) REFERENCES type_AFS (id) ON DELETE CASCADE,
+  FOREIGN KEY (status_os) REFERENCES status_os (id) ON DELETE CASCADE
 );
 
 CREATE UNIQUE INDEX os_site_internal_number_id_key
@@ -426,24 +427,24 @@ CREATE TABLE type_activity
 CREATE TABLE activity
 (
   id                      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  os                      INTEGER                 NOT NULL,
-  implementer             INTEGER                 NOT NULL,
-  type_activity           INTEGER                 NOT NULL,
-  date_time               TIMESTAMP DEFAULT now() NOT NULL,
-  plane_date_time         TIMESTAMP               NOT NULL,
-  rating                  NUMERIC                 NOT NULL,
+  os                      INTEGER                           NOT NULL,
+  implementer             INTEGER                           NOT NULL,
+  type_activity           INTEGER                           NOT NULL,
+  date_time               TIMESTAMP           DEFAULT now() NOT NULL,
+  plane_date_time         TIMESTAMP                         NOT NULL,
+  rating                  NUMERIC                           NOT NULL,
   accept                  BOOLEAN,
   accept_date_time        TIMESTAMP,
-  status_activity         INTEGER                 NOT NULL,
+  status_activity         INTEGER                           NOT NULL,
   date_time_change_status TIMESTAMP,
   comments                TEXT,
-  user_id                 INTEGER                 NOT NULL,
+  user_id                 INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT activity_idx UNIQUE (os, type_activity, implementer),
-  FOREIGN KEY (os) REFERENCES os (id),
-  FOREIGN KEY (implementer) REFERENCES implementer (id),
-  FOREIGN KEY (type_activity) REFERENCES type_activity (id),
-  FOREIGN KEY (status_activity) REFERENCES status_activity (id)
+  FOREIGN KEY (os) REFERENCES os (id)ON DELETE CASCADE,
+  FOREIGN KEY (implementer) REFERENCES implementer (id)ON DELETE CASCADE,
+  FOREIGN KEY (type_activity) REFERENCES type_activity (id)ON DELETE CASCADE,
+  FOREIGN KEY (status_activity) REFERENCES status_activity (id)ON DELETE CASCADE
 );
 
 CREATE TABLE date_change_status
@@ -455,42 +456,42 @@ CREATE TABLE date_change_status
   comments        TEXT,
   user_id         INTEGER   NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  FOREIGN KEY (activity) REFERENCES activity (id),
-  FOREIGN KEY (status_activity) REFERENCES status_activity (id)
+  FOREIGN KEY (activity) REFERENCES activity (id)ON DELETE CASCADE,
+  FOREIGN KEY (status_activity) REFERENCES status_activity (id)ON DELETE CASCADE
 );
 
 CREATE TABLE task
 (
   id                INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  activity          INTEGER                 NOT NULL,
-  date_time         TIMESTAMP DEFAULT now() NOT NULL,
-  type_task         INTEGER                 NOT NULL,
-  department        INTEGER                 NOT NULL,
-  plane_date_time   TIMESTAMP               NOT NULL,
+  activity          INTEGER                           NOT NULL,
+  date_time         TIMESTAMP           DEFAULT now() NOT NULL,
+  type_task         INTEGER                           NOT NULL,
+  department        INTEGER                           NOT NULL,
+  plane_date_time   TIMESTAMP                         NOT NULL,
   right_on_time     BOOLEAN,
   approve           BOOLEAN,
   approve_date_time TIMESTAMP,
-  result_task       INTEGER                 NOT NULL,
+  result_task       INTEGER                           NOT NULL,
   comments          TEXT,
-  user_id           INTEGER                 NOT NULL,
+  user_id           INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   /*CONSTRAINT task_activity_type_task_department_idx UNIQUE (activity, type_task, department),*/
-  FOREIGN KEY (activity) REFERENCES activity (id),
-  FOREIGN KEY (type_task) REFERENCES type_task (id),
-  FOREIGN KEY (department) REFERENCES department (id),
-  FOREIGN KEY (result_task) REFERENCES result_task (id)
+  FOREIGN KEY (activity) REFERENCES activity (id)ON DELETE CASCADE,
+  FOREIGN KEY (type_task) REFERENCES type_task (id)ON DELETE CASCADE,
+  FOREIGN KEY (department) REFERENCES department (id)ON DELETE CASCADE,
+  FOREIGN KEY (result_task) REFERENCES result_task (id)ON DELETE CASCADE
 );
 
 CREATE TABLE comments
 (
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  os          INTEGER                 NOT NULL,
-  implementer INTEGER                 NOT NULL,
-  date_time   TIMESTAMP DEFAULT now() NOT NULL,
+  os          INTEGER                           NOT NULL,
+  implementer INTEGER                           NOT NULL,
+  date_time   TIMESTAMP           DEFAULT now() NOT NULL,
   comments    TEXT,
-  user_id     INTEGER                 NOT NULL,
+  user_id     INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  FOREIGN KEY (os) REFERENCES os (id),
-  FOREIGN KEY (implementer) REFERENCES implementer (id)
+  FOREIGN KEY (os) REFERENCES os (id)ON DELETE CASCADE,
+  FOREIGN KEY (implementer) REFERENCES implementer (id)ON DELETE CASCADE
 );
 
