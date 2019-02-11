@@ -4,6 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
@@ -86,12 +87,13 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
                 LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
     }*/
 
-   /* @Test
+    @Test
     void testValidation() {
         assumeTrue(isJpaBased());
-        validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new OperatorEntity(null,"bn","bn"), ConstraintViolationException.class);
-    }*/
+        validateRootCause(() -> service.create(new OperatorEntity(null, "", ""), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "O", "C"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, null, null), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "Operator", "Comments"), USER_ID), ConstraintViolationException.class);
+
+    }
 }

@@ -39,7 +39,7 @@ abstract class AbstractServiceTest {
         return env.acceptsProfiles(Profiles.JPA, Profiles.DATAJPA);
     }
 
-    //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
+    //  Check rootaus ce in JUnit: https://github.com/junit-team/junit4/pull/778
     <T extends Throwable> void validateRootCause(Runnable runnable, Class<T> exceptionClass) {
         assertThrows(exceptionClass, () -> {
             try {

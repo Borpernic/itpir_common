@@ -16,6 +16,14 @@ import static ru.lab729.itpir.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class OperatorServiceImpl implements OperatorService {
+
+    private final OperatorRepository repository;
+
+    @Autowired
+    public OperatorServiceImpl(OperatorRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public OperatorEntity get(int id) throws NotFoundException {
         return null;
@@ -71,12 +79,7 @@ public class OperatorServiceImpl implements OperatorService {
         return null;
     }
 /*
-    private final OperatorRepository repository;
 
-    @Autowired
-    public OperatorServiceImpl(OperatorRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public OperatorEntity get(int id) throws NotFoundException {
