@@ -11,11 +11,15 @@ import java.util.List;
 @Repository
 public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
 
-    @Autowired
-    private CrudOperatorRepository crudOperatorRepository;
+    private final CrudOperatorRepository crudOperatorRepository;
+
+    private final CrudUserRepository crudUserRepository;
 
     @Autowired
-    private CrudUserRepository crudUserRepository;
+    public DataJpaOperatorRepositoryImpl(CrudOperatorRepository crudOperatorRepository, CrudUserRepository crudUserRepository) {
+        this.crudOperatorRepository = crudOperatorRepository;
+        this.crudUserRepository = crudUserRepository;
+    }
 
 
     @Override
@@ -43,8 +47,8 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public boolean deleteAll() {
-        crudOperatorRepository.deleteAll();
-        return true;
+
+        return crudOperatorRepository.deleteAllEntity() != 0;
     }
 
     @Override

@@ -32,6 +32,12 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
 
     @Modifying
     @Transactional
+    @Query("DELETE FROM OperatorEntity o ")
+    int deleteAllEntity();
+
+
+    @Modifying
+    @Transactional
     @Query("DELETE FROM OperatorEntity o WHERE o.user.id=:userId")
     int deleteAllByUserId(@Param("userId") int userId);
 
