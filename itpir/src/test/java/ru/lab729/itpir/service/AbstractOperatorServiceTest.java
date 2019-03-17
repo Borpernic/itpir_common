@@ -10,6 +10,7 @@ import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -29,9 +30,33 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
     protected OperatorService service;
 
     @Test
+    void getAllWithUser() {
+        assertMatch(service.getAll(USER_ID), OPERATORS);
+    }
+
+
+    @Test
+    void getAll() {
+        assertMatch(service.getAll(), ALL_OPERATORS);
+    }
+
+    @Test
+    void get() {
+        OperatorEntity actual = service.get(OPERATOR1_ID, USER_ID);
+        assertMatch(actual, OPERATOR1);
+    }
+
+    @Test
+    void create() {
+        OperatorEntity created = getCreated();
+        service.create(created, USER_ID);
+        assertMatch(service.getAll(USER_ID), OPERATOR2, OPERATOR1, created);
+    }
+
+    @Test
     void delete() {
         service.delete(OPERATOR1_ID, USER_ID);
-        assertMatch(service.getAll(USER_ID), OPERATOR1, OPERATOR2, ADMIN_OPERATOR3);
+        assertMatch(service.getAll(), OPERATOR2, ADMIN_OPERATOR3);
     }
 
     @Test
@@ -39,18 +64,6 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
         assertThrows(NotFoundException.class, () -> service.delete(OPERATOR1_ID, 1));
     }
 
-    @Test
-    void create() {
-        OperatorEntity created = getCreated();
-        service.create(created, USER_ID);
-        assertMatch(service.getAll(USER_ID), created, OPERATOR1, OPERATOR2, ADMIN_OPERATOR3);
-    }
-
-    @Test
-    void get() {
-        OperatorEntity actual = service.get(OPERATOR1_ID, ADMIN_ID);
-        assertMatch(actual, OPERATOR1);
-    }
 
     @Test
     void getNotFound() {
@@ -75,25 +88,27 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
         );
     }
 
-    @Test
-    void getAll() {
-        assertMatch(service.getAll(USER_ID), OPERATORS);
-    }
 
-    /*@Test
+/*
+
+   @Test
     void getBetween() {
         assertMatch(service.getBetweenDates(
                 LocalDate.of(2015, Month.MAY, 30),
                 LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
-    }*/
+    }
+*/
 
     @Test
     void testValidation() {
         assumeTrue(isJpaBased());
-        validateRootCause(() -> service.create(new OperatorEntity(null, "", ""), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new OperatorEntity(null, "O", "C"), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new OperatorEntity(null, null, null), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new OperatorEntity(null, "Operator", "Comments"), USER_ID), ConstraintViolationException.class);
-
+        validateRootCause(() -> service.create(new OperatorEntity(null, "", "Comments"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "О", "Comments"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, null, "Comments"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444", "Comments"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "Оператор", ""), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "Оператор", "C"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "Оператор", null), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new OperatorEntity(null, "Оператор", "Comments77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777"), USER_ID), ConstraintViolationException.class);
     }
 }

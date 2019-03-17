@@ -10,61 +10,13 @@ import java.util.List;
 
 @Repository
 public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
-    @Override
-    public OperatorEntity save(OperatorEntity operator, int userId) {
-        return null;
-    }
 
-    @Override
-    public OperatorEntity save(OperatorEntity operator) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id, int userId) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteAll(int userId) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteAll() {
-        return false;
-    }
-
-    @Override
-    public OperatorEntity get(int id) {
-        return null;
-    }
-
-    @Override
-    public OperatorEntity get(int id, int userId) {
-        return null;
-    }
-
-    @Override
-    public List<OperatorEntity> getAll(int userId) {
-        return null;
-    }
-
-    @Override
-    public List<OperatorEntity> getAll() {
-        return null;
-    }
-/*
     @Autowired
     private CrudOperatorRepository crudOperatorRepository;
 
     @Autowired
     private CrudUserRepository crudUserRepository;
+
 
     @Override
     @Transactional
@@ -76,14 +28,23 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
         return crudOperatorRepository.save(operator);
     }
 
+
     @Override
     public OperatorEntity save(OperatorEntity operator) {
+        return save(operator, operator.getId());
+    }
 
-        if (!operator.isNew() && get(operator.getId()) == null) {
-            return null;
-        }
-        operator.setUser(crudUserRepository.getOne(operator.getUser().getId()));
-        return crudOperatorRepository.save(operator);
+
+    @Override
+    public boolean deleteAll(int userId) {
+
+        return crudOperatorRepository.deleteAllByUserId(userId) != 0;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        crudOperatorRepository.deleteAll();
+        return true;
     }
 
     @Override
@@ -96,6 +57,13 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
         return crudOperatorRepository.deleteByIdAndUserId(id, userId) != 0;
     }
 
+
+    @Override
+    public OperatorEntity getWithUser(int id, int userId) {
+        return crudOperatorRepository.getWithUser(id, userId);
+    }
+
+
     @Override
     public OperatorEntity get(int id) {
         return crudOperatorRepository.findById(id).orElse(null);
@@ -103,7 +71,13 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     public OperatorEntity get(int id, int userId) {
-        return crudOperatorRepository.findById(id).filter(operatorEntity -> operatorEntity.getUser().getId() == userId).orElse(null);
+        return crudOperatorRepository.getWithUser(id, userId);
+    }
+
+    @Override
+    public List<OperatorEntity> getAll(int userId) {
+
+        return crudOperatorRepository.getAll(userId);
     }
 
     @Override
@@ -112,23 +86,4 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
 
-    @Override
-    public OperatorEntity getWithUser(int id, int userId) {
-        return crudOperatorRepository.getWithUser(id, userId);
-    }
-
-    @Override
-    public boolean deleteAll(int userId) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteAll() {
-        return false;
-    }
-
-    @Override
-    public List<OperatorEntity> getAll(int userId) {
-        return null;
-    }*/
 }

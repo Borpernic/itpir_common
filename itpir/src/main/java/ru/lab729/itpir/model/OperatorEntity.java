@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("JpaQlInspection")
 @NamedQueries({
@@ -121,4 +122,5 @@ public class OperatorEntity extends AbstractBaseEntity {
                 ", comments='" + comments + '\'' +
                 '}';
     }
+
 }

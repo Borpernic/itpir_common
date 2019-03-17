@@ -58,6 +58,8 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
 
     //    https://stackoverflow.com/a/46013654/548473
     @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT o FROM OperatorEntity o WHERE o.id=?1")
+    @Query("SELECT o FROM OperatorEntity o  JOIN FETCH o.user  WHERE o.id=?1 and o.user.id=?2")
     OperatorEntity getWithUser(int id, int userId);
+
+
 }

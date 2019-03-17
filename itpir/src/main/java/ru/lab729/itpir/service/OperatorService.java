@@ -18,7 +18,9 @@ public interface OperatorService {
 
     void delete(int id, int userId) throws NotFoundException;
 
-    void deleteAll(int id, int userId) throws NotFoundException;
+    void deleteAll( int userId) throws NotFoundException;
+
+    void deleteAll() throws NotFoundException;
 
     OperatorEntity update(OperatorEntity operator) throws NotFoundException;
 

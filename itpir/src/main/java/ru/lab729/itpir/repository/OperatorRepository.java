@@ -24,8 +24,6 @@ public interface OperatorRepository {
     // false if operators wasn't deleted
     boolean deleteAll();
 
-
-
     // false if not found
     OperatorEntity get(int id);
 
@@ -37,6 +35,7 @@ public interface OperatorRepository {
 
     // ORDERED Operator ASC
     List<OperatorEntity> getAll();
+
 
     default OperatorEntity getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();

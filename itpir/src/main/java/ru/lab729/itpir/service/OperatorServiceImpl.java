@@ -24,66 +24,27 @@ public class OperatorServiceImpl implements OperatorService {
         this.repository = repository;
     }
 
+
     @Override
-    public OperatorEntity get(int id) throws NotFoundException {
-        return null;
+    public OperatorEntity create(OperatorEntity operatorEntity, int userId) {
+        Assert.notNull(operatorEntity, "meal must not be null");
+        return repository.save(operatorEntity, userId);
+    }
+
+
+    @Override
+    public OperatorEntity update(OperatorEntity operatorEntity) throws NotFoundException {
+        return checkNotFoundWithId(repository.save(operatorEntity, operatorEntity.getId()), operatorEntity.getId());
     }
 
     @Override
-    public OperatorEntity get(int id, int userId) throws NotFoundException {
-        return null;
+    public OperatorEntity update(OperatorEntity operatorEntity, int userId) {
+        return checkNotFoundWithId(repository.save(operatorEntity, userId), operatorEntity.getId());
     }
-
-    @Override
-    public List<OperatorEntity> getAll() {
-        return null;
-    }
-
-    @Override
-    public List<OperatorEntity> getAll(int userId) {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) throws NotFoundException {
-
-    }
-
-    @Override
-    public void delete(int id, int userId) throws NotFoundException {
-
-    }
-
-    @Override
-    public void deleteAll(int id, int userId) throws NotFoundException {
-
-    }
-
-    @Override
-    public OperatorEntity update(OperatorEntity operator) throws NotFoundException {
-        return null;
-    }
-
-    @Override
-    public OperatorEntity update(OperatorEntity operator, int userId) throws NotFoundException {
-        return null;
-    }
-
-    @Override
-    public OperatorEntity create(OperatorEntity operator, int userId) {
-        return null;
-    }
-
-    @Override
-    public OperatorEntity getWithUser(int id, int userId) {
-        return null;
-    }
-/*
-
 
     @Override
     public OperatorEntity get(int id) throws NotFoundException {
-        return null;
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Override
@@ -93,7 +54,19 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public List<OperatorEntity> getAll() {
-        return null;
+
+        return repository.getAll();
+    }
+
+    @Override
+    public List<OperatorEntity> getAll(int userId) {
+        return repository.getAll(userId);
+    }
+
+
+    @Override
+    public void delete(int id) throws NotFoundException {
+
     }
 
     @Override
@@ -102,38 +75,19 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public void deleteAll(int id, int userId) throws NotFoundException {
-
+    public void deleteAll(int userId) throws NotFoundException {
+        checkNotFoundWithId(repository.deleteAll(userId));
     }
 
     @Override
-    public OperatorEntity update(OperatorEntity operator) throws NotFoundException {
-        return null;
-    }
-
-    @Override
-    public List<OperatorEntity> getAll(int userId) {
-        return repository.getAll(userId);
-    }
-
-    @Override
-    public void delete(int id) throws NotFoundException {
+    public void deleteAll() throws NotFoundException {
 
     }
 
-    @Override
-    public OperatorEntity update(OperatorEntity operatorEntity, int userId) {
-        return checkNotFoundWithId(repository.save(operatorEntity, userId), operatorEntity.getId());
-    }
 
-    @Override
-    public OperatorEntity create(OperatorEntity operatorEntity, int userId) {
-        Assert.notNull(operatorEntity, "meal must not be null");
-        return repository.save(operatorEntity, userId);
-    }
 
     @Override
     public OperatorEntity getWithUser(int id, int userId) {
         return checkNotFoundWithId(repository.getWithUser(id, userId), id);
-    }*/
+    }
 }
