@@ -66,7 +66,7 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
     @Override
@@ -77,12 +77,12 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public void deleteAll(int userId) throws NotFoundException {
 
-        checkNotFoundWithId(repository.deleteAll(),uder);
-    }
+        checkNotFoundWithId(repository.deleteAll(userId),0);
+}
 
     @Override
     public void deleteAll() throws NotFoundException {
-
+        checkNotFoundWithId(repository.deleteAll(),0);
     }
 
 

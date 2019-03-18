@@ -33,6 +33,9 @@ public class OperatorTestData {
     public static void assertMatch(OperatorEntity actual, OperatorEntity expected) {
         assertThat(actual).usingDefaultComparator().isEqualTo(expected);
     }
+    public static void assertMatch(Iterable<OperatorEntity> actual, int listSize) {
+        assertThat(actual).hasSize(listSize);
+    }
 
     public static void assertMatch(Iterable<OperatorEntity> actual, OperatorEntity... expected) {
         assertMatch(actual, Arrays.asList(expected));
