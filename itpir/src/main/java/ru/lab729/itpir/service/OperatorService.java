@@ -10,6 +10,8 @@ public interface OperatorService {
 
     OperatorEntity get(int id, int userId) throws NotFoundException;
 
+    OperatorEntity getWithUser(int id, int userId);
+
     List<OperatorEntity> getAll();
 
     List<OperatorEntity> getAll(int userId);
@@ -18,7 +20,7 @@ public interface OperatorService {
 
     void delete(int id, int userId) throws NotFoundException;
 
-    void deleteAll( int userId) throws NotFoundException;
+    void deleteAll(int userId) throws NotFoundException;
 
     void deleteAll() throws NotFoundException;
 
@@ -26,7 +28,7 @@ public interface OperatorService {
 
     OperatorEntity update(OperatorEntity operator, int userId) throws NotFoundException;
 
-    OperatorEntity create(OperatorEntity operator, int userId);
+    OperatorEntity create(OperatorEntity operator);
 
-    OperatorEntity getWithUser(int id, int userId);
+    OperatorEntity create(OperatorEntity operator, int userId);
 }

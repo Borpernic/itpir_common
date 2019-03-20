@@ -3,13 +3,10 @@ package ru.lab729.itpir.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
-import ru.lab729.itpir.repository.MealRepository;
 import ru.lab729.itpir.repository.OperatorRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.lab729.itpir.util.ValidationUtil.checkNotFoundWithId;
@@ -24,17 +21,22 @@ public class OperatorServiceImpl implements OperatorService {
         this.repository = repository;
     }
 
+    @Override
+    public OperatorEntity create(OperatorEntity operator) {
+        Assert.notNull(operator, "operator must not be null");
+        return repository.save(operator);
+    }
 
     @Override
-    public OperatorEntity create(OperatorEntity operatorEntity, int userId) {
-        Assert.notNull(operatorEntity, "meal must not be null");
-        return repository.save(operatorEntity, userId);
+    public OperatorEntity create(OperatorEntity operator, int userId) {
+        Assert.notNull(operator, "operator must not be null");
+        return repository.save(operator, userId);
     }
 
 
     @Override
-    public OperatorEntity update(OperatorEntity operatorEntity) throws NotFoundException {
-        return checkNotFoundWithId(repository.save(operatorEntity, operatorEntity.getId()), operatorEntity.getId());
+    public OperatorEntity update(OperatorEntity operator) throws NotFoundException {
+        return checkNotFoundWithId(repository.save(operator), operator.getId());
     }
 
     @Override
