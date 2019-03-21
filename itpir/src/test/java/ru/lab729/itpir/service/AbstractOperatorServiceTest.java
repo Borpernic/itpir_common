@@ -61,13 +61,24 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
     @Test
     void update() {
         OperatorEntity updated = getUpdated();
-        service.update(updated, USER_ID);
-        assertMatch(service.get(OPERATOR1_ID, USER_ID), updated);
+        service.update(updated);
+        assertMatch(service.get(OPERATOR1_ID), updated);
     }
 
     @Test
+    void updateWithUserIdNotFound() {
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> service.update(getUpdated(), ADMIN_ID));
+
+        assertAll(
+                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(ErrorType.DATA_NOT_FOUND.name())),
+                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(NotFoundException.NOT_FOUND_EXCEPTION)),
+                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(String.valueOf(OPERATOR1_ID)))
+        );
+    }
+    @Test
     void updateNotFound() {
-        NotFoundException thrown = assertThrows(NotFoundException.class, () -> service.update(OPERATOR1, ADMIN_ID));
+        service.delete(getUpdated().getId());
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> service.update(getUpdated()));
 
         assertAll(
                 () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(ErrorType.DATA_NOT_FOUND.name())),

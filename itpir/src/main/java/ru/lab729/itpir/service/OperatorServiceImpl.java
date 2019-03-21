@@ -31,7 +31,7 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public OperatorEntity update(OperatorEntity operator) throws NotFoundException {
-        Integer userId = repository.get(operator.getId()).getUser().getId();
+        Integer userId = get(operator.getId()).getUser().getId();
         return checkNotFoundWithId(repository.save(operator, userId), operator.getId(),"update without id");
     }
 
