@@ -7,6 +7,7 @@ import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.repository.OperatorRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
+import javax.persistence.Entity;
 import java.util.List;
 
 import static ru.lab729.itpir.util.ValidationUtil.checkNotFoundWithId;
@@ -32,7 +33,7 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public OperatorEntity update(OperatorEntity operator) throws NotFoundException {
         Integer userId = get(operator.getId()).getUser().getId();
-        return checkNotFoundWithId(repository.save(operator, userId), operator.getId(),"update without id");
+        return checkNotFoundWithId(repository.save(operator, userId), operator.getId(), "update without id");
     }
 
     @Override
@@ -75,14 +76,13 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public void deleteAll(int userId) throws NotFoundException {
 
-        checkNotFoundWithId(repository.deleteAll(userId),0);
-}
+        checkNotFoundWithId(repository.deleteAll(userId), 0);
+    }
 
     @Override
     public void deleteAll() throws NotFoundException {
-        checkNotFoundWithId(repository.deleteAll(),0);
+        checkNotFoundWithId(repository.deleteAll(), 0);
     }
-
 
 
     @Override
