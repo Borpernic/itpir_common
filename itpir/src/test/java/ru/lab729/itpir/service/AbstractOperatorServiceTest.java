@@ -52,6 +52,13 @@ public abstract class AbstractOperatorServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void updateWithUserId() {
+        OperatorEntity updated = getUpdated();
+        service.update(updated, USER_ID);
+        assertMatch(service.get(OPERATOR1_ID, USER_ID), updated);
+    }
+
+    @Test
     void update() {
         OperatorEntity updated = getUpdated();
         service.update(updated, USER_ID);

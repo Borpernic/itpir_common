@@ -28,7 +28,5 @@ public interface OperatorService {
 
     OperatorEntity update(OperatorEntity operator, int userId) throws NotFoundException;
 
-    OperatorEntity create(OperatorEntity operator);
-
     OperatorEntity create(OperatorEntity operator, int userId);
 }

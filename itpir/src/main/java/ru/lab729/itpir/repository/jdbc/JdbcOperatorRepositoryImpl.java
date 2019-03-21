@@ -65,10 +65,6 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
         return operatorEntity;
     }
 
-    @Override
-    public OperatorEntity save(OperatorEntity operator) {
-        return null;
-    }
 
     @Override
     public boolean delete(int id) {

@@ -33,11 +33,6 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
 
-    @Override
-    public OperatorEntity save(OperatorEntity operator) {
-        return save(operator, operator.getId());
-    }
-
 
     @Override
     public boolean deleteAll(int userId) {

@@ -1,8 +1,6 @@
 package ru.lab729.itpir;
 
-import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
-import ru.lab729.itpir.model.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +15,6 @@ public class OperatorTestData {
     public static final OperatorEntity OPERATOR1 = new OperatorEntity(OPERATOR1_ID, "МТС", "Оператор МТС");
     public static final OperatorEntity OPERATOR2 = new OperatorEntity(OPERATOR1_ID + 1, "Билайн", "Оператор Билайн");
     public static final OperatorEntity ADMIN_OPERATOR3 = new OperatorEntity(ADMIN_OPERATOR_ID, "МегаФон", "Оператор МегаФон");
-
     public static final List<OperatorEntity> OPERATORS = Arrays.asList(OPERATOR2, OPERATOR1);
     public static final List<OperatorEntity> ALL_OPERATORS = Arrays.asList(OPERATOR2, ADMIN_OPERATOR3, OPERATOR1);
 
@@ -29,10 +26,10 @@ public class OperatorTestData {
         return new OperatorEntity(OPERATOR1_ID, "Обновленный оператор", "Обновленный оператор комментарий");
     }
 
-
     public static void assertMatch(OperatorEntity actual, OperatorEntity expected) {
         assertThat(actual).usingDefaultComparator().isEqualTo(expected);
     }
+
     public static void assertMatch(Iterable<OperatorEntity> actual, int listSize) {
         assertThat(actual).hasSize(listSize);
     }
@@ -43,6 +40,6 @@ public class OperatorTestData {
 
     public static void assertMatch(Iterable<OperatorEntity> actual, Iterable<OperatorEntity> expected) {
         //assertThat(actual).usingElementComparatorIgnoringFields("user_id").isEqualTo(expected);
-          assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
+        assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
     }
 }

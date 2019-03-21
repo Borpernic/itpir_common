@@ -21,11 +21,6 @@ public class OperatorServiceImpl implements OperatorService {
         this.repository = repository;
     }
 
-    @Override
-    public OperatorEntity create(OperatorEntity operator) {
-        Assert.notNull(operator, "operator must not be null");
-        return repository.save(operator);
-    }
 
     @Override
     public OperatorEntity create(OperatorEntity operator, int userId) {
@@ -36,7 +31,8 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public OperatorEntity update(OperatorEntity operator) throws NotFoundException {
-        return checkNotFoundWithId(repository.save(operator), operator.getId());
+        Integer userId = repository.get(operator.getId()).getUser().getId();
+        return checkNotFoundWithId(repository.save(operator, userId), operator.getId(),"update without id");
     }
 
     @Override
