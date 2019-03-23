@@ -25,7 +25,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "operator", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"operator"}, name = "operator_operator_idx")})
-public class OperatorEntity extends AbstractBaseEntity {
+public class OperatorEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "operator.getAllSorted";
     public static final String ALL = "operator.getAll";
@@ -43,18 +43,18 @@ public class OperatorEntity extends AbstractBaseEntity {
     @Column(name = "operator", nullable = false, length = 50, unique = true)
     private String operator;
 
-    @NotBlank
+   /* @NotBlank
     @Size(min = 2, max = 150)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = false, length = 150)
-    private String comments;
+    private String comments;*/
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(groups = View.Persist.class)
-    private User user;
+    private User user;*/
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "operator")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("dateTime DESC")
@@ -70,18 +70,18 @@ public class OperatorEntity extends AbstractBaseEntity {
     }
 
     public OperatorEntity(Integer id, String operator, String comments) {
-        super(id);
+        super(id,comments);
         this.operator = operator;
-        this.comments = comments;
+//        this.comments = comments;
     }
 
-    public User getUser() {
+    /*public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 
     public String getOperator() {
         return operator;
@@ -107,19 +107,18 @@ public class OperatorEntity extends AbstractBaseEntity {
         this.operator = operator;
     }
 
-    public String getComments() {
+/*    public String getComments() {
         return comments;
     }
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
+    }*/
 
     @Override
     public String toString() {
         return "OperatorEntity{" +
                 "operator='" + operator + '\'' +
-                ", comments='" + comments + '\'' +
                 '}';
     }
 
