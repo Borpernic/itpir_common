@@ -1,10 +1,13 @@
 package ru.lab729.itpir.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @SuppressWarnings("JpaQlInspection")
@@ -42,6 +45,13 @@ public class RegionEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(groups = View.Persist.class)
+    private User user;
+
     public RegionEntity() {
     }
 
@@ -59,6 +69,12 @@ public class RegionEntity extends AbstractBaseEntity {
         return region;
     }
 
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+
+
     /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,8 +91,13 @@ public class RegionEntity extends AbstractBaseEntity {
         return Objects.hash(id, region, comments);
     }*/
 
-    public void setRegion(String region) {
-        this.region = region;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getComments() {

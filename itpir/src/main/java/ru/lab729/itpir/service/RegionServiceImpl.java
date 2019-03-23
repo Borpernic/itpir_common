@@ -4,61 +4,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.lab729.itpir.model.OperatorEntity;
+import ru.lab729.itpir.model.RegionEntity;
 import ru.lab729.itpir.repository.OperatorRepository;
+import ru.lab729.itpir.repository.RegionRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 import static ru.lab729.itpir.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class OperatorServiceImpl implements OperatorService {
+public class RegionServiceImpl implements RegionService {
 
-    private final OperatorRepository repository;
+    private final RegionRepository repository;
 
     @Autowired
-    public OperatorServiceImpl(OperatorRepository repository) {
+    public RegionServiceImpl(RegionRepository repository) {
         this.repository = repository;
     }
 
 
     @Override
-    public OperatorEntity create(OperatorEntity entity, int userId) {
+    public RegionEntity create(RegionEntity entity, int userId) {
         Assert.notNull(entity, "operator must not be null");
         return repository.save(entity, userId);
     }
 
 
     @Override
-    public OperatorEntity update(OperatorEntity entity) throws NotFoundException {
+    public RegionEntity update(RegionEntity entity) throws NotFoundException {
         Integer userId = get(entity.getId()).getUser().getId();
         return checkNotFoundWithId(repository.save(entity, userId), entity.getId(), "update without id");
     }
 
     @Override
-    public OperatorEntity update(OperatorEntity entity, int userId) {
+    public RegionEntity update(RegionEntity entity, int userId) {
         return checkNotFoundWithId(repository.save(entity, userId), entity.getId());
     }
 
     @Override
-    public OperatorEntity get(int id) throws NotFoundException {
+    public RegionEntity get(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Override
-    public OperatorEntity get(int id, int userId) {
+    public RegionEntity get(int id, int userId) {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     @Override
-    public List<OperatorEntity> getAll() {
+    public List<RegionEntity> getAll() {
 
         return repository.getAll();
     }
 
     @Override
-    public List<OperatorEntity> getAll(int userId) {
+    public List<RegionEntity> getAll(int userId) {
         return repository.getAll(userId);
     }
 
@@ -86,7 +87,7 @@ public class OperatorServiceImpl implements OperatorService {
 
 
     @Override
-    public OperatorEntity getWithUser(int id, int userId) {
+    public RegionEntity getWithUser(int id, int userId) {
         return checkNotFoundWithId(repository.getWithUser(id, userId), id);
     }
 }

@@ -24,12 +24,12 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     @Transactional
-    public OperatorEntity save(OperatorEntity operator, int userId) {
-        if (!operator.isNew() && get(operator.getId(), userId) == null) {
+    public OperatorEntity save(OperatorEntity entity, int userId) {
+        if (!entity.isNew() && get(entity.getId(), userId) == null) {
             return null;
         }
-        operator.setUser(crudUserRepository.getOne(userId));
-        return crudOperatorRepository.save(operator);
+        entity.setUser(crudUserRepository.getOne(userId));
+        return crudOperatorRepository.save(entity);
     }
 
 

@@ -2,27 +2,26 @@ package ru.lab729.itpir.repository.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
+import ru.lab729.itpir.model.RegionEntity;
 import ru.lab729.itpir.model.User;
-import ru.lab729.itpir.repository.MealRepository;
 import ru.lab729.itpir.repository.OperatorRepository;
+import ru.lab729.itpir.repository.RegionRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JpaOperatorRepositoryImpl implements OperatorRepository {
+public class JpaRegionRepositoryImpl implements RegionRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional
-    public OperatorEntity save(OperatorEntity entity, int userId) {
+    public RegionEntity save(RegionEntity entity, int userId) {
         if (!entity.isNew() && get(entity.getId(), userId) == null) {
             return null;
         }
@@ -57,27 +56,27 @@ public class JpaOperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public OperatorEntity get(int id) {
+    public RegionEntity get(int id) {
         return null;
     }
 
     @Override
-    public OperatorEntity get(int id, int userId) {
+    public RegionEntity get(int id, int userId) {
         return null;
     }
 
     @Override
-    public List<OperatorEntity> getAll(int userId) {
+    public List<RegionEntity> getAll(int userId) {
         return null;
     }
 
     @Override
-    public List<OperatorEntity> getAll() {
+    public List<RegionEntity> getAll() {
         return null;
     }
 
     @Override
-    public OperatorEntity getWithUser(int id, int userId) {
+    public RegionEntity getWithUser(int id, int userId) {
         return null;
     }
 }

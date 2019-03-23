@@ -10,20 +10,19 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
-import ru.lab729.itpir.repository.MealRepository;
+import ru.lab729.itpir.model.RegionEntity;
 import ru.lab729.itpir.repository.OperatorRepository;
+import ru.lab729.itpir.repository.RegionRepository;
 
 import javax.sql.DataSource;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JdbcOperatorRepositoryImpl implements OperatorRepository {
+public class JdbcRegionRepositoryImpl implements RegionRepository {
 
-    private static final RowMapper<OperatorEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(OperatorEntity.class);
+    private static final RowMapper<RegionEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(RegionEntity.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -32,9 +31,9 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     private final SimpleJdbcInsert insertOperator;
 
     @Autowired
-    public JdbcOperatorRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcRegionRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
-                .withTableName("operator")
+                .withTableName("region")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
@@ -43,10 +42,10 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     @Transactional
-    public OperatorEntity save(OperatorEntity entity, int userId) {
+    public RegionEntity save(RegionEntity entity, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", entity.getId())
-                .addValue("operator", entity.getOperator())
+                .addValue("operator", entity.getRegion())
                 .addValue("comments", entity.getComments())
                 .addValue("user_id", userId);
 
@@ -74,7 +73,7 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-        return jdbcTemplate.update("DELETE FROM operator WHERE id=? AND user_id=?", id, userId) != 0;
+        return jdbcTemplate.update("DELETE FROM region WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
@@ -88,25 +87,25 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     }
 
     @Override
-    public OperatorEntity get(int id) {
+    public RegionEntity get(int id) {
         return null;
     }
 
     @Override
-    public OperatorEntity get(int id, int userId) {
-        List<OperatorEntity> meals = jdbcTemplate.query(
-                "SELECT * FROM operator WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
+    public RegionEntity get(int id, int userId) {
+        List<RegionEntity> meals = jdbcTemplate.query(
+                "SELECT * FROM region WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
     @Override
-    public List<OperatorEntity> getAll(int userId) {
+    public List<RegionEntity> getAll(int userId) {
         return jdbcTemplate.query(
-                "SELECT * FROM operator WHERE user_id=? ORDER BY operator.operator DESC", ROW_MAPPER, userId);
+                "SELECT * FROM region WHERE user_id=? ORDER BY operator.operator DESC", ROW_MAPPER, userId);
     }
 
     @Override
-    public List<OperatorEntity> getAll() {
+    public List<RegionEntity> getAll() {
         return null;
     }
 

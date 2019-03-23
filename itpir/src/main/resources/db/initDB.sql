@@ -176,7 +176,7 @@ CREATE TABLE project
   comments TEXT    NOT NULL,
   user_id  INTEGER NOT NULL,
   FOREIGN KEY (pm) REFERENCES pm (id),
-  FOREIGN KEY (customer) REFERENCES customer (id),
+  FOREIGN KEY (customer) REFERENCES customer (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT project_project_idx UNIQUE (project)
 
@@ -260,7 +260,7 @@ CREATE TABLE internal_number
   user_id  INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT internal_number_number_idx UNIQUE (number),
-  FOREIGN KEY (project) REFERENCES project (id)
+  FOREIGN KEY (project) REFERENCES project (id) ON DELETE CASCADE
 );
 
 CREATE TABLE os

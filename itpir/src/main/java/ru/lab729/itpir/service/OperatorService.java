@@ -24,9 +24,9 @@ public interface OperatorService {
 
     void deleteAll() throws NotFoundException;
 
-    OperatorEntity update(OperatorEntity operator) throws NotFoundException;
+    OperatorEntity update(OperatorEntity entity) throws NotFoundException;
 
-    OperatorEntity update(OperatorEntity operator, int userId) throws NotFoundException;
+    OperatorEntity update(OperatorEntity entity, int userId) throws NotFoundException;
 
-    OperatorEntity create(OperatorEntity operator, int userId);
+    OperatorEntity create(OperatorEntity entity, int userId);
 }
