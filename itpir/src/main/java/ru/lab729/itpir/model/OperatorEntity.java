@@ -25,7 +25,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "operator", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"operator"}, name = "operator_operator_idx")})
-public class OperatorEntity extends AbstractBaseEntity {
+public class OperatorEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "operator.getAllSorted";
     public static final String ALL = "operator.getAll";
@@ -50,11 +50,11 @@ public class OperatorEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(groups = View.Persist.class)
-    private User user;
+    private User user;*/
 
     public List<SiteEntity> getSiteEntities() {
         return siteEntities;
@@ -83,13 +83,13 @@ public class OperatorEntity extends AbstractBaseEntity {
         this.comments = comments;
     }
 
-    public User getUser() {
+   /* public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 
     public String getOperator() {
         return operator;

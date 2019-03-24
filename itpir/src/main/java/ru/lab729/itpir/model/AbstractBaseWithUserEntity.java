@@ -13,12 +13,6 @@ import javax.validation.constraints.Size;
 @MappedSuperclass
 public abstract class AbstractBaseWithUserEntity extends AbstractBaseEntity {
 
-    @NotBlank
-    @Size(min = 2, max = 150)
-    @SafeHtml(groups = {View.Web.class})
-    @Basic
-    @Column(name = "comments", nullable = false, length = 150)
-    private String comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -29,18 +23,11 @@ public abstract class AbstractBaseWithUserEntity extends AbstractBaseEntity {
     protected AbstractBaseWithUserEntity() {
     }
 
-    protected AbstractBaseWithUserEntity(Integer id, String comments) {
+    protected AbstractBaseWithUserEntity(Integer id) {
         super(id);
-        this.comments = comments;
+
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public User getUser() {
         return user;

@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "region", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"region"}, name = "region_region_idx")})
-public class RegionEntity extends AbstractBaseEntity {
+public class RegionEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "RegionEntity.getAllSorted";
     public static final String ALL = "RegionEntity.getAll";
@@ -45,12 +45,12 @@ public class RegionEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
-
+/*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(groups = View.Persist.class)
-    private User user;
+    private User user;*/
 
     public RegionEntity() {
     }
@@ -92,13 +92,13 @@ public class RegionEntity extends AbstractBaseEntity {
     }*/
 
 
-    public User getUser() {
+    /*public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 
     public String getComments() {
         return comments;

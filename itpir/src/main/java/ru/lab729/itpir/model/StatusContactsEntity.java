@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "status_contacts", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"status"}, name = "status_contacts_status_idx")})
-public class StatusContactsEntity extends AbstractBaseEntity {
+public class StatusContactsEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "StatusContactsEntity.getAllSorted";
     public static final String ALL = "StatusContactsEntity.getAll";
