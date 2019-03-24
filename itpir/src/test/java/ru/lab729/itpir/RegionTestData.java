@@ -17,7 +17,7 @@ public class RegionTestData {
     public static final RegionEntity REGION2 = new RegionEntity(REGION1_ID + 1, "50", "МО");
     public static final RegionEntity ADMIN_REGION3 = new RegionEntity(ADMIN_REGION_ID, "68", "Тверь");
     public static final List<RegionEntity> REGIONS = Arrays.asList(REGION2, REGION1);
-    public static final List<RegionEntity> ALL_REGIONSS = Arrays.asList(REGION2,ADMIN_REGION3, REGION1 );
+    public static final List<RegionEntity> ALL_REGIONS = Arrays.asList(REGION2,ADMIN_REGION3, REGION1 );
 
     public static RegionEntity getCreated() {
         return new RegionEntity(null, "Созданный регион", "Созданный регион комментарий");

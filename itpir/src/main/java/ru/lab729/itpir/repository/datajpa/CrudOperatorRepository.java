@@ -17,12 +17,12 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM OperatorEntity o WHERE o.id=:id")
+    @Query("DELETE FROM OperatorEntity e WHERE e.id=:id")
     int delete(@Param("id") int id);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM OperatorEntity o WHERE o.id=:id AND o.user.id=:userId")
+    @Query("DELETE FROM OperatorEntity e WHERE e.id=:id AND e.user.id=:userId")
     int deleteByIdAndUserId(@Param("id") int id, @Param("userId") int userId);
 
     @Override
@@ -32,13 +32,13 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM OperatorEntity o ")
+    @Query("DELETE FROM OperatorEntity e ")
     int deleteAllEntity();
 
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM OperatorEntity o WHERE o.user.id=:userId")
+    @Query("DELETE FROM OperatorEntity e WHERE e.user.id=:userId")
     int deleteAllByUserId(@Param("userId") int userId);
 
     @Override
@@ -53,18 +53,18 @@ public interface CrudOperatorRepository extends JpaRepository<OperatorEntity, In
     @Override
     Optional<OperatorEntity> findById(Integer id);
 
-    @Query("SELECT o FROM OperatorEntity o WHERE o.id=:id AND o.user.id=:userId")
+    @Query("SELECT e FROM OperatorEntity e WHERE e.id=:id AND e.user.id=:userId")
     List<OperatorEntity> get(@Param("id") int id, @Param("userId") int userId);
 
-    @Query("SELECT o FROM OperatorEntity o  ORDER BY o.operator  ASC")
+    @Query("SELECT e FROM OperatorEntity e  ORDER BY e.operator  ASC")
     List<OperatorEntity> getAll();
 
-    @Query("SELECT o FROM OperatorEntity o where o.user.id=:userId ORDER BY o.operator  ASC")
+    @Query("SELECT e FROM OperatorEntity e where e.user.id=:userId ORDER BY e.operator  ASC")
     List<OperatorEntity> getAll(@Param("userId") int userId);
 
     //    https://stackoverflow.com/a/46013654/548473
     @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT o FROM OperatorEntity o  JOIN FETCH o.user  WHERE o.id=?1 and o.user.id=?2")
+    @Query("SELECT e FROM OperatorEntity e  JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2")
     OperatorEntity getWithUser(int id, int userId);
 
 

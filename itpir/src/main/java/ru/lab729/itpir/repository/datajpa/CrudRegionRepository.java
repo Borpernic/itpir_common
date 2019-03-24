@@ -17,12 +17,12 @@ public interface CrudRegionRepository extends JpaRepository<RegionEntity, Intege
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM RegionEntity r WHERE r.id=:id")
+    @Query("DELETE FROM RegionEntity e WHERE e.id=:id")
     int delete(@Param("id") int id);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM RegionEntity r WHERE r.id=:id AND r.user.id=:userId")
+    @Query("DELETE FROM RegionEntity e WHERE e.id=:id AND e.user.id=:userId")
     int deleteByIdAndUserId(@Param("id") int id, @Param("userId") int userId);
 
     @Override
@@ -32,13 +32,13 @@ public interface CrudRegionRepository extends JpaRepository<RegionEntity, Intege
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM RegionEntity r ")
+    @Query("DELETE FROM RegionEntity e ")
     int deleteAllEntity();
 
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM RegionEntity r WHERE r.user.id=:userId")
+    @Query("DELETE FROM RegionEntity e WHERE e.user.id=:userId")
     int deleteAllByUserId(@Param("userId") int userId);
 
     @Override
@@ -53,18 +53,18 @@ public interface CrudRegionRepository extends JpaRepository<RegionEntity, Intege
     @Override
     Optional<RegionEntity> findById(Integer id);
 
-    @Query("SELECT r FROM RegionEntity r WHERE r.id=:id AND r.user.id=:userId")
+    @Query("SELECT e FROM RegionEntity e WHERE e.id=:id AND e.user.id=:userId")
     List<RegionEntity> get(@Param("id") int id, @Param("userId") int userId);
 
-    @Query("SELECT r FROM RegionEntity r  ORDER BY r.region  ASC")
+    @Query("SELECT e FROM RegionEntity e  ORDER BY e.region  ASC")
     List<RegionEntity> getAll();
 
-    @Query("SELECT r FROM RegionEntity r where r.user.id=:userId ORDER BY r.region  ASC")
+    @Query("SELECT e FROM RegionEntity e where e.user.id=:userId ORDER BY e.region  ASC")
     List<RegionEntity> getAll(@Param("userId") int userId);
 
     //    https://stackoverflow.com/a/46013654/548473
    // @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM RegionEntity r  JOIN FETCH r.user  WHERE r.id=?1 and r.user.id=?2")
+    @Query("SELECT e FROM RegionEntity e  JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2")
     RegionEntity getWithUser(int id, int userId);
 
 

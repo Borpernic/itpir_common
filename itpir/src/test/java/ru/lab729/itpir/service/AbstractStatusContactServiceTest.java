@@ -3,7 +3,7 @@ package ru.lab729.itpir.service;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.lab729.itpir.model.RegionEntity;
+import ru.lab729.itpir.model.StatusContactsEntity;
 import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
@@ -14,55 +14,55 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
-import static ru.lab729.itpir.RegionTestData.*;
+import static ru.lab729.itpir.StatusContactTestData.*;
 import static ru.lab729.itpir.UserTestData.ADMIN_ID;
 import static ru.lab729.itpir.UserTestData.USER_ID;
 
-public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
+public abstract class AbstractStatusContactServiceTest extends AbstractServiceTest {
 
     @Autowired
-    protected RegionService service;
+    protected StatusContactService service;
 
     @Test
     void getAllWithUser() {
-        assertMatch(service.getAll(USER_ID), REGIONS);
+        assertMatch(service.getAll(USER_ID), STATUSCONTACTS);
     }
 
     @Test
     void getAll() {
-        assertMatch(service.getAll(), ALL_REGIONS);
+        assertMatch(service.getAll(), ALL_STATUSCONTACTS);
     }
 
     @Test
     void get() {
-        RegionEntity actual = service.get(REGION1_ID, USER_ID);
-        assertMatch(actual, REGION1);
+        StatusContactsEntity actual = service.get(STATUSCONTACT1_ID, USER_ID);
+        assertMatch(actual, STATUSCONTACT1);
     }
 
     @Test
     void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(REGION1_ID, ADMIN_ID));
+        assertThrows(NotFoundException.class, () -> service.get(STATUSCONTACT1_ID, ADMIN_ID));
     }
 
     @Test
     void create() {
-        RegionEntity created = getCreated();
+        StatusContactsEntity created = getCreated();
         service.create(created, USER_ID);
-        assertMatch(service.getAll(USER_ID), REGION2, REGION1, created);
+        assertMatch(service.getAll(USER_ID), STATUSCONTACT2, STATUSCONTACT1, created);
     }
 
     @Test
     void updateWithUserId() {
-        RegionEntity updated = getUpdated();
+        StatusContactsEntity updated = getUpdated();
         service.update(updated, USER_ID);
-        assertMatch(service.get(REGION1_ID, USER_ID), updated);
+        assertMatch(service.get(STATUSCONTACT1_ID, USER_ID), updated);
     }
 
     @Test
     void update() {
-        RegionEntity updated = getUpdated();
+        StatusContactsEntity updated = getUpdated();
         service.update(updated);
-        assertMatch(service.get(REGION1_ID), updated);
+        assertMatch(service.get(STATUSCONTACT1_ID), updated);
     }
 
     @Test
@@ -72,9 +72,10 @@ public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
         assertAll(
                 () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(ErrorType.DATA_NOT_FOUND.name())),
                 () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(NotFoundException.NOT_FOUND_EXCEPTION)),
-                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(String.valueOf(REGION1_ID)))
+                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(String.valueOf(STATUSCONTACT1_ID)))
         );
     }
+
     @Test
     void updateNotFound() {
         service.delete(getUpdated().getId());
@@ -83,31 +84,31 @@ public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
         assertAll(
                 () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(ErrorType.DATA_NOT_FOUND.name())),
                 () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(NotFoundException.NOT_FOUND_EXCEPTION)),
-                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(String.valueOf(REGION1_ID)))
+                () -> MatcherAssert.assertThat(thrown.getMessage(), containsString(String.valueOf(STATUSCONTACT1_ID)))
         );
     }
 
     @Test
     void deleteWithUserId() {
-        service.delete(REGION1_ID, USER_ID);
-        assertMatch(service.getAll(), REGION2, ADMIN_REGION3);
+        service.delete(STATUSCONTACT1_ID, USER_ID);
+        assertMatch(service.getAll(), STATUSCONTACT2, ADMIN_STATUSCONTACT3);
     }
 
     @Test
     void delete() {
-        service.delete(REGION1_ID);
-        assertMatch(service.getAll(), REGION2, ADMIN_REGION3);
+        service.delete(STATUSCONTACT1_ID);
+        assertMatch(service.getAll(), STATUSCONTACT2, ADMIN_STATUSCONTACT3);
     }
 
     @Test
     void deleteNotFoundWithUserId() {
-        assertThrows(NotFoundException.class, () -> service.delete(REGION1_ID, ADMIN_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(STATUSCONTACT1_ID, ADMIN_ID));
     }
 
     @Test
     void deleteNotFound() {
-        service.delete(REGION1_ID);
-        assertThrows(NotFoundException.class, () -> service.delete(REGION1_ID));
+        service.delete(STATUSCONTACT1_ID);
+        assertThrows(NotFoundException.class, () -> service.delete(STATUSCONTACT1_ID));
     }
 
     @Test
@@ -119,7 +120,7 @@ public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
     @Test
     void deleteAll() {
         service.deleteAll();
-        List<RegionEntity> all = service.getAll();
+        List<StatusContactsEntity> all = service.getAll();
         assertMatch(all, 0);
 
     }
@@ -128,13 +129,13 @@ public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
     void deleteAllWithUserNotFound() {
         service.deleteAll(USER_ID);
         assertThrows(NotFoundException.class, () -> service.deleteAll(USER_ID));
-        assertMatch(service.getAll(), ADMIN_REGION3);
+        assertMatch(service.getAll(), ADMIN_STATUSCONTACT3);
     }
 
     @Test
     void deleteAllWithUser() {
         service.deleteAll(USER_ID);
-        assertMatch(service.getAll(), ADMIN_REGION3);
+        assertMatch(service.getAll(), ADMIN_STATUSCONTACT3);
     }
 
 
@@ -151,13 +152,9 @@ public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
     @Test
     void testValidation() {
         assumeTrue(isJpaBased());
-        validateRootCause(() -> service.create(new RegionEntity(null, "", "Comments"), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, "Р", "Comments"), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, null, "Comments"), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444", "Comments"), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, "Регион", ""), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, "Регион", "C"), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, "Регион", null), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new RegionEntity(null, "Регион", "Comments77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new StatusContactsEntity(null, ""), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new StatusContactsEntity(null, "С"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new StatusContactsEntity(null, null), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new StatusContactsEntity(null, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444"), USER_ID), ConstraintViolationException.class);
     }
 }
