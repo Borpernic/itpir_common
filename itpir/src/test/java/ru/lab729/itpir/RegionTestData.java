@@ -1,6 +1,6 @@
 package ru.lab729.itpir;
 
-import ru.lab729.itpir.model.OperatorEntity;
+
 import ru.lab729.itpir.model.RegionEntity;
 
 import java.util.Arrays;
@@ -11,13 +11,13 @@ import static ru.lab729.itpir.model.AbstractBaseEntity.START_SEQ;
 
 public class RegionTestData {
     public static final int REGION1_ID = START_SEQ + 13;
-    public static final int ADMIN_REGION_ID = START_SEQ + 14;
+    public static final int ADMIN_REGION_ID = START_SEQ + 15;
 
-    public static final RegionEntity REGION1 = new RegionEntity(REGION1_ID, "77", "'Москва'");
+    public static final RegionEntity REGION1 = new RegionEntity(REGION1_ID, "77", "Москва");
     public static final RegionEntity REGION2 = new RegionEntity(REGION1_ID + 1, "50", "МО");
     public static final RegionEntity ADMIN_REGION3 = new RegionEntity(ADMIN_REGION_ID, "68", "Тверь");
     public static final List<RegionEntity> REGIONS = Arrays.asList(REGION2, REGION1);
-    public static final List<RegionEntity> ALL_REGIONSS = Arrays.asList(ADMIN_REGION3, REGION2, REGION1);
+    public static final List<RegionEntity> ALL_REGIONSS = Arrays.asList(REGION2,ADMIN_REGION3, REGION1 );
 
     public static RegionEntity getCreated() {
         return new RegionEntity(null, "Созданный регион", "Созданный регион комментарий");

@@ -56,6 +56,14 @@ public class OperatorEntity extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private User user;
 
+    public List<SiteEntity> getSiteEntities() {
+        return siteEntities;
+    }
+
+    public void setSiteEntities(List<SiteEntity> siteEntities) {
+        this.siteEntities = siteEntities;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "operator")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("dateTime DESC")
 //    @JsonIgnore
@@ -119,7 +127,7 @@ public class OperatorEntity extends AbstractBaseEntity {
     public String toString() {
         return "OperatorEntity{" +
                 "operator='" + operator + '\'' +
+                ", comments='" + comments + '\'' +
                 '}';
     }
-
 }

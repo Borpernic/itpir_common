@@ -63,7 +63,7 @@ public interface CrudRegionRepository extends JpaRepository<RegionEntity, Intege
     List<RegionEntity> getAll(@Param("userId") int userId);
 
     //    https://stackoverflow.com/a/46013654/548473
-    @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
+   // @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM RegionEntity r  JOIN FETCH r.user  WHERE r.id=?1 and r.user.id=?2")
     RegionEntity getWithUser(int id, int userId);
 
