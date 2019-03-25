@@ -18,7 +18,7 @@ public class StatusContactTestData {
     public static final StatusContactsEntity STATUSCONTACT2 = new StatusContactsEntity(STATUSCONTACT1_ID + 1, "Не звонить");
     public static final StatusContactsEntity ADMIN_STATUSCONTACT3 = new StatusContactsEntity(ADMIN_STATUSCONTACT_ID, "Звонить для доступа");
     public static final List<StatusContactsEntity> STATUSCONTACTS = Arrays.asList(STATUSCONTACT2, STATUSCONTACT1);
-    public static final List<StatusContactsEntity> ALL_STATUSCONTACTS = Arrays.asList(STATUSCONTACT2,ADMIN_STATUSCONTACT3, STATUSCONTACT1 );
+    public static final List<StatusContactsEntity> ALL_STATUSCONTACTS = Arrays.asList(ADMIN_STATUSCONTACT3, STATUSCONTACT2, STATUSCONTACT1 );
 
     public static StatusContactsEntity getCreated() {
         return new StatusContactsEntity(null, "Созданный статус");

@@ -26,7 +26,7 @@ public class StatusContactsEntity extends AbstractBaseWithUserEntity {
     public static final String GET = "StatusContactsEntity.get";
 
     @NotBlank
-    @Size(min = 3, max = 15)
+    @Size(min = 3, max = 20)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "status", nullable = false, length = 15, unique = true)

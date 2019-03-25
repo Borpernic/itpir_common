@@ -91,13 +91,13 @@ public abstract class AbstractStatusContactServiceTest extends AbstractServiceTe
     @Test
     void deleteWithUserId() {
         service.delete(STATUSCONTACT1_ID, USER_ID);
-        assertMatch(service.getAll(), STATUSCONTACT2, ADMIN_STATUSCONTACT3);
+        assertMatch(service.getAll(),  ADMIN_STATUSCONTACT3,STATUSCONTACT2);
     }
 
     @Test
     void delete() {
         service.delete(STATUSCONTACT1_ID);
-        assertMatch(service.getAll(), STATUSCONTACT2, ADMIN_STATUSCONTACT3);
+        assertMatch(service.getAll(),  ADMIN_STATUSCONTACT3,STATUSCONTACT2);
     }
 
     @Test

@@ -142,7 +142,7 @@ CREATE TABLE contacts_ad
   user_id    INTEGER NOT NULL,
 
   FOREIGN KEY (site_id) REFERENCES site (id) ON DELETE CASCADE,
-  FOREIGN KEY (status) REFERENCES status_contacts (id),
+  FOREIGN KEY (status) REFERENCES status_contacts (id)  ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT contacts_ad_email_idx UNIQUE (email)
 );
