@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customer", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"customer"}, name = "customer_customer_idx")})
-public class CustomerEntity extends AbstractBaseEntity {
+public class CustomerEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "CustomerEntity.getAllSorted";
     public static final String ALL = "CustomerEntity.getAll";
@@ -51,6 +51,12 @@ public class CustomerEntity extends AbstractBaseEntity {
     public CustomerEntity(Integer id, String customer) {
         super(id);
         this.customer = customer;
+    }
+
+    public CustomerEntity(Integer id, String customer, String comments) {
+        super(id);
+        this.customer = customer;
+        this.comments = comments;
     }
 
     public List<ProjectEntity> getProjectEntityList() {
