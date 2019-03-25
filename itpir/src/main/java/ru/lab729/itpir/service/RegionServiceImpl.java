@@ -3,9 +3,7 @@ package ru.lab729.itpir.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.model.RegionEntity;
-import ru.lab729.itpir.repository.OperatorRepository;
 import ru.lab729.itpir.repository.RegionRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 

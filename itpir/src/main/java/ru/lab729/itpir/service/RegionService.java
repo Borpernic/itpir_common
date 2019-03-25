@@ -1,8 +1,6 @@
 package ru.lab729.itpir.service;
 
-import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.model.RegionEntity;
-import ru.lab729.itpir.repository.RegionRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
 import java.util.List;

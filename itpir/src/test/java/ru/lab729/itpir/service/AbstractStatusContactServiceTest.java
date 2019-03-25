@@ -3,6 +3,7 @@ package ru.lab729.itpir.service;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.lab729.itpir.model.StatusContactsEntity;
 import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
@@ -49,6 +50,12 @@ public abstract class AbstractStatusContactServiceTest extends AbstractServiceTe
         StatusContactsEntity created = getCreated();
         service.create(created, USER_ID);
         assertMatch(service.getAll(USER_ID), STATUSCONTACT2, STATUSCONTACT1, created);
+    }
+
+
+    @Test
+    void createDuplicate() {
+        assertThrows(DataAccessException.class, () -> service.create(new StatusContactsEntity(null, "Нет данных"), USER_ID));
     }
 
     @Test

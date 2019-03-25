@@ -3,8 +3,8 @@ package ru.lab729.itpir.service;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.lab729.itpir.model.PmEntity;
-import ru.lab729.itpir.model.StatusContactsEntity;
 import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
@@ -50,6 +50,11 @@ public abstract class AbstractPmServiceTest extends AbstractServiceTest {
         PmEntity created = getCreated();
         service.create(created, USER_ID);
         assertMatch(service.getAll(USER_ID), PM2, PM1, created);
+    }
+
+    @Test
+    void createDuplicate() {
+        assertThrows(DataAccessException.class, () -> service.create(new PmEntity(null, "Байрамсагатов", "Duplicate"), USER_ID));
     }
 
     @Test

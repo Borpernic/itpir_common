@@ -3,6 +3,7 @@ package ru.lab729.itpir.service;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.lab729.itpir.model.RegionEntity;
 import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
@@ -49,6 +50,12 @@ public abstract class AbstractRegionServiceTest extends AbstractServiceTest {
         RegionEntity created = getCreated();
         service.create(created, USER_ID);
         assertMatch(service.getAll(USER_ID), REGION2, REGION1, created);
+    }
+
+
+    @Test
+    void createDuplicate() {
+        assertThrows(DataAccessException.class, () -> service.create(new RegionEntity(null, "77", "Duplicate"), USER_ID));
     }
 
     @Test
