@@ -55,10 +55,10 @@ public interface CrudPmRepository extends JpaRepository<PmEntity, Integer> {
     @Query("SELECT e FROM PmEntity e WHERE e.id=:id AND e.user.id=:userId")
     List<PmEntity> get(@Param("id") int id, @Param("userId") int userId);
 
-    @Query("SELECT e FROM PmEntity e  ORDER BY e.status  ASC")
+    @Query("SELECT e FROM PmEntity e  ORDER BY e.pm  ASC")
     List<PmEntity> getAll();
 
-    @Query("SELECT e FROM PmEntity e where e.user.id=:userId ORDER BY e.status  ASC")
+    @Query("SELECT e FROM PmEntity e where e.user.id=:userId ORDER BY e.pm  ASC")
     List<PmEntity> getAll(@Param("userId") int userId);
 
     //    https://stackoverflow.com/a/46013654/548473

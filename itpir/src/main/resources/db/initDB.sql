@@ -142,7 +142,7 @@ CREATE TABLE contacts_ad
   user_id    INTEGER NOT NULL,
 
   FOREIGN KEY (site_id) REFERENCES site (id) ON DELETE CASCADE,
-  FOREIGN KEY (status) REFERENCES status_contacts (id)  ON DELETE CASCADE,
+  FOREIGN KEY (status) REFERENCES status_contacts (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT contacts_ad_email_idx UNIQUE (email)
 );
@@ -175,7 +175,7 @@ CREATE TABLE project
   customer INTEGER NOT NULL,
   comments TEXT    NOT NULL,
   user_id  INTEGER NOT NULL,
-  FOREIGN KEY (pm) REFERENCES pm (id),
+  FOREIGN KEY (pm) REFERENCES pm (id) ON DELETE CASCADE,
   FOREIGN KEY (customer) REFERENCES customer (id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT project_project_idx UNIQUE (project)
@@ -290,7 +290,7 @@ CREATE TABLE os
   user_id         INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (site) REFERENCES site (id) ON DELETE CASCADE,
-  FOREIGN KEY (internal_number) REFERENCES internal_number (id),
+  FOREIGN KEY (internal_number) REFERENCES internal_number (id) ON DELETE CASCADE,
   FOREIGN KEY (curator) REFERENCES curator (id) ON DELETE CASCADE,
   FOREIGN KEY (band) REFERENCES band (id) ON DELETE CASCADE,
   FOREIGN KEY (type_os) REFERENCES type_os (id) ON DELETE CASCADE,
@@ -441,10 +441,10 @@ CREATE TABLE activity
   user_id                 INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT activity_idx UNIQUE (os, type_activity, implementer),
-  FOREIGN KEY (os) REFERENCES os (id)ON DELETE CASCADE,
-  FOREIGN KEY (implementer) REFERENCES implementer (id)ON DELETE CASCADE,
-  FOREIGN KEY (type_activity) REFERENCES type_activity (id)ON DELETE CASCADE,
-  FOREIGN KEY (status_activity) REFERENCES status_activity (id)ON DELETE CASCADE
+  FOREIGN KEY (os) REFERENCES os (id) ON DELETE CASCADE,
+  FOREIGN KEY (implementer) REFERENCES implementer (id) ON DELETE CASCADE,
+  FOREIGN KEY (type_activity) REFERENCES type_activity (id) ON DELETE CASCADE,
+  FOREIGN KEY (status_activity) REFERENCES status_activity (id) ON DELETE CASCADE
 );
 
 CREATE TABLE date_change_status
@@ -456,8 +456,8 @@ CREATE TABLE date_change_status
   comments        TEXT,
   user_id         INTEGER   NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  FOREIGN KEY (activity) REFERENCES activity (id)ON DELETE CASCADE,
-  FOREIGN KEY (status_activity) REFERENCES status_activity (id)ON DELETE CASCADE
+  FOREIGN KEY (activity) REFERENCES activity (id) ON DELETE CASCADE,
+  FOREIGN KEY (status_activity) REFERENCES status_activity (id) ON DELETE CASCADE
 );
 
 CREATE TABLE task
@@ -476,10 +476,10 @@ CREATE TABLE task
   user_id           INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   /*CONSTRAINT task_activity_type_task_department_idx UNIQUE (activity, type_task, department),*/
-  FOREIGN KEY (activity) REFERENCES activity (id)ON DELETE CASCADE,
-  FOREIGN KEY (type_task) REFERENCES type_task (id)ON DELETE CASCADE,
-  FOREIGN KEY (department) REFERENCES department (id)ON DELETE CASCADE,
-  FOREIGN KEY (result_task) REFERENCES result_task (id)ON DELETE CASCADE
+  FOREIGN KEY (activity) REFERENCES activity (id) ON DELETE CASCADE,
+  FOREIGN KEY (type_task) REFERENCES type_task (id) ON DELETE CASCADE,
+  FOREIGN KEY (department) REFERENCES department (id) ON DELETE CASCADE,
+  FOREIGN KEY (result_task) REFERENCES result_task (id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments
@@ -491,7 +491,7 @@ CREATE TABLE comments
   comments    TEXT,
   user_id     INTEGER                           NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  FOREIGN KEY (os) REFERENCES os (id)ON DELETE CASCADE,
-  FOREIGN KEY (implementer) REFERENCES implementer (id)ON DELETE CASCADE
+  FOREIGN KEY (os) REFERENCES os (id) ON DELETE CASCADE,
+  FOREIGN KEY (implementer) REFERENCES implementer (id) ON DELETE CASCADE
 );
 

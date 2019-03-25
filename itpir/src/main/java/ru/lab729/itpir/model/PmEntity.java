@@ -54,6 +54,12 @@ public class PmEntity extends AbstractBaseWithUserEntity {
         this.pm = pm;
     }
 
+    public PmEntity(Integer id, String pm, String comments) {
+        super(id);
+        this.pm = pm;
+        this.comments = comments;
+    }
+
     public List<ProjectEntity> getProjectEntityList() {
         return projectEntityList;
     }
