@@ -55,8 +55,8 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
             entity.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
-                            "UPDATE meals " +
-                            "   SET description=:description, calories=:calories, date_time=:date_time " +
+                            "UPDATE operator " +
+                            "   SET operator=:operator, comments=:comments " +
                             " WHERE id=:id AND user_id=:user_id"
                     , map) == 0) {
                 return null;
@@ -102,7 +102,7 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     @Override
     public List<OperatorEntity> getAll(int userId) {
         return jdbcTemplate.query(
-                "SELECT * FROM operator WHERE user_id=? ORDER BY operator.operator DESC", ROW_MAPPER, userId);
+                "SELECT * FROM operator WHERE user_id=? ORDER BY operator ASC", ROW_MAPPER, userId);
     }
 
     @Override

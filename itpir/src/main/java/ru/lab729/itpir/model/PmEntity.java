@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "pm", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"pm"}, name = "pm_pm_idx")})
-public class PmEntity extends AbstractBaseEntity {
+public class PmEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "PmEntity.getAllSorted";
     public static final String ALL = "PmEntity.getAll";
@@ -72,5 +72,13 @@ public class PmEntity extends AbstractBaseEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "PmEntity{" +
+                "pm='" + pm + '\'' +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 }

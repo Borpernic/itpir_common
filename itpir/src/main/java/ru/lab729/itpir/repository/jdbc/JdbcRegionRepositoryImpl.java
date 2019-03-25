@@ -45,7 +45,7 @@ public class JdbcRegionRepositoryImpl implements RegionRepository {
     public RegionEntity save(RegionEntity entity, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", entity.getId())
-                .addValue("operator", entity.getRegion())
+                .addValue("region", entity.getRegion())
                 .addValue("comments", entity.getComments())
                 .addValue("user_id", userId);
 
@@ -54,8 +54,8 @@ public class JdbcRegionRepositoryImpl implements RegionRepository {
             entity.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
-                            "UPDATE meals " +
-                            "   SET description=:description, calories=:calories, date_time=:date_time " +
+                            "UPDATE region " +
+                            "   SET region=:region, comments=:comments " +
                             " WHERE id=:id AND user_id=:user_id"
                     , map) == 0) {
                 return null;
@@ -101,7 +101,7 @@ public class JdbcRegionRepositoryImpl implements RegionRepository {
     @Override
     public List<RegionEntity> getAll(int userId) {
         return jdbcTemplate.query(
-                "SELECT * FROM region WHERE user_id=? ORDER BY operator.operator DESC", ROW_MAPPER, userId);
+                "SELECT * FROM region WHERE user_id=? ORDER BY region.region ASC", ROW_MAPPER, userId);
     }
 
     @Override

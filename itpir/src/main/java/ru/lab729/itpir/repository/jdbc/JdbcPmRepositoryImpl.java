@@ -10,19 +10,17 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.RegionEntity;
-import ru.lab729.itpir.model.StatusContactsEntity;
-import ru.lab729.itpir.repository.RegionRepository;
-import ru.lab729.itpir.repository.StatusContactRepository;
+import ru.lab729.itpir.model.PmEntity;
+import ru.lab729.itpir.repository.PmRepository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JdbcStatusContactRepositoryImpl implements StatusContactRepository {
+public class JdbcPmRepositoryImpl implements PmRepository {
 
-    private static final RowMapper<StatusContactsEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(StatusContactsEntity.class);
+    private static final RowMapper<PmEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(PmEntity.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,7 +29,7 @@ public class JdbcStatusContactRepositoryImpl implements StatusContactRepository 
     private final SimpleJdbcInsert insertOperator;
 
     @Autowired
-    public JdbcStatusContactRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcPmRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
                 .withTableName("region")
                 .usingGeneratedKeyColumns("id");
@@ -42,19 +40,20 @@ public class JdbcStatusContactRepositoryImpl implements StatusContactRepository 
 
     @Override
     @Transactional
-    public StatusContactsEntity save(StatusContactsEntity entity, int userId) {
+    public PmEntity save(PmEntity entity, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", entity.getId())
-                .addValue("status", entity.getStatus())
-                             .addValue("user_id", userId);
+                .addValue("pm", entity.getPm())
+                .addValue("comments", entity.getComments())
+                .addValue("user_id", userId);
 
         if (entity.isNew()) {
             Number newId = insertOperator.executeAndReturnKey(map);
             entity.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
-                            "UPDATE status_contacts " +
-                            "   SET status=:status" +
+                            "UPDATE pm " +
+                            "   SET pm=:pm, comments=:comments " +
                             " WHERE id=:id AND user_id=:user_id"
                     , map) == 0) {
                 return null;
@@ -62,7 +61,6 @@ public class JdbcStatusContactRepositoryImpl implements StatusContactRepository 
         }
         return entity;
     }
-
 
     @Override
     public boolean delete(int id) {
@@ -72,7 +70,7 @@ public class JdbcStatusContactRepositoryImpl implements StatusContactRepository 
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-        return jdbcTemplate.update("DELETE FROM status_contacts WHERE id=? AND user_id=?", id, userId) != 0;
+        return jdbcTemplate.update("DELETE FROM pm WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
@@ -86,25 +84,25 @@ public class JdbcStatusContactRepositoryImpl implements StatusContactRepository 
     }
 
     @Override
-    public StatusContactsEntity get(int id) {
+    public PmEntity get(int id) {
         return null;
     }
 
     @Override
-    public StatusContactsEntity get(int id, int userId) {
-        List<StatusContactsEntity> meals = jdbcTemplate.query(
-                "SELECT * FROM status_contacts WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
+    public PmEntity get(int id, int userId) {
+        List<PmEntity> meals = jdbcTemplate.query(
+                "SELECT * FROM Pm WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
     @Override
-    public List<StatusContactsEntity> getAll(int userId) {
+    public List<PmEntity> getAll(int userId) {
         return jdbcTemplate.query(
-                "SELECT * FROM status_contacts WHERE user_id=? ORDER BY status ASC ", ROW_MAPPER, userId);
+                "SELECT * FROM pm WHERE user_id=? ORDER BY pm ASC ", ROW_MAPPER, userId);
     }
 
     @Override
-    public List<StatusContactsEntity> getAll() {
+    public List<PmEntity> getAll() {
         return null;
     }
 
