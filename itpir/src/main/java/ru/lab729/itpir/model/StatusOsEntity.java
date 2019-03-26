@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "status_os", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"status"}, name = "status_os_status_idx")})
-public class StatusOsEntity extends AbstractBaseEntity {
+public class StatusOsEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "StatusOsEntity.getAllSorted";
     public static final String ALL = "StatusOsEntity.getAll";
