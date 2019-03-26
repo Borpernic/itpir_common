@@ -10,9 +10,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.CustomerEntity;
+import ru.lab729.itpir.model.BandEntity;
 import ru.lab729.itpir.model.PmEntity;
-import ru.lab729.itpir.repository.CustomerRepository;
+import ru.lab729.itpir.repository.BandRepository;
 import ru.lab729.itpir.repository.PmRepository;
 
 import javax.sql.DataSource;
@@ -20,9 +20,9 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JdbcCustomerRepositoryImpl implements CustomerRepository {
+public class JdbcBandRepositoryImpl implements BandRepository {
 
-    private static final RowMapper<CustomerEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(CustomerEntity.class);
+    private static final RowMapper<BandEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(BandEntity.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,9 +31,9 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
     private final SimpleJdbcInsert insertOperator;
 
     @Autowired
-    public JdbcCustomerRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcBandRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
-                .withTableName("customer")
+                .withTableName("band")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
@@ -42,10 +42,10 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     @Transactional
-    public CustomerEntity save(CustomerEntity entity, int userId) {
+    public BandEntity save(BandEntity entity, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", entity.getId())
-                .addValue("customer", entity.getCustomer())
+                .addValue("band", entity.getBand())
                 .addValue("comments", entity.getComments())
                 .addValue("user_id", userId);
 
@@ -54,8 +54,8 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
             entity.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
-                            "UPDATE customer " +
-                            "   SET customer=:customer, comments=:comments " +
+                            "UPDATE band " +
+                            "   SET band=:band, comments=:comments " +
                             " WHERE id=:id AND user_id=:user_id"
                     , map) == 0) {
                 return null;
@@ -72,7 +72,7 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-        return jdbcTemplate.update("DELETE FROM customer WHERE id=? AND user_id=?", id, userId) != 0;
+        return jdbcTemplate.update("DELETE FROM band WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
@@ -86,25 +86,25 @@ public class JdbcCustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public CustomerEntity get(int id) {
+    public BandEntity get(int id) {
         return null;
     }
 
     @Override
-    public CustomerEntity get(int id, int userId) {
-        List<CustomerEntity> customer = jdbcTemplate.query(
-                "SELECT * FROM customer WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
-        return DataAccessUtils.singleResult(customer);
+    public BandEntity get(int id, int userId) {
+        List<BandEntity> meals = jdbcTemplate.query(
+                "SELECT * FROM band WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
+        return DataAccessUtils.singleResult(meals);
     }
 
     @Override
-    public List<CustomerEntity> getAll(int userId) {
+    public List<BandEntity> getAll(int userId) {
         return jdbcTemplate.query(
-                "SELECT * FROM customer WHERE user_id=? ORDER BY customer ASC ", ROW_MAPPER, userId);
+                "SELECT * FROM band WHERE user_id=? ORDER BY band.band ASC ", ROW_MAPPER, userId);
     }
 
     @Override
-    public List<CustomerEntity> getAll() {
+    public List<BandEntity> getAll() {
         return null;
     }
 

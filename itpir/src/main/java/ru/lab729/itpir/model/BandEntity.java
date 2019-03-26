@@ -31,7 +31,7 @@ public class BandEntity extends AbstractBaseWithUserEntity {
     protected List<OsEntity> osEntities;
     @Basic
     @NotBlank
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "band", nullable = false, length = 100, unique = true)
     private String band;
@@ -52,6 +52,12 @@ public class BandEntity extends AbstractBaseWithUserEntity {
     public BandEntity(Integer id, String band) {
         super(id);
         this.band = band;
+    }
+
+    public BandEntity(Integer id, String band, String comments) {
+        super(id);
+        this.band = band;
+        this.comments = comments;
     }
 
     public List<OsEntity> getOsEntities() {

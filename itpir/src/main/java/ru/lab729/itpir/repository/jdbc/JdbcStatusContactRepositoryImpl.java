@@ -33,7 +33,7 @@ public class JdbcStatusContactRepositoryImpl implements StatusContactRepository 
     @Autowired
     public JdbcStatusContactRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
-                .withTableName("region")
+                .withTableName("status_contacts")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;

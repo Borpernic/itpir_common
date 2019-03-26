@@ -31,7 +31,7 @@ public class JdbcPmRepositoryImpl implements PmRepository {
     @Autowired
     public JdbcPmRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
-                .withTableName("region")
+                .withTableName("pm")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
