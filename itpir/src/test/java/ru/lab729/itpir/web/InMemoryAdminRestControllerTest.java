@@ -1,24 +1,12 @@
 package ru.lab729.itpir.web;
 
-import org.junit.jupiter.api.*;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.lab729.itpir.UserTestData;
-import ru.lab729.itpir.model.User;
-import ru.lab729.itpir.repository.mock.InMemoryUserRepositoryImpl;
-import ru.lab729.itpir.util.exception.NotFoundException;
 import ru.lab729.itpir.web.user.AdminRestController;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static ru.lab729.itpir.UserTestData.ADMIN;
 
 class InMemoryAdminRestControllerTest {
     private static ConfigurableApplicationContext appCtx;
     private static AdminRestController controller;
-
+/*
     @BeforeAll
     static void beforeClass() {
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/mock.xml");
@@ -51,5 +39,5 @@ class InMemoryAdminRestControllerTest {
     @Test
     void testDeleteNotFound() {
         assertThrows(NotFoundException.class, () -> controller.delete(10));
-    }
+    }*/
 }

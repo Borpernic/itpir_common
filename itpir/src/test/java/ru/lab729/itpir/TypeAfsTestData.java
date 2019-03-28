@@ -10,8 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.lab729.itpir.model.AbstractBaseEntity.START_SEQ;
 
 public class TypeAfsTestData {
-    public static final int TYPE_AFS1_ID = START_SEQ + 13;
-    public static final int ADMIN_TYPE_AFS_ID = START_SEQ + 15;
+    public static final int TYPE_AFS1_ID = START_SEQ + 66;
+    public static final int ADMIN_TYPE_AFS_ID = START_SEQ + 68;
 
     public static final TypeAfsEntity TYPE_AFS1 = new TypeAfsEntity(TYPE_AFS1_ID, "Антенные опоры на фасаде");
     public static final TypeAfsEntity TYPE_AFS2 = new TypeAfsEntity(TYPE_AFS1_ID + 1, "Антенные опоры на пригрузах");

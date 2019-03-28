@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "type_afs", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"type"}, name = "type_AFS_type_idx")})
-public class TypeAfsEntity extends AbstractBaseEntity {
+public class TypeAfsEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "TypeAfsEntity.getAllSorted";
     public static final String ALL = "TypeAfsEntity.getAll";
