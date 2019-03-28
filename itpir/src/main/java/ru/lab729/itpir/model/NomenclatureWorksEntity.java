@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "nomenclature_works", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"works"}, name = "nomenclature_works_works_idx")})
-public class NomenclatureWorksEntity extends AbstractBaseEntity {
+public class NomenclatureWorksEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "NomenclatureWorksEntity.getAllSorted";
     public static final String ALL = "NomenclatureWorksEntity.getAll";
@@ -35,11 +35,11 @@ public class NomenclatureWorksEntity extends AbstractBaseEntity {
     @Column(name = "works", nullable = false, length = 50, unique = true)
     private String works;
 
-    @NotBlank
-    @Size(min = 2, max = 150)
+    // @NotBlank
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = true, length = 150)
     private String comments;
 
     public NomenclatureWorksEntity() {
@@ -53,6 +53,11 @@ public class NomenclatureWorksEntity extends AbstractBaseEntity {
     public NomenclatureWorksEntity(Integer id, String works) {
         super(id);
         this.works = works;
+    }
+
+    public NomenclatureWorksEntity(Integer id, String works, String comments) {
+        this(id, works);
+        this.comments = comments;
     }
 
     @Basic
