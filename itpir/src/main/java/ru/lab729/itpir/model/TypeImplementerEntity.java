@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "type_implementer", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"type"}, name = "type_implementer_type_idx")})
-public class TypeImplementerEntity extends AbstractBaseEntity {
+public class TypeImplementerEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "TypeImplementerEntity.getAllSorted";
     public static final String ALL = "TypeImplementerEntity.getAll";
@@ -35,11 +35,11 @@ public class TypeImplementerEntity extends AbstractBaseEntity {
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
 
-    @NotBlank
-    @Size(min = 2, max = 150)
+    //@NotBlank
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = true, length = 100)
     private String comments;
 
     public TypeImplementerEntity() {
@@ -53,6 +53,11 @@ public class TypeImplementerEntity extends AbstractBaseEntity {
     public TypeImplementerEntity(Integer id, String type) {
         super(id);
         this.type = type;
+    }
+
+    public TypeImplementerEntity(Integer id, String type, String comments) {
+        this(id, type);
+        this.comments = comments;
     }
 
     public String getType() {

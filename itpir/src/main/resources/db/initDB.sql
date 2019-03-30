@@ -346,8 +346,8 @@ CREATE TABLE implementer
   user_id     INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
   CONSTRAINT implementer_implementer_idx UNIQUE (implementer),
-  FOREIGN KEY (status) REFERENCES status_implementer (id),
-  FOREIGN KEY (type) REFERENCES type_implementer (id)
+  FOREIGN KEY (status) REFERENCES status_implementer (id) ON DELETE CASCADE,
+  FOREIGN KEY (type) REFERENCES type_implementer (id) ON DELETE CASCADE
 );
 
 CREATE TABLE tzp

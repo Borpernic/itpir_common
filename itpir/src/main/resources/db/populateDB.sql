@@ -152,10 +152,10 @@ VALUES ('Обследование ОС', 'Обследование', 100000),
        ('Разработка ДП', 'ПД/РД', 100001),
        ('Разработка ПРА', 'ПД/РД', 100001);
 
-INSERT INTO type_implementer (type, user_id)
-VALUES ('Оклад', 100000),
-       ('Сделка', 100000),
-       ('Фриланс', 100001);
+INSERT INTO type_implementer (type, comments, user_id)
+VALUES ('Оклад', 'Штатный', 100000),
+       ('Сделка', 'Штатный', 100000),
+       ('Фриланс', 'Физ. лицо', 100001);
 
 INSERT INTO status_implementer (status, user_id)
 VALUES ('Готов к работе', 100000),
