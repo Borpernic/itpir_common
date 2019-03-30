@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "type_task", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"type"}, name = "type_task_type_idx")})
-public class TypeTaskEntity extends AbstractBaseEntity {
+public class TypeTaskEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "TypeTaskEntity.getAllSorted";
     public static final String ALL = "TypeTaskEntity.getAll";
@@ -37,11 +37,11 @@ public class TypeTaskEntity extends AbstractBaseEntity {
     @Basic
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
-    @NotBlank
-    @Size(min = 2, max = 150)
+
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = false, length = 100)
     private String comments;
 
     public TypeTaskEntity() {
@@ -55,6 +55,11 @@ public class TypeTaskEntity extends AbstractBaseEntity {
     public TypeTaskEntity(Integer id, String type) {
         super(id);
         this.type = type;
+    }
+
+    public TypeTaskEntity(Integer id, String type, String comments) {
+        this(id, type);
+        this.comments = comments;
     }
 
     public List<TaskEntity> getTaskEntities() {
