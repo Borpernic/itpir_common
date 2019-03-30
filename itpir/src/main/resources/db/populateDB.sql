@@ -157,10 +157,10 @@ VALUES ('Оклад', 'Штатный', 100000),
        ('Сделка', 'Штатный', 100000),
        ('Фриланс', 'Физ. лицо', 100001);
 
-INSERT INTO status_implementer (status, user_id)
-VALUES ('Готов к работе', 100000),
-       ('Занят', 100000),
-       ('Дисквалифицирован', 100001);
+INSERT INTO status_implementer (status, comments, user_id)
+VALUES ('Готов к работе', 'Исполнитель', 100000),
+       ('Занят', 'Исполнитель', 100000),
+       ('Дисквалифицирован', 'Исполнитель', 100001);
 
 INSERT INTO implementer (implementer, phone, email, type, status, rating, comments, user_id)
 VALUES ('Ершов С. А.', '8-966-100-31-24', 's.e@email.com', 100089, 100092, 1, 'АС, КМ', 100000),

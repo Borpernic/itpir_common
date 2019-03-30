@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "status_implementer", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"status"}, name = "status_implementer_status_idx")})
-public class StatusImplementerEntity extends AbstractBaseEntity {
+public class StatusImplementerEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "StatusImplementerEntity.getAllSorted";
     public static final String ALL = "StatusImplementerEntity.getAll";
@@ -35,11 +35,11 @@ public class StatusImplementerEntity extends AbstractBaseEntity {
     @Column(name = "status", nullable = false, length = 50, unique = true)
     private String status;
 
-    @NotBlank
-    @Size(min = 2, max = 150)
+
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = true, length = 100)
     private String comments;
 
     public StatusImplementerEntity() {
@@ -49,6 +49,11 @@ public class StatusImplementerEntity extends AbstractBaseEntity {
     public StatusImplementerEntity(Integer id, String status) {
         super(id);
         this.status = status;
+    }
+
+    public StatusImplementerEntity(Integer id, String status, String comments) {
+        this(id, status);
+        this.comments = comments;
     }
 
     public StatusImplementerEntity(String comments) {
