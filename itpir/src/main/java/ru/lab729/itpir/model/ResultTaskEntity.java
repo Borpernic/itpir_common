@@ -18,7 +18,7 @@ import java.util.List;
 })
 @Entity
 @Table(name = "result_task", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"result"}, name = "result_task_result_idx")})
-public class ResultTaskEntity extends AbstractBaseEntity {
+public class ResultTaskEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "ResultTaskEntity.getAllSorted";
     public static final String ALL = "ResultTaskEntity.getAll";
@@ -35,8 +35,8 @@ public class ResultTaskEntity extends AbstractBaseEntity {
     @Basic
     @Column(name = "result", nullable = false, length = 50, unique = true)
     private String result;
-    @NotBlank
-    @Size(min = 2, max = 150)
+
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = false, length = 150)
@@ -53,6 +53,11 @@ public class ResultTaskEntity extends AbstractBaseEntity {
     public ResultTaskEntity(Integer id, String result) {
         super(id);
         this.result = result;
+    }
+
+    public ResultTaskEntity(Integer id, String result, String comments) {
+        this(id, result);
+        this.comments = comments;
     }
 
     public List<TaskEntity> getTaskEntities() {
