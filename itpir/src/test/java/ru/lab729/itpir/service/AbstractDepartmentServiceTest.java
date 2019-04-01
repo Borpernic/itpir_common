@@ -49,7 +49,7 @@ public abstract class AbstractDepartmentServiceTest extends AbstractServiceTest 
     void create() {
         DepartmentEntity created = getCreated();
         service.create(created, USER_ID);
-        assertMatch(service.getAll(USER_ID), DEPARTMENT2, DEPARTMENT2, created);
+        assertMatch(service.getAll(USER_ID), DEPARTMENT2, DEPARTMENT1, created);
     }
 
     @Test
@@ -99,7 +99,7 @@ public abstract class AbstractDepartmentServiceTest extends AbstractServiceTest 
         service.delete(DEPARTMENT1_ID, USER_ID);
         assertMatch(service.getAll(), ADMIN_DEPARTMENT3, ADMIN_DEPARTMENT4,
                 ADMIN_DEPARTMENT7, DEPARTMENT2, ADMIN_DEPARTMENT12, ADMIN_DEPARTMENT11, ADMIN_DEPARTMENT5,
-                ADMIN_DEPARTMENT10, DEPARTMENT1, ADMIN_DEPARTMENT8, ADMIN_DEPARTMENT6, ADMIN_DEPARTMENT9);
+                ADMIN_DEPARTMENT10, ADMIN_DEPARTMENT8, ADMIN_DEPARTMENT6, ADMIN_DEPARTMENT9);
     }
 
     @Test
@@ -107,7 +107,7 @@ public abstract class AbstractDepartmentServiceTest extends AbstractServiceTest 
         service.delete(DEPARTMENT1_ID);
         assertMatch(service.getAll(), ADMIN_DEPARTMENT3, ADMIN_DEPARTMENT4,
                 ADMIN_DEPARTMENT7, DEPARTMENT2, ADMIN_DEPARTMENT12, ADMIN_DEPARTMENT11, ADMIN_DEPARTMENT5,
-                ADMIN_DEPARTMENT10, DEPARTMENT1, ADMIN_DEPARTMENT8, ADMIN_DEPARTMENT6, ADMIN_DEPARTMENT9);
+                ADMIN_DEPARTMENT10, ADMIN_DEPARTMENT8, ADMIN_DEPARTMENT6, ADMIN_DEPARTMENT9);
     }
 
     @Test
