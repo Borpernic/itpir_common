@@ -55,6 +55,12 @@ public class DepartmentEntity extends AbstractBaseWithUserEntity {
         this.department = department;
     }
 
+    public DepartmentEntity(Integer id, String department, String comments) {
+
+        this(id, department);
+        this.comments = comments;
+    }
+
     public List<TaskEntity> getTaskEntities() {
         return taskEntities;
     }
