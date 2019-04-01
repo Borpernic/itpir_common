@@ -86,7 +86,7 @@ public class SiteEntity extends AbstractBaseEntity {
     @Column(name = "building", nullable = false, length = 5)
     private String building;
     @Basic
-    @Size(max = 150)
+    @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "comments", nullable = false, length = 150)

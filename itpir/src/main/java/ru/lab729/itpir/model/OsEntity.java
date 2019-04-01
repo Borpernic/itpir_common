@@ -109,7 +109,7 @@ public class OsEntity extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private StatusOsEntity statusOs;
     @Basic
-    @Size(max = 150)
+    @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "comments", nullable = false, length = 150)

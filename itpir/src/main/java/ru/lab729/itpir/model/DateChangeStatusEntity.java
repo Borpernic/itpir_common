@@ -49,7 +49,7 @@ public class DateChangeStatusEntity extends AbstractBaseEntity {
     private StatusActivityEntity statusActivity;
 
     @Basic
-    @Size(max = 150)
+    @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "comments", nullable = false, length = 150)

@@ -46,7 +46,7 @@ public class InternalNumberEntity extends AbstractBaseEntity {
     @Column(name = "number", nullable = false, length = 20, unique = true)
     private String number;
     @Basic
-    @Size(max = 150)
+    @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;

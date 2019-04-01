@@ -84,7 +84,7 @@ public class TaskEntity extends AbstractBaseEntity {
     private ResultTaskEntity resultTask;
 
     @Basic
-    @Size(max = 150)
+    @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     private String comments;

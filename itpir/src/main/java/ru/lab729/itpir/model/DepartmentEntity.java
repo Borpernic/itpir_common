@@ -18,7 +18,7 @@ import java.util.List;
 })
 @Entity
 @Table(name = "department", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"department"}, name = "department_department_idx")})
-public class DepartmentEntity extends AbstractBaseEntity {
+public class DepartmentEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "DepartmentEntity.getAllSorted";
     public static final String ALL = "DepartmentEntity.getAll";
@@ -35,8 +35,8 @@ public class DepartmentEntity extends AbstractBaseEntity {
     @Basic
     @Column(name = "department", nullable = false, length = 50, unique = true)
     private String department;
-    @NotBlank
-    @Size(min = 2, max = 150)
+
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = false, length = 150)

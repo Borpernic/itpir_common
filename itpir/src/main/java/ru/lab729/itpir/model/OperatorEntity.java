@@ -44,7 +44,7 @@ public class OperatorEntity extends AbstractBaseWithUserEntity {
     private String operator;
 
     @NotBlank
-    @Size(min = 2, max = 150)
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "comments", nullable = false, length = 150)
