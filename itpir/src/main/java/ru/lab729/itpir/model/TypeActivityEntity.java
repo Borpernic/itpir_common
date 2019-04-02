@@ -20,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "type_activity", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"type"}, name = "type_activity_type_idx")})
-public class TypeActivityEntity extends AbstractBaseEntity {
+public class TypeActivityEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "TypeActivityEntity.getAllSorted";
     public static final String ALL = "TypeActivityEntity.getAll";
@@ -31,57 +31,67 @@ public class TypeActivityEntity extends AbstractBaseEntity {
     @OrderBy("dateTime DESC")
 //    @JsonIgnore
     protected List<ActivityEntity> activityEntities;
+
     @NotBlank
-    @NotNull
     @Size(min = 2, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "type", nullable = false, length = 50, unique = true)
     private String type;
+
     @Basic
     @Column(name = "source_data", nullable = false)
     @NotNull
     private boolean sourceData;
+
     @Basic
     @Column(name = "source_Rd", nullable = false)
     @NotNull
     private boolean sourceRd;
+
     @Basic
     @Column(name = "rns", nullable = false)
     @NotNull
     private boolean rns;
+
     @Basic
     @Column(name = "f1a", nullable = false)
     @NotNull
     private boolean f1A;
+
     @Basic
     @Column(name = "survey", nullable = false)
     @NotNull
     private boolean survey;
+
     @Basic
     @Column(name = "ssr", nullable = false)
     @NotNull
     private boolean ssr;
+
     @Basic
     @Column(name = "tssr", nullable = false)
     @NotNull
     private boolean tssr;
+
     @Basic
     @Column(name = "rd", nullable = false)
     @NotNull
     private boolean rd;
+
     @Basic
     @Column(name = "impldoc", nullable = false)
     @NotNull
     private boolean impldoc;
+
     @Basic
     @Column(name = "signedll", nullable = false)
     @NotNull
     private boolean signedll;
+
     @Basic
-    @Size(max = 100)
+    @Size(min = 2, max = 100)
     @SafeHtml(groups = {View.Web.class})
-    @NotBlank
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
@@ -108,6 +118,13 @@ public class TypeActivityEntity extends AbstractBaseEntity {
         this.rd = rd;
         this.impldoc = impldoc;
         this.signedll = signedll;
+    }
+
+    public TypeActivityEntity(Integer id, String type, boolean sourceData, boolean sourceRd, boolean rns, boolean f1A,
+                              boolean survey, boolean ssr, boolean tssr, boolean rd, boolean impldoc, boolean signedll,
+                              String comments) {
+        this(id, type, sourceData, sourceRd, rns, f1A, survey, ssr, tssr, rd, impldoc, signedll);
+        this.comments = comments;
     }
 
     public List<ActivityEntity> getActivityEntities() {

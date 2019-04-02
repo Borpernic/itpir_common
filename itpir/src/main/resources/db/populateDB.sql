@@ -367,18 +367,18 @@ VALUES ('Нет подтверждения', 100000),
        ('Приостановлено', 100001),
        ('Отозвано', 100001);
 
-INSERT INTO type_activity (type, source_data, source_RD, RNS, F1A, survey, SSR, TSSR, RD, implDoc, signedLL, user_id)
-VALUES ('Запрос исходных данных', TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 100000),
-       ('Запрос исходного проекта', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 100000),
-       ('Уточнение исходных данных', FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 100001),
-       ('Обследование', FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 100001),
-       ('Фотоотчет', FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, 100001),
-       ('SSR', FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, 100001),
-       ('TSSR', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, 100001),
-       ('РД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, 100001),
-       ('Сдача РД', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, 100001),
-       ('ИД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, 100001),
-       ('Согласование с АД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, 100001);
+INSERT INTO type_activity (type, source_data, source_RD, RNS, F1A, survey, SSR, TSSR, RD, implDoc, signedLL, comments,user_id)
+VALUES ('Запрос исходных данных', TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100000),
+       ('Запрос исходного проекта', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100000),
+       ('Уточнение исходных данных', FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
+       ('Обследование', FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
+       ('Фотоотчет', FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE,'Тип активности',  100001),
+       ('SSR', FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
+       ('TSSR', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
+       ('РД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE,'Тип активности',  100001),
+       ('Сдача РД', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, 'Тип активности', 100001),
+       ('ИД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,'Тип активности',  100001),
+       ('Согласование с АД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,'Тип активности',  100001);
 
 INSERT INTO activity (os, implementer, type_activity, date_time, plane_date_time, rating, status_activity, user_id)
 VALUES (100072, 100095, 100180, now(), now(), 1, 100175, 100000),
