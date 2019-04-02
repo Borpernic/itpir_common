@@ -1,5 +1,6 @@
 package ru.lab729.itpir.repository.datajpa;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -82,6 +83,14 @@ public interface CrudSiteRepository extends JpaRepository<SiteEntity, Integer> {
 
     @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator,  e.region WHERE e.id=:id AND e.user.id=:userId")
     List<SiteEntity> get(@Param("id") int id, @Param("userId") int userId);
+
+    @EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator,  e.region , e.osEntities WHERE e.id=:id AND e.user.id=:userId")
+    List<SiteEntity> getWithOs(@Param("id") int id, @Param("userId") int userId);
+
+    @EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator,  e.region , e.osEntities WHERE e.id=:id")
+    List<SiteEntity> getWithOs(@Param("id") int id);
 
     @Query("SELECT e FROM SiteEntity e  JOIN FETCH e.operator,  e.region ORDER BY e.operator.operator , e.number  ASC")
     List<SiteEntity> getAll();
