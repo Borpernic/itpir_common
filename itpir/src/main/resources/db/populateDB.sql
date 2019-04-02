@@ -46,12 +46,14 @@ VALUES ('77', 'Москва', 100000),
        ('68', 'Тверь', 100001);
 
 INSERT INTO site (number, name, operator, region, date_time, city, street, building, comments, user_id)
-VALUES ('1279', 'Будапешт', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Авиамоторная', '28С', ' БС 1279', 100000),
-       ('1280', 'Будапешт2', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Автозаводская', '18С', ' БС 1280',
+VALUES ('1279000', 'Будапешт', 100010, 100013, '2018-05-30 13:00:00', 'Пекин', 'Авиамоторная', '28С', ' БС 1279',
         100000),
-       ('1281', 'Будапешт3', 100010, 100013, '2018-05-30 13:00:00', 'Москва', 'Лесная', '38С', ' БС 1281', 100000),
-       ('1279', 'Будапешт', 100011, 100013, '2018-05-30 13:00:00', 'Москва', 'Тверская', '48С', ' БС 1279', 100001),
-       ('1280', 'Будапешт2', 100012, 100014, '2018-05-30 13:00:00', 'Москва', 'Авиамоторная', '22', ' БС 1280', 100001);
+       ('1280000', 'Будапешт2', 100010, 100013, '2018-05-30 13:00:00', 'Пекин', 'Автозаводская', '18С', ' БС 1280',
+        100000),
+       ('1281000', 'Будапешт3', 100010, 100013, '2018-05-30 13:00:00', 'Пекин', 'Лесная', '38С', ' БС 1281', 100001),
+       ('1279000', 'Будапешт', 100011, 100013, '2018-05-30 13:00:00', 'Пекин', 'Тверская', '48С', ' БС 1279', 100001),
+       ('128000', 'Будапешт2', 100012, 100014, '2018-05-30 13:00:00', 'Пекин', 'Авиамоторная', '22', ' БС 1280',
+        100001);
 
 INSERT INTO status_contacts (status, user_id)
 VALUES ('Нет данных', 100000),
@@ -367,18 +369,23 @@ VALUES ('Нет подтверждения', 100000),
        ('Приостановлено', 100001),
        ('Отозвано', 100001);
 
-INSERT INTO type_activity (type, source_data, source_RD, RNS, F1A, survey, SSR, TSSR, RD, implDoc, signedLL, comments,user_id)
-VALUES ('Запрос исходных данных', TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100000),
-       ('Запрос исходного проекта', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100000),
-       ('Уточнение исходных данных', FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
+INSERT INTO type_activity (type, source_data, source_RD, RNS, F1A, survey, SSR, TSSR, RD, implDoc, signedLL, comments,
+                           user_id)
+VALUES ('Запрос исходных данных', TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности',
+        100000),
+       ('Запрос исходного проекта', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,
+        'Тип активности', 100000),
+       ('Уточнение исходных данных', FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,
+        'Тип активности', 100001),
        ('Обследование', FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
-       ('Фотоотчет', FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE,'Тип активности',  100001),
+       ('Фотоотчет', FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
        ('SSR', FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
        ('TSSR', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, 'Тип активности', 100001),
-       ('РД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE,'Тип активности',  100001),
+       ('РД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, 'Тип активности', 100001),
        ('Сдача РД', FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, 'Тип активности', 100001),
-       ('ИД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE,'Тип активности',  100001),
-       ('Согласование с АД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,'Тип активности',  100001);
+       ('ИД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, 'Тип активности', 100001),
+       ('Согласование с АД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, 'Тип активности',
+        100001);
 
 INSERT INTO activity (os, implementer, type_activity, date_time, plane_date_time, rating, status_activity, user_id)
 VALUES (100072, 100095, 100180, now(), now(), 1, 100175, 100000),

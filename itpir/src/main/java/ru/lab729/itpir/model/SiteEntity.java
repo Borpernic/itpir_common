@@ -27,7 +27,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "site", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"number", "name", "operator"}, name = "site_site_number_name_operator_id_key")})
-public class SiteEntity extends AbstractBaseEntity {
+public class SiteEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "SiteEntity.getAllSorted";
     public static final String ALL_OPERATOR_SORTED = "SiteEntity.getAllOperatorSorted";
@@ -38,6 +38,7 @@ public class SiteEntity extends AbstractBaseEntity {
     public static final String DELETE_ALL_BY_OPERATOR = "SiteEntity.deleteAllByOperator";
     public static final String GET = "SiteEntity.get";
     public static final String GET_BY_NUMBER_NAME_OPERATOR = "SiteEntity.getByNumberNameOperator";
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("id DESC")
 //    @JsonIgnore
@@ -48,43 +49,51 @@ public class SiteEntity extends AbstractBaseEntity {
     @NotBlank
     @Column(name = "number", nullable = false)
     private String number;
+
     @Basic
     @Size(max = 50)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "name", nullable = false, length = 50)
     private String name;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "operator", nullable = false)
     @NotNull(groups = View.Persist.class)
     private OperatorEntity operator;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region", nullable = false)
     @NotNull(groups = View.Persist.class)
     //@Column(name = "region", nullable = false)
     private RegionEntity region;
+
     @Basic
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime dateTime = LocalDateTime.now();
+
     @Basic
     @Size(max = 20)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "city", nullable = false, length = 20)
     private String city;
+
     @Basic
     @Size(max = 50)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "street", nullable = false, length = 50)
     private String street;
+
     @Basic
     @Size(max = 5)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "building", nullable = false, length = 5)
     private String building;
+
     @Basic
     @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
