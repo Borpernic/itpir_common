@@ -47,11 +47,23 @@ public interface SiteRepository {
     // null if operator do not belong to userId
     SiteEntity get(int id, int userId);
 
+    // false if not found
+    SiteEntity getWithOs(int id);
+
+    // null if operator do not belong to userId
+    SiteEntity getWithOs(int id, int userId);
+
     // ORDERED Operator ASC
     List<SiteEntity> getAll(int userId);
 
     // ORDERED Operator ASC
     List<SiteEntity> getAll();
+
+    // ORDERED Operator ASC
+    List<SiteEntity> getAllWithOs(int userId);
+
+    // ORDERED Operator ASC
+    List<SiteEntity> getAllWithOs();
 
     default SiteEntity getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();

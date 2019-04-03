@@ -92,15 +92,17 @@ public interface CrudSiteRepository extends JpaRepository<SiteEntity, Integer> {
     @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator,  e.region , e.osEntities WHERE e.id=:id")
     List<SiteEntity> getWithOs(@Param("id") int id);
 
+    @EntityGraph(attributePaths = {"OsEntities"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT e FROM SiteEntity e  JOIN FETCH e.operator,  e.region ORDER BY e.operator.operator , e.number  ASC")
     List<SiteEntity> getAll();
 
+    @EntityGraph(attributePaths = {"OsEntities"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator,  e.region where e.user.id=:userId ORDER BY e.operator.operator , e.number  ASC")
     List<SiteEntity> getAll(@Param("userId") int userId);
 
-    //    https://stackoverflow.com/a/46013654/548473
-    // @EntityGraph(attributePaths = {"siteEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM SiteEntity e  JOIN FETCH e.operator,  e.region, e.user  WHERE e.id=?1 and e.user.id=?2")
+    //    https://stackoverflow.com/a/46013654/548473 e.osEntities,
+    // @EntityGraph(attributePaths = {"OsEntities"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT e FROM SiteEntity e  JOIN FETCH e.operator,  e.region  WHERE e.id=?1 and e.user.id=?2")
     SiteEntity getWithUser(int id, int userId);
 
 }
