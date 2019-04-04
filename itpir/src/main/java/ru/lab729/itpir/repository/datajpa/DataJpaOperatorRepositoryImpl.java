@@ -62,7 +62,6 @@ public class DataJpaOperatorRepositoryImpl implements OperatorRepository {
         return crudOperatorRepository.getWithUser(id, userId);
     }
 
-
     @Override
     public OperatorEntity get(int id) {
         return crudOperatorRepository.findById(id).orElse(null);

@@ -25,7 +25,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "os", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"site", "internal_number"}, name = "os_site_internal_number_id_key")})
-public class OsEntity extends AbstractBaseEntity {
+public class OsEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_OPERATOR_NUMBER_SORTED = "OsEntity.getAllOperatorNumberSorted";
     public static final String ALL = "OsEntity.getAll";

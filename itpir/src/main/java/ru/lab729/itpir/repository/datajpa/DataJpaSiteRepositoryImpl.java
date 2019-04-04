@@ -47,32 +47,32 @@ public class DataJpaSiteRepositoryImpl implements SiteRepository {
 
     @Override
     public boolean deleteAllByOperator(int operatorId, int userId) {
-        return false;
+        return crudSiteRepository.deleteAllByOperatorAndUserId(operatorId,userId)!=0;
     }
 
     @Override
     public boolean deleteAllByOperator(int operatorId) {
-        return false;
+        return crudSiteRepository.deleteAllByOperator(operatorId)!=0;
     }
 
     @Override
     public boolean deleteAllByRegion(int regionId, int userId) {
-        return false;
+        return crudSiteRepository.deleteAllByRegionAndUserId(regionId,userId)!=0;
     }
 
     @Override
     public boolean deleteAllByRegion(int regionId) {
-        return false;
+        return crudSiteRepository.deleteAllByRegion(regionId)!=0;
     }
 
     @Override
     public boolean deleteAllByComments(String comments, int userId) {
-        return false;
+        return crudSiteRepository.deleteAllByCommentsContainsAndUserId(comments,userId)!=0;
     }
 
     @Override
     public boolean deleteAllByComments(String comments) {
-        return false;
+        return crudSiteRepository.deleteAllByCommentsContains(comments)!=0;
     }
 
     @Override
@@ -104,12 +104,12 @@ public class DataJpaSiteRepositoryImpl implements SiteRepository {
 
     @Override
     public SiteEntity getWithOs(int id) {
-        return null;
+        return crudSiteRepository.getWithOs(id).orElse(null);
     }
 
     @Override
     public SiteEntity getWithOs(int id, int userId) {
-        return null;
+        return crudSiteRepository.getWithOs(id,userId).orElse(null);
     }
 
     @Override
@@ -125,12 +125,12 @@ public class DataJpaSiteRepositoryImpl implements SiteRepository {
 
     @Override
     public List<SiteEntity> getAllWithOs(int userId) {
-        return null;
+        return crudSiteRepository.getAllWithOs(userId);
     }
 
     @Override
     public List<SiteEntity> getAllWithOs() {
-        return null;
+        return crudSiteRepository.getAllWithOs();
     }
 
 
