@@ -184,18 +184,36 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     void deleteAllByOperator() {
         service.deleteAllByOperator(100010);
         List<SiteEntity> all = service.getAll();
-        assertMatch(all,  ADMIN_SITE4,  ADMIN_SITE5);
+        assertMatch(all, ADMIN_SITE4, ADMIN_SITE5);
 
     }
+
+    @Test
+    void deleteAllByOperatorWithUser() {
+        service.deleteAllByOperator(100010, USER_ID);
+        List<SiteEntity> all = service.getAll();
+        assertMatch(all, ADMIN_SITE4, ADMIN_SITE5);
+
+    }
+
+    @Test
+    void deleteAllByRegion() {
+        service.deleteAllByRegion(100013);
+        List<SiteEntity> all = service.getAll();
+        assertMatch(all, ADMIN_SITE5);
+
+    }
+
+    @Test
+    void deleteAllByRegionWithUser() {
+        service.deleteAllByRegion(100013, USER_ID);
+        List<SiteEntity> all = service.getAll();
+        assertMatch(all, ADMIN_SITE5);
+
+    }
+
     /*
 
-    void deleteAllByOperator(int operatorId, int userId) throws NotFoundException;
-
-    void deleteAllByOperator(int operatorId) throws NotFoundException;
-
-    void deleteAllByRegion(int regionId, int userId) throws NotFoundException;
-
-    void deleteAllByRegion(int regionId) throws NotFoundException;
 
     void deleteAllByComments(String comments, int userId) throws NotFoundException;
 
