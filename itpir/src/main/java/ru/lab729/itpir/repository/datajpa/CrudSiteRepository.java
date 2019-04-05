@@ -84,11 +84,11 @@ public interface CrudSiteRepository extends JpaRepository<SiteEntity, Integer> {
 
 
     //@EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities WHERE e.id=:id AND e.user.id=:userId")
+    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities WHERE e.id=:id AND e.user.id=:userId ORDER BY e.operator.operator , e.number  ASC")
     Optional<SiteEntity>  getWithOs(@Param("id") int id, @Param("userId") int userId);
 
     //@EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities WHERE e.id=:id")
+    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities WHERE e.id=:id ORDER BY e.operator.operator , e.number  ASC")
     Optional<SiteEntity>  getWithOs(@Param("id") int id);
 
     //@EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
@@ -99,7 +99,7 @@ public interface CrudSiteRepository extends JpaRepository<SiteEntity, Integer> {
     @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region where e.user.id=:userId ORDER BY e.operator.operator , e.number  ASC")
     List<SiteEntity> getAll(@Param("userId") int userId);
 
-    @EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
+    //@EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT e FROM SiteEntity e  JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities ORDER BY e.operator.operator , e.number  ASC")
     List<SiteEntity> getAllWithOs();
 
@@ -109,7 +109,7 @@ public interface CrudSiteRepository extends JpaRepository<SiteEntity, Integer> {
 
     //    https://stackoverflow.com/a/46013654/548473 e.osEntities,
     @EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM SiteEntity e   JOIN FETCH e.operator JOIN FETCH e.region JOIN FETCH e.osEntities JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2")
+    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH e.region JOIN FETCH e.osEntities JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2 ORDER BY e.operator.operator , e.number  ASC")
     SiteEntity getWithUser(int id, int userId);
 
 }

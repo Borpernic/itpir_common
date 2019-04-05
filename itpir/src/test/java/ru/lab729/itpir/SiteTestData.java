@@ -20,21 +20,21 @@ public class SiteTestData {
     public static final SiteEntity SITE1 = new SiteEntity(SITE1_ID, "12790", "Будапешт", OPERATOR1, REGION1,
             of(2018, Month.MAY, 30, 13, 0),
             "Пекин", "Авиамоторная", "28С", " БС 1279");
-    public static final SiteEntity SITE2 = new SiteEntity(SITE1_ID+1, "12800", "Будапешт2", OPERATOR1, REGION1,
+    public static final SiteEntity SITE2 = new SiteEntity(SITE1_ID + 1, "12800", "Будапешт2", OPERATOR1, REGION1,
             of(2018, Month.MAY, 30, 13, 0),
             "Пекин", "Авиамоторная", "28С", " БС 1280");
     public static final SiteEntity ADMIN_SITE3 = new SiteEntity(ADMIN_SITE_ID, "12790", "Будапешт", OPERATOR1, REGION1,
             of(2018, Month.MAY, 30, 13, 0),
             "Пекин", "Авиамоторная", "28С", " БС 1279");
-    public static final SiteEntity ADMIN_SITE4 = new SiteEntity(ADMIN_SITE_ID+1, "12790", "Будапешт2", OPERATOR2, REGION1,
+    public static final SiteEntity ADMIN_SITE4 = new SiteEntity(ADMIN_SITE_ID + 1, "12790", "Будапешт2", OPERATOR2, REGION1,
             of(2018, Month.MAY, 30, 13, 0),
             "Пекин", "Авиамоторная", "28С", " БС 1279");
-    public static final SiteEntity ADMIN_SITE5 = new SiteEntity(ADMIN_SITE_ID+2, "12800", "Будапешт3", ADMIN_OPERATOR3, REGION2,
+    public static final SiteEntity ADMIN_SITE5 = new SiteEntity(ADMIN_SITE_ID + 2, "12800", "Будапешт3", ADMIN_OPERATOR3, REGION2,
             of(2018, Month.MAY, 30, 13, 0),
             "Пекин", "Авиамоторная", "28С", " БС 1280");
 
     public static final List<SiteEntity> SITES = Arrays.asList(SITE1, SITE2);
-    public static final List<SiteEntity> ALL_SITES = Arrays.asList(ADMIN_SITE4, ADMIN_SITE5,SITE1,  SITE2,ADMIN_SITE3);
+    public static final List<SiteEntity> ALL_SITES = Arrays.asList(ADMIN_SITE4, ADMIN_SITE5, SITE1, SITE2, ADMIN_SITE3);
 
     public static SiteEntity getCreated() {
         return new SiteEntity(null, "00000", "Созданное название", OPERATOR1, REGION1,

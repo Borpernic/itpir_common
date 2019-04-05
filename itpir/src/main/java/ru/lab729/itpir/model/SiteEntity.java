@@ -98,7 +98,7 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
     @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = false, length = 100)
     private String comments;
 
     public SiteEntity() {

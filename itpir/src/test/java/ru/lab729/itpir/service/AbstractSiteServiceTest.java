@@ -39,9 +39,39 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void get() {
+    void getWithUser() {
         SiteEntity actual = service.get(SITE1_ID, USER_ID);
         assertMatch(actual, SITE1);
+    }
+
+    @Test
+    void get() {
+        SiteEntity actual = service.get(SITE1_ID);
+        assertMatch(actual, SITE1);
+    }
+
+    @Test
+    void getWithOsWithUser() {
+        SiteEntity actual = service.getWithOs(SITE1_ID, USER_ID);
+        assertMatch(actual, SITE1);
+        // assertMatch(actual.getOsEntities(), OS1,OS2);
+    }
+
+    @Test
+    void getWithOs() {
+        SiteEntity actual = service.getWithOs(SITE1_ID, USER_ID);
+        assertMatch(actual, SITE1);
+        // assertMatch(actual.getOsEntities(), OS1,OS2);
+    }
+
+    @Test
+    void getAllWithOsUser() {
+        assertMatch(service.getAllWithOs(USER_ID), SITES);
+    }
+
+    @Test
+    void getAllWithOs() {
+        assertMatch(service.getAllWithOs(), ALL_SITES);
     }
 
     @Test
@@ -150,6 +180,28 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
         assertMatch(service.getAll(), ADMIN_SITE4, ADMIN_SITE5, ADMIN_SITE3);
     }
 
+    @Test
+    void deleteAllByOperator() {
+        service.deleteAllByOperator(100010);
+        List<SiteEntity> all = service.getAll();
+        assertMatch(all,  ADMIN_SITE4,  ADMIN_SITE5);
+
+    }
+    /*
+
+    void deleteAllByOperator(int operatorId, int userId) throws NotFoundException;
+
+    void deleteAllByOperator(int operatorId) throws NotFoundException;
+
+    void deleteAllByRegion(int regionId, int userId) throws NotFoundException;
+
+    void deleteAllByRegion(int regionId) throws NotFoundException;
+
+    void deleteAllByComments(String comments, int userId) throws NotFoundException;
+
+    void deleteAllByComments(String comments) throws NotFoundException;*/
+
+
 
 /*
 
@@ -164,9 +216,78 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     @Test
     void testValidation() {
         assumeTrue(isJpaBased());
-        validateRootCause(() -> service.create(new SiteEntity(null,"111111111", "ааааа", OPERATOR1, REGION1,
+        validateRootCause(() -> service.create(new SiteEntity(null, "123456", "ааааа", OPERATOR1, REGION1,
                 of(2018, Month.MAY, 30, 13, 0),
                 "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
 
+        validateRootCause(() -> service.create(new SiteEntity(null, null, "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", null, OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "123456", "", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "123456789012345678901234567890123456789012345678901", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", null, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, null,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                null, "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "123456789012345678901", "Авиамоторная", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", null, "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "123456789012345678901234567890123456789012345678901", "28С", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "", " БС 1279"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", null, " БС 1279"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "123456", " БС 1279"), USER_ID), ConstraintViolationException.class);
+
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", ""), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", null), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new SiteEntity(null, "12345", "ааааа", OPERATOR1, REGION1,
+                of(2018, Month.MAY, 30, 13, 0),
+                "Пекин", "Авиамоторная", "28С", "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"), USER_ID), ConstraintViolationException.class);
     }
+
 }

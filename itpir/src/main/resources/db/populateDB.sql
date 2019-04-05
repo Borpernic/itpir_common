@@ -135,7 +135,7 @@ VALUES ('3568999', 100037, 100000),
 INSERT INTO os (date_time, site, internal_number, curator, band, type_os, type_BS, type_AMS, type_AFS, status_os,
                 comments, user_id)
 VALUES (now(), 100016, 100069, 100040, 100043, 100050, 100055, 100060, 100066, 100046, 'МТС', 100000),
-       (now(), 100017, 100070, 100041, 100044, 100051, 100056, 100061, 100067, 100047, 'HW', 100000),
+       (now(), 100016, 100070, 100041, 100044, 100051, 100056, 100061, 100067, 100047, 'HW', 100000),
        (now(), 100018, 100071, 100042, 100045, 100052, 100057, 100062, 100068, 100048, 'HW', 100001);
 
 INSERT INTO nomenclature_works (works, comments, user_id)
