@@ -47,7 +47,7 @@ public class DataJpaSiteRepositoryImpl implements SiteRepository {
 
     @Override
     public boolean deleteAllByOperator(int operatorId, int userId) {
-        return crudSiteRepository.deleteAllByOperatorAndUserId(operatorId,userId)!=0;
+        return crudSiteRepository.deleteAllByOperatorIdAndUserId(operatorId, userId) != 0;
     }
 
     @Override
@@ -57,12 +57,12 @@ public class DataJpaSiteRepositoryImpl implements SiteRepository {
 
     @Override
     public boolean deleteAllByRegion(int regionId, int userId) {
-        return crudSiteRepository.deleteAllByRegionAndUserId(regionId,userId)!=0;
+        return crudSiteRepository.deleteAllByRegionIdAndUserId(regionId, userId) != 0;
     }
 
     @Override
     public boolean deleteAllByRegion(int regionId) {
-        return crudSiteRepository.deleteAllByRegion(regionId)!=0;
+        return crudSiteRepository.deleteAllByRegionId(regionId) != 0;
     }
 
     @Override

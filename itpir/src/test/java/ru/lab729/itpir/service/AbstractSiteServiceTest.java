@@ -192,7 +192,7 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     void deleteAllByOperatorWithUser() {
         service.deleteAllByOperator(100010, USER_ID);
         List<SiteEntity> all = service.getAll();
-        assertMatch(all, ADMIN_SITE4, ADMIN_SITE5);
+        assertMatch(all, ADMIN_SITE4, ADMIN_SITE5, ADMIN_SITE3);
 
     }
 
@@ -208,7 +208,23 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     void deleteAllByRegionWithUser() {
         service.deleteAllByRegion(100013, USER_ID);
         List<SiteEntity> all = service.getAll();
-        assertMatch(all, ADMIN_SITE5);
+        assertMatch(all, ADMIN_SITE4, ADMIN_SITE5, ADMIN_SITE3);
+
+    }
+
+    @Test
+    void deleteAllByComments() {
+        service.deleteAllByComments("1280");
+        List<SiteEntity> all = service.getAll();
+        assertMatch(all, ADMIN_SITE4, SITE1, ADMIN_SITE3);
+
+    }
+
+    @Test
+    void deleteAllByCommentsWithUser() {
+        service.deleteAllByComments("1280", USER_ID);
+        List<SiteEntity> all = service.getAll();
+        assertMatch(all, ADMIN_SITE4, ADMIN_SITE5, SITE1, ADMIN_SITE3);
 
     }
 
