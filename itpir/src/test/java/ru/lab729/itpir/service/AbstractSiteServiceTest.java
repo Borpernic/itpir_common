@@ -59,7 +59,7 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
 
     @Test
     void getWithOs() {
-        SiteEntity actual = service.getWithOs(SITE1_ID, USER_ID);
+        SiteEntity actual = service.getWithOs(SITE1_ID);
         assertMatch(actual, SITE1);
         // assertMatch(actual.getOsEntities(), OS1,OS2);
     }

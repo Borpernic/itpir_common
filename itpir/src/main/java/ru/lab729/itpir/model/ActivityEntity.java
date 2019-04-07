@@ -30,7 +30,7 @@ import java.util.List;
 @Entity
 @Table(name = "activity", schema = "public", catalog = "itpirdb",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"os", "type_activity", "implementer"}, name = "activity_idx")})
-public class ActivityEntity extends AbstractBaseEntity {
+public class ActivityEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "ActivityEntity.getAllSorted";
     public static final String ALL = "ActivityEntity.getAll";
@@ -45,7 +45,7 @@ public class ActivityEntity extends AbstractBaseEntity {
 //    @JsonIgnore
     protected List<TaskEntity> taskEntities;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("id DESC")
 //    @JsonIgnore
     protected List<DateChangeStatusEntity> dateChangeStatusEntities;
@@ -219,6 +219,38 @@ public class ActivityEntity extends AbstractBaseEntity {
 
     public List<DateChangeStatusEntity> getDateChangeStatusEntities() {
         return dateChangeStatusEntities;
+    }
+
+    public void setTaskEntities(List<TaskEntity> taskEntities) {
+        this.taskEntities = taskEntities;
+    }
+
+    public void setDateChangeStatusEntities(List<DateChangeStatusEntity> dateChangeStatusEntities) {
+        this.dateChangeStatusEntities = dateChangeStatusEntities;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public LocalDateTime getPlaneDateTime() {
+        return planeDateTime;
+    }
+
+    public void setPlaneDateTime(LocalDateTime planeDateTime) {
+        this.planeDateTime = planeDateTime;
+    }
+
+    public LocalDateTime getAcceptDateTime() {
+        return acceptDateTime;
+    }
+
+    public void setAcceptDateTime(LocalDateTime acceptDateTime) {
+        this.acceptDateTime = acceptDateTime;
     }
 }
 

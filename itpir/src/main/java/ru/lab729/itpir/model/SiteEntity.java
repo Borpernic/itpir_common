@@ -101,6 +101,11 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
     @Column(name = "comments", nullable = false, length = 100)
     private String comments;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("name ASC")
+//    @JsonIgnore
+    protected List<ContactsAdEntity> contactsAdEntities;
+
     public SiteEntity() {
     }
 
@@ -197,5 +202,25 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
 
     public List<OsEntity> getOsEntities() {
         return osEntities;
+    }
+
+    public void setOsEntities(List<OsEntity> osEntities) {
+        this.osEntities = osEntities;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public List<ContactsAdEntity> getContactsAdEntities() {
+        return contactsAdEntities;
+    }
+
+    public void setContactsAdEntities(List<ContactsAdEntity> contactsAdEntities) {
+        this.contactsAdEntities = contactsAdEntities;
     }
 }

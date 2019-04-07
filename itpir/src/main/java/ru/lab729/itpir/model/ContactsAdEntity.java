@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @NamedQueries({
         @NamedQuery(name = ContactsAdEntity.ALL_SORTED, query = "SELECT c FROM ContactsAdEntity c ORDER BY c.id ASC"),
-        @NamedQuery(name = ContactsAdEntity.ALL_SURNAME_SORTED, query = "SELECT c FROM ContactsAdEntity c ORDER BY c.surname, c.name, c.middlename ASC"),
+        @NamedQuery(name = ContactsAdEntity.ALL_SURNAME_SORTED, query = "SELECT c FROM ContactsAdEntity c ORDER BY c.surname, c.name, c.middle_name ASC"),
 
         @NamedQuery(name = ContactsAdEntity.DELETE, query = "DELETE FROM ContactsAdEntity c WHERE c.id=:id"),
         @NamedQuery(name = ContactsAdEntity.DELETE_ALL, query = "DELETE FROM ContactsAdEntity c"),
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "contacts_ad", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "contacts_ad_email_idx")})
-public class ContactsAdEntity extends AbstractBaseEntity {
+public class ContactsAdEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "ContactsAdEntity.getAllSorted";
     public static final String ALL_SURNAME_SORTED = "ContactsAdEntity.getAllSurnameSorted";
@@ -51,8 +51,8 @@ public class ContactsAdEntity extends AbstractBaseEntity {
     @Size(min = 3, max = 25)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "middlename", nullable = true, length = 25)
-    private String middlename;
+    @Column(name = "middle_name", nullable = true, length = 25)
+    private String middle_name;
 
     @Size(min = 3, max = 25)
     @SafeHtml(groups = {View.Web.class})
@@ -160,11 +160,11 @@ public class ContactsAdEntity extends AbstractBaseEntity {
     }
 
     public String getMiddlename() {
-        return middlename;
+        return middle_name;
     }
 
     public void setMiddlename(String middlename) {
-        this.middlename = middlename;
+        this.middle_name = middlename;
     }
 
     public String getPosition() {
