@@ -62,8 +62,7 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
 
     @Phone
     @Size(min = 12, max = 12)
-    @NotBlank
-    @SafeHtml(groups = {View.Web.class})
+     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "phone1", nullable = false, length = 12)
     private String phone1;
@@ -77,7 +76,7 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
 
     @Email
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 30)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "email", nullable = true, length = 30, unique = true)

@@ -21,25 +21,18 @@ public interface ContactsAdRepository {
     // false if operators wasn't deleted
     boolean deleteAll();
 
+    // false if operators wasn't deleted
+    boolean deleteAllBySite(int siteId, int userId);
 
     // false if operators wasn't deleted
-    boolean deleteAllByOperator(int operatorId, int userId);
-
-    // false if operators wasn't deleted
-    boolean deleteAllByOperator(int operatorId);
+    boolean deleteAllBySite(int siteId);
 
 
     // false if operators wasn't deleted
-    boolean deleteAllByRegion(int regionId, int userId);
+    boolean deleteAllByText(String text, int userId);
 
     // false if operators wasn't deleted
-    boolean deleteAllByRegion(int regionId);
-
-    // false if operators wasn't deleted
-    boolean deleteAllByComments(String comments, int userId);
-
-    // false if operators wasn't deleted
-    boolean deleteAllByComments(String comments);
+    boolean deleteAllByText(String text);
 
     // false if not found
     ContactsAdEntity get(int id);
@@ -47,11 +40,12 @@ public interface ContactsAdRepository {
     // null if operator do not belong to userId
     ContactsAdEntity get(int id, int userId);
 
+
     // false if not found
-    ContactsAdEntity getWithOs(int id);
+    ContactsAdEntity getAllByText(String text);
 
     // null if operator do not belong to userId
-    ContactsAdEntity getWithOs(int id, int userId);
+    ContactsAdEntity getAllByText(String text, int userId);
 
     // ORDERED Operator ASC
     List<ContactsAdEntity> getAll(int userId);
@@ -59,11 +53,6 @@ public interface ContactsAdRepository {
     // ORDERED Operator ASC
     List<ContactsAdEntity> getAll();
 
-    // ORDERED Operator ASC
-    List<ContactsAdEntity> getAllWithOs(int userId);
-
-    // ORDERED Operator ASC
-    List<ContactsAdEntity> getAllWithOs();
 
     default ContactsAdEntity getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();
