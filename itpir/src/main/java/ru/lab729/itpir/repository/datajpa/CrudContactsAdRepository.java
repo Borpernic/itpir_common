@@ -31,6 +31,16 @@ public interface CrudContactsAdRepository extends JpaRepository<ContactsAdEntity
 
     @Modifying
     @Transactional
+    @Query("DELETE FROM ContactsAdEntity e ")
+    void deleteAllEntity();
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM ContactsAdEntity e where e.user.id=:userId")
+    void deleteAllEntity(@Param("userId") int userId);
+
+    @Modifying
+    @Transactional
     @Query("DELETE FROM ContactsAdEntity e WHERE e.user.id=:userId")
     int deleteAllByUserId(@Param("userId") int userId);
 
