@@ -42,10 +42,10 @@ public interface ContactsAdRepository {
 
 
     // false if not found
-    ContactsAdEntity getAllByText(String text);
+    List<ContactsAdEntity> getAllByText(String text);
 
     // null if operator do not belong to userId
-    ContactsAdEntity getAllByText(String text, int userId);
+    List<ContactsAdEntity> getAllByText(String text, int userId);
 
     // ORDERED Operator ASC
     List<ContactsAdEntity> getAll(int userId);

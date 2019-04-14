@@ -118,14 +118,15 @@ public class JdbcContactsAdRepositoryImpl implements ContactsAdRepository {
     }
 
     @Override
-    public ContactsAdEntity getAllByText(String text) {
+    public List<ContactsAdEntity> getAllByText(String text) {
         return null;
     }
 
     @Override
-    public ContactsAdEntity getAllByText(String text, int userId) {
+    public List<ContactsAdEntity> getAllByText(String text, int userId) {
         return null;
     }
+
 
     @Override
     public List<ContactsAdEntity> getAll(int userId) {

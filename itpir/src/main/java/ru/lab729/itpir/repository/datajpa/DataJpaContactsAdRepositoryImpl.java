@@ -9,7 +9,7 @@ import ru.lab729.itpir.repository.ContactsAdRepository;
 import java.util.List;
 
 @Repository
-public class DataJpaContactsAdRepositoryImpl implements CrudContactsAdRepository {
+public class DataJpaContactsAdRepositoryImpl implements ContactsAdRepository {
 
     private final CrudContactsAdRepository crudContactsAdRepository;
 
@@ -42,37 +42,27 @@ public class DataJpaContactsAdRepositoryImpl implements CrudContactsAdRepository
     @Override
     public boolean deleteAll() {
 
-        return crudContactsAdRepository.deleteAll()!= 0;
+        return crudContactsAdRepository.deleteAllEntity() != 0;
     }
 
     @Override
-    public boolean deleteAllByOperator(int operatorId, int userId) {
-        return crudContactsAdRepository.deleteAllByOperatorIdAndUserId(operatorId, userId) != 0;
+    public boolean deleteAllBySite(int siteId, int userId) {
+        return crudContactsAdRepository.deleteAllBySite_IdAndUserId(siteId, userId) != 0;
     }
 
     @Override
-    public boolean deleteAllByOperator(int operatorId) {
-        return crudContactsAdRepository.deleteAllByOperator(operatorId)!=0;
+    public boolean deleteAllBySite(int siteId) {
+        return crudContactsAdRepository.deleteAllBySite_Id(siteId) != 0;
     }
 
     @Override
-    public boolean deleteAllByRegion(int regionId, int userId) {
-        return crudContactsAdRepository.deleteAllByRegionIdAndUserId(regionId, userId) != 0;
+    public boolean deleteAllByText(String text, int userId) {
+        return crudContactsAdRepository.deleteAllByTextAndUserId(text, userId) != 0;
     }
 
     @Override
-    public boolean deleteAllByRegion(int regionId) {
-        return crudContactsAdRepository.deleteAllByRegionId(regionId) != 0;
-    }
-
-    @Override
-    public boolean deleteAllByComments(String comments, int userId) {
-        return crudContactsAdRepository.deleteAllByCommentsContainsAndUserId(comments,userId)!=0;
-    }
-
-    @Override
-    public boolean deleteAllByComments(String comments) {
-        return crudContactsAdRepository.deleteAllByCommentsContains(comments)!=0;
+    public boolean deleteAllByText(String text) {
+        return crudContactsAdRepository.deleteAllByText(text) != 0;
     }
 
     @Override
@@ -103,13 +93,13 @@ public class DataJpaContactsAdRepositoryImpl implements CrudContactsAdRepository
     }
 
     @Override
-    public ContactsAdEntity getWithOs(int id) {
-        return crudContactsAdRepository.getWithOs(id).orElse(null);
+    public List<ContactsAdEntity> getAllByText(String text) {
+        return crudContactsAdRepository.getAllByText(text);
     }
 
     @Override
-    public ContactsAdEntity getWithOs(int id, int userId) {
-        return crudContactsAdRepository.getWithOs(id,userId).orElse(null);
+    public List<ContactsAdEntity> getAllByText(String text, int userId) {
+        return crudContactsAdRepository.getAllByText(text, userId);
     }
 
     @Override
@@ -121,16 +111,6 @@ public class DataJpaContactsAdRepositoryImpl implements CrudContactsAdRepository
     @Override
     public List<ContactsAdEntity> getAll() {
         return crudContactsAdRepository.getAll();
-    }
-
-    @Override
-    public List<ContactsAdEntity> getAllWithOs(int userId) {
-        return crudContactsAdRepository.getAllWithOs(userId);
-    }
-
-    @Override
-    public List<ContactsAdEntity> getAllWithOs() {
-        return crudContactsAdRepository.getAllWithOs();
     }
 
 

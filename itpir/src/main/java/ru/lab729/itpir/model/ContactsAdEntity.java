@@ -62,7 +62,7 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
 
     @Phone
     @Size(min = 12, max = 12)
-     @SafeHtml(groups = {View.Web.class})
+    @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "phone1", nullable = false, length = 12)
     private String phone1;
@@ -132,6 +132,26 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
         this.phone1 = phone1;
         this.status = status;
         this.confirmed = confirmed;
+    }
+
+    public ContactsAdEntity(Integer id, SiteEntity site, String surname, String name, String middle_name,
+                            String position, String phone1, String phone2, String email, StatusContactsEntity status,
+                            String comments, boolean confirmed, String city, String street, String building) {
+        super(id);
+        this.site = site;
+        this.surname = surname;
+        this.name = name;
+        this.middle_name = middle_name;
+        this.position = position;
+        this.phone1 = phone1;
+        this.phone2 = phone2;
+        this.email = email;
+        this.status = status;
+        this.comments = comments;
+        this.confirmed = confirmed;
+        this.city = city;
+        this.street = street;
+        this.building = building;
     }
 
     public SiteEntity getSite() {

@@ -32,12 +32,12 @@ public interface CrudContactsAdRepository extends JpaRepository<ContactsAdEntity
     @Modifying
     @Transactional
     @Query("DELETE FROM ContactsAdEntity e ")
-    void deleteAllEntity();
+    int deleteAllEntity();
 
     @Modifying
     @Transactional
     @Query("DELETE FROM ContactsAdEntity e where e.user.id=:userId")
-    void deleteAllEntity(@Param("userId") int userId);
+    int deleteAllEntity(@Param("userId") int userId);
 
     @Modifying
     @Transactional
@@ -108,7 +108,8 @@ public interface CrudContactsAdRepository extends JpaRepository<ContactsAdEntity
 
     //    https://stackoverflow.com/a/46013654/548473 e.osEntities,
     @EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM ContactsAdEntity e JOIN FETCH e.site JOIN FETCH  e.status JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2 ORDER BY e.operator.operator , e.number  ASC")
+    @Query("SELECT e FROM ContactsAdEntity e JOIN FETCH e.site JOIN FETCH  e.status JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2 " +
+            "ORDER BY e.site.operator.operator, e.site.number, e.surname , e.name  ASC")
     ContactsAdEntity getWithUser(int id, int userId);
 
 }
