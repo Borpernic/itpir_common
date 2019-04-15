@@ -115,9 +115,10 @@ public class ContactsAdServiceImpl implements ContactsAdService {
         checkNotFoundWithId(repository.deleteAllByText(text), 0);
     }
 
-
     @Override
     public ContactsAdEntity getWithUser(int id, int userId) {
         return checkNotFoundWithId(repository.getWithUser(id, userId), id);
     }
+
+
 }

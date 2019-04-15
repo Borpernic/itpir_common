@@ -118,18 +118,19 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
     public ContactsAdEntity() {
     }
 
-    public ContactsAdEntity(SiteEntity site, String surname, String name, String phone1,
+    public ContactsAdEntity(SiteEntity site, String surname, String name, String phone1, String email,
                             StatusContactsEntity status, boolean confirmed) {
-        this(null, site, surname, name, phone1, status, confirmed);
+        this(null, site, surname, name, phone1, email, status, confirmed);
     }
 
-    public ContactsAdEntity(Integer id, SiteEntity site, String surname, String name, String phone1,
+    public ContactsAdEntity(Integer id, SiteEntity site, String surname, String name, String phone1, String email,
                             StatusContactsEntity status, boolean confirmed) {
         this.id = id;
         this.site = site;
         this.surname = surname;
         this.name = name;
         this.phone1 = phone1;
+        this.email = email;
         this.status = status;
         this.confirmed = confirmed;
     }
