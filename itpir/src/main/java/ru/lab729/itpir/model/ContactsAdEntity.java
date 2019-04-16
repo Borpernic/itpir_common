@@ -67,19 +67,19 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
     @Column(name = "phone1", nullable = false, length = 16)
     private String phone1;
 
-    @Phone
+
     @Size(min = 11, max = 16)
     @SafeHtml(groups = {View.Web.class})
     @Basic
+    @Phone
     @Column(name = "phone2", nullable = true, length = 16)
     private String phone2;
 
     @Email
-    @NotBlank
-    @Size(max = 30)
+    @Size(max = 25)
     @SafeHtml(groups = {View.Web.class})
     @Basic
-    @Column(name = "email", nullable = true, length = 30, unique = true)
+    @Column(name = "email", nullable = true, length = 25, unique = true)
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)

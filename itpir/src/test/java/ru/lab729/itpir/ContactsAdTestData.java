@@ -25,7 +25,7 @@ public class ContactsAdTestData {
             "Сергеевич3", "Инженер3", "8-926-637-22-21", "8-926-637-22-93",
             "bn3@mail.ru", STATUSCONTACT1, "ГИ3", false, "Москва3", "Колодезный2", "24");
     public static final List<ContactsAdEntity> CONTACTS_ADS = Arrays.asList(CONTACTS_AD2, CONTACTS_AD1);
-    public static final List<ContactsAdEntity> ALL_CONTACTS_ADS = Arrays.asList(CONTACTS_AD2, ADMIN_CONTACTS_AD3, CONTACTS_AD1);
+    public static final List<ContactsAdEntity> ALL_CONTACTS_ADS = Arrays.asList(CONTACTS_AD2, CONTACTS_AD1, ADMIN_CONTACTS_AD3);
 
     public static final String TEXT_FOR_SERCH = "8-926-637-22-2";
 
@@ -37,8 +37,8 @@ public class ContactsAdTestData {
 
     public static ContactsAdEntity getUpdated() {
         return new ContactsAdEntity(CONTACTS_AD1_ID, SITE1, "Обновленная Фамилия", "Обновленное Имя",
-                "Обновленное Отчество", "Обновленная Должность", "Обновленный 8-926-637-22-21", "Обновленный 8-926-637-22-93",
-                "bn3@mail.ru", STATUSCONTACT1, "Обновленный Комментарий", false, "Обновленный Город", "Обновленная Улица", "Обновленный Дом");
+                "Обновленное Отчество", "Обновленная Должность", "8-926-637-22-21", "8-926-637-22-93",
+                "bn4@mail.ru", STATUSCONTACT1, "Обновленный Комментарий", false, "Обновленный Город", "Обновленная Улица", "Обновленный Дом");
     }
 
     public static void assertMatch(ContactsAdEntity actual, ContactsAdEntity expected) {

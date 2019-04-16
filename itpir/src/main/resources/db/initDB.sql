@@ -130,7 +130,7 @@ CREATE TABLE contacts_ad
   name        TEXT    NOT NULL,
   middle_name TEXT,
   position    TEXT,
-  phone1      TEXT   ,
+  phone1      TEXT,
   phone2      TEXT,
   email       TEXT,
   status      INTEGER NOT NULL,
