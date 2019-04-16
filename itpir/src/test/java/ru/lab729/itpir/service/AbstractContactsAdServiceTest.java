@@ -82,7 +82,7 @@ public abstract class AbstractContactsAdServiceTest extends AbstractServiceTest 
     void createDuplicate() {
 
         assertThrows(DataAccessException.class, () -> service.create(new ContactsAdEntity(null, SITE1,
-                "Лавров", "Дмитрий", "8-926-637-22-19", "bn1@mail.ru",
+                "Лавров", "Дмитрий", "+7(926)637-22-19", "bn1@mail.ru",
                 STATUSCONTACT1, false), USER_ID));
     }
 

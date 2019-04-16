@@ -43,6 +43,7 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
     @OrderBy("id DESC")
 //    @JsonIgnore
     protected List<OsEntity> osEntities;
+
     @Basic
     @Size(max = 5)
     @SafeHtml(groups = {View.Web.class})

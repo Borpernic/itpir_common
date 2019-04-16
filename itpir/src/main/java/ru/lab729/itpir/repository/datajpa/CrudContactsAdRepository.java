@@ -108,7 +108,7 @@ public interface CrudContactsAdRepository extends JpaRepository<ContactsAdEntity
 
     //    https://stackoverflow.com/a/46013654/548473 e.osEntities,
     @EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM ContactsAdEntity e JOIN FETCH e.site JOIN FETCH  e.status JOIN FETCH e.user  WHERE e.id=?1 and e.user.id=?2 " +
+    @Query("SELECT e FROM ContactsAdEntity e JOIN FETCH e.site JOIN FETCH  e.status JOIN FETCH e.user  JOIN FETCH e.site WHERE e.id=?1 and e.user.id=?2 " +
             "ORDER BY e.site.operator.operator, e.site.number, e.surname , e.name  ASC")
     ContactsAdEntity getWithUser(int id, int userId);
 

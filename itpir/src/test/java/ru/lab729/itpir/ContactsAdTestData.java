@@ -31,8 +31,8 @@ public class ContactsAdTestData {
 
     public static ContactsAdEntity getCreated() {
         return new ContactsAdEntity(null, SITE1, "Фамилия", "Имя",
-                "Отчество", "Должность", "8-926-637-22-21", "8-926-637-22-93",
-                "bn3@mail.ru", STATUSCONTACT1, "Комментарий", false, "Город", "Улица", "Дом");
+                "Отчество", "Должность", "+7(926)637-22-21", "+7-926-637-22-93",
+                "bn4@mail.ru", STATUSCONTACT1, "Комментарий", false, "Город", "Улица", "Дом");
     }
 
     public static ContactsAdEntity getUpdated() {
