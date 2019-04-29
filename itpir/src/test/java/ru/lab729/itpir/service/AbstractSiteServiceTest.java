@@ -17,6 +17,8 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static ru.lab729.itpir.ContactsAdTestData.CONTACTS_AD1;
+import static ru.lab729.itpir.ContactsAdTestData.CONTACTS_AD2;
 import static ru.lab729.itpir.OperatorTestData.OPERATOR1;
 import static ru.lab729.itpir.RegionTestData.REGION1;
 import static ru.lab729.itpir.SiteTestData.*;
@@ -62,6 +64,7 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
         SiteEntity actual = service.getWithOs(SITE1_ID);
         assertMatch(actual, SITE1);
         // assertMatch(actual.getOsEntities(), OS1,OS2);
+        ru.lab729.itpir.ContactsAdTestData.assertMatch(actual.getContactsAdEntities(), CONTACTS_AD1, CONTACTS_AD2);
     }
 
     @Test

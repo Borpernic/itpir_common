@@ -89,7 +89,7 @@ public interface CrudSiteRepository extends JpaRepository<SiteEntity, Integer> {
     Optional<SiteEntity> getWithOs(@Param("id") int id, @Param("userId") int userId);
 
     //@EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities WHERE e.id=:id ORDER BY e.operator.operator , e.number  ASC")
+    @Query("SELECT e FROM SiteEntity e JOIN FETCH e.operator JOIN FETCH  e.region JOIN FETCH e.osEntities  JOIN FETCH  e.contactsAdEntities WHERE e.id=:id ORDER BY e.operator.operator , e.number  ASC")
     Optional<SiteEntity> getWithOs(@Param("id") int id);
 
     //@EntityGraph(attributePaths = {"osEntities"}, type = EntityGraph.EntityGraphType.LOAD)

@@ -24,7 +24,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "project", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"project"}, name = "project_project_idx")})
-public class ProjectEntity extends AbstractBaseEntity {
+public class ProjectEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "ProjectEntity.getAllSorted";
     public static final String ALL_PM_SORTED = "ProjectEntity.getAllPmSorted";

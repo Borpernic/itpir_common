@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @NamedQueries({
         @NamedQuery(name = ContactsAdEntity.ALL_SORTED, query = "SELECT c FROM ContactsAdEntity c ORDER BY c.id ASC"),
@@ -266,4 +267,27 @@ public class ContactsAdEntity extends AbstractBaseWithUserEntity {
     public void setBuilding(String building) {
         this.building = building;
     }
+
+    @Override
+    public String toString() {
+        return "ContactsAdEntity{" +
+
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", middle_name='" + middle_name + '\'' +
+                ", position='" + position + '\'' +
+                ", phone1='" + phone1 + '\'' +
+                ", phone2='" + phone2 + '\'' +
+                ", email='" + email + '\'' +
+                ", status=" + status +
+                ", comments='" + comments + '\'' +
+                ", confirmed=" + confirmed +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", building='" + building + '\'' +
+                '}';
+    }
 }
+
+
+

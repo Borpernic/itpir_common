@@ -224,4 +224,21 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
     public void setContactsAdEntities(List<ContactsAdEntity> contactsAdEntities) {
         this.contactsAdEntities = contactsAdEntities;
     }
+
+    @Override
+    public String toString() {
+        return "SiteEntity{" +
+
+                ", number='" + number + '\'' +
+                ", name='" + name + '\'' +
+                ", operator=" + operator +
+                ", region=" + region +
+                ", dateTime=" + dateTime +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", building='" + building + '\'' +
+                ", comments='" + comments + '\'' +
+                ", contactsAdEntities=" + contactsAdEntities +
+                '}';
+    }
 }
