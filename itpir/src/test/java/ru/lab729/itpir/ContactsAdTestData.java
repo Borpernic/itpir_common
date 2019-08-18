@@ -23,7 +23,7 @@ public class ContactsAdTestData {
             "bn2@mail.ru", STATUSCONTACT1, "ГИ2", false, "Москва2", "Колодезный2", "23");
     public static final ContactsAdEntity ADMIN_CONTACTS_AD3 = new ContactsAdEntity(ADMIN_CONTACTS_AD_ID, ADMIN_SITE3, "Петров", "Иван",
             "Сергеевич3", "Инженер3", "8-926-637-22-21", "8-926-637-22-93",
-            "bn3@mail.ru", STATUSCONTACT1, "ГИ3", false, "Москва3", "Колодезный2", "24");
+            "bn3@mail.ru", STATUSCONTACT1, "ГИ3", false, "Москва3", "Колодезный3", "24");
     public static final List<ContactsAdEntity> CONTACTS_ADS = Arrays.asList(CONTACTS_AD2, CONTACTS_AD1);
     public static final List<ContactsAdEntity> ALL_CONTACTS_ADS = Arrays.asList(CONTACTS_AD2, CONTACTS_AD1, ADMIN_CONTACTS_AD3);
 
@@ -55,6 +55,7 @@ public class ContactsAdTestData {
 
     public static void assertMatch(Iterable<ContactsAdEntity> actual, Iterable<ContactsAdEntity> expected) {
         //assertThat(actual).usingElementComparatorIgnoringFields("user_id").isEqualTo(expected);
-        assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
+        // assertThat(actual).usingElementComparatorOnFields("surname","name","middle_name","position","phone1").isEqualTo(expected);
     }
 }

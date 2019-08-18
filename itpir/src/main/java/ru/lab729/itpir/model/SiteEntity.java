@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = SiteEntity.ALL_SORTED, query = "SELECT s FROM SiteEntity s ORDER BY s.number ASC"),
@@ -102,10 +103,10 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
     @Column(name = "comments", nullable = false, length = 100)
     private String comments;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "site")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("name ASC")
 //    @JsonIgnore
-    protected List<ContactsAdEntity> contactsAdEntities;
+    protected Set<ContactsAdEntity> contactsAdEntities;
 
     public SiteEntity() {
     }
@@ -217,11 +218,11 @@ public class SiteEntity extends AbstractBaseWithUserEntity {
         this.dateTime = dateTime;
     }
 
-    public List<ContactsAdEntity> getContactsAdEntities() {
+    public Set<ContactsAdEntity> getContactsAdEntities() {
         return contactsAdEntities;
     }
 
-    public void setContactsAdEntities(List<ContactsAdEntity> contactsAdEntities) {
+    public void setContactsAdEntities(Set<ContactsAdEntity> contactsAdEntities) {
         this.contactsAdEntities = contactsAdEntities;
     }
 

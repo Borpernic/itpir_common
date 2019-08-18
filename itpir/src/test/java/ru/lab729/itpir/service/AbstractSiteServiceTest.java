@@ -4,6 +4,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import ru.lab729.itpir.UserTestData;
 import ru.lab729.itpir.model.SiteEntity;
 import ru.lab729.itpir.util.exception.ErrorType;
 import ru.lab729.itpir.util.exception.NotFoundException;
@@ -44,6 +45,7 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     void getWithUser() {
         SiteEntity actual = service.get(SITE1_ID, USER_ID);
         assertMatch(actual, SITE1);
+        UserTestData.assertMatch(actual.getUser(), UserTestData.USER);
     }
 
     @Test
@@ -56,14 +58,13 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
     void getWithOsWithUser() {
         SiteEntity actual = service.getWithOs(SITE1_ID, USER_ID);
         assertMatch(actual, SITE1);
-        // assertMatch(actual.getOsEntities(), OS1,OS2);
     }
 
     @Test
     void getWithOs() {
         SiteEntity actual = service.getWithOs(SITE1_ID);
         assertMatch(actual, SITE1);
-        // assertMatch(actual.getOsEntities(), OS1,OS2);
+        //assertMatch(actual.getOsEntities(), OS1,OS2);
         ru.lab729.itpir.ContactsAdTestData.assertMatch(actual.getContactsAdEntities(), CONTACTS_AD1, CONTACTS_AD2);
     }
 
@@ -231,16 +232,7 @@ public abstract class AbstractSiteServiceTest extends AbstractServiceTest {
 
     }
 
-    /*
-
-
-    void deleteAllByComments(String comments, int userId) throws NotFoundException;
-
-    void deleteAllByComments(String comments) throws NotFoundException;*/
-
-
-
-/*
+   /*
 
    @Test
     void getBetween() {
