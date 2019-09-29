@@ -54,6 +54,7 @@ public class ProjectEntity extends AbstractBaseWithUserEntity {
     @NotNull(groups = View.Persist.class)
     private CustomerEntity customer;
     @Basic
+    @NotBlank
     @Size(min = 3, max = 50)
     @SafeHtml(groups = {View.Web.class})
     @Column(name = "comments", nullable = false, length = 50)

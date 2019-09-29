@@ -23,7 +23,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "curator", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"curator"}, name = "curator_curator_idx")})
-public class CuratorEntity extends AbstractBaseEntity {
+public class CuratorEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "CuratorEntity.getAllSorted";
     public static final String ALL_BY_OPERATOR_SORTED = "CuratorEntity.getAllByOperatorSorted";

@@ -164,5 +164,9 @@ public abstract class AbstractProjectServiceTest extends AbstractServiceTest {
         validateRootCause(() -> service.create(new ProjectEntity(null, "С", PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new ProjectEntity(null, null, PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new ProjectEntity(null, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444", PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "МТС", PM1, CUSTOMER1, ""), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "МТС", PM1, CUSTOMER1, "С"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "МТС", PM1, CUSTOMER1, null), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "МТС", PM1, CUSTOMER1, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444,"), USER_ID), ConstraintViolationException.class);
     }
 }
