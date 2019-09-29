@@ -51,12 +51,12 @@ public abstract class AbstractProjectServiceTest extends AbstractServiceTest {
     void create() {
         ProjectEntity created = getCreated();
         service.create(created, USER_ID);
-        assertMatch(service.getAll(USER_ID), PROJECT2, PROJECT1, created);
+        assertMatch(service.getAll(USER_ID), PROJECT1, created, PROJECT2);
     }
 
     @Test
     void createDuplicate() {
-        assertThrows(DataAccessException.class, () -> service.create(new ProjectEntity(null, PM1, CUSTOMER1), USER_ID));
+        assertThrows(DataAccessException.class, () -> service.create(new ProjectEntity(null, "МТС", PM1, CUSTOMER1, "Столб"), USER_ID));
     }
 
     @Test
@@ -160,9 +160,9 @@ public abstract class AbstractProjectServiceTest extends AbstractServiceTest {
     @Test
     void testValidation() {
         assumeTrue(isJpaBased());
-        validateRootCause(() -> service.create(new ProjectEntity(null, "", PM1, CUSTOMER1), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new ProjectEntity(null, "С", PM1, CUSTOMER1), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new ProjectEntity(null, null, PM1, CUSTOMER1), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new ProjectEntity(null, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444", PM1, CUSTOMER1), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "", PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "С", PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, null, PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new ProjectEntity(null, "123456789012131444444444444444444444444444444444444444444444444444444444444444444444444444444444", PM1, CUSTOMER1, "Столб,"), USER_ID), ConstraintViolationException.class);
     }
 }

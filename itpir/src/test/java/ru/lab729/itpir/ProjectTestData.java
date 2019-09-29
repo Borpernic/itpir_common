@@ -12,22 +12,22 @@ import static ru.lab729.itpir.PmTestData.*;
 import static ru.lab729.itpir.model.AbstractBaseEntity.START_SEQ;
 
 public class ProjectTestData {
-    public static final int PROJECT1_ID = START_SEQ + 30;
-    public static final int ADMIN_PROJECT_ID = START_SEQ + 32;
+    public static final int PROJECT1_ID = START_SEQ + 37;
+    public static final int ADMIN_PROJECT_ID = START_SEQ + 39;
 
-    public static final ProjectEntity PROJECT1 = new ProjectEntity(PROJECT1_ID, "МТС", PM1, CUSTOMER1);
-    public static final ProjectEntity PROJECT2 = new ProjectEntity(PROJECT1_ID + 1, "Хуавей", PM2, ADMIN_CUSTOMER5);
-    public static final ProjectEntity ADMIN_PROJECT3 = new ProjectEntity(ADMIN_PROJECT_ID, "WLL", ADMIN_PM3, CUSTOMER2);
+    public static final ProjectEntity PROJECT1 = new ProjectEntity(PROJECT1_ID, "МТС", PM1, CUSTOMER1, "Столб");
+    public static final ProjectEntity PROJECT2 = new ProjectEntity(PROJECT1_ID + 1, "Хуавей", PM2, ADMIN_CUSTOMER5, "SWAP");
+    public static final ProjectEntity ADMIN_PROJECT3 = new ProjectEntity(ADMIN_PROJECT_ID, "WLL", ADMIN_PM3, CUSTOMER2, "РРС");
 
-    public static final List<ProjectEntity> PROJECTS = Arrays.asList(PROJECT2, PROJECT1);
-    public static final List<ProjectEntity> ALL_PROJECTS = Arrays.asList(ADMIN_PROJECT3, PROJECT2, PROJECT1);
+    public static final List<ProjectEntity> PROJECTS = Arrays.asList(PROJECT1, PROJECT2);
+    public static final List<ProjectEntity> ALL_PROJECTS = Arrays.asList(ADMIN_PROJECT3, PROJECT1, PROJECT2);
 
     public static ProjectEntity getCreated() {
-        return new ProjectEntity(null, "Созданный проект", PM1, CUSTOMER1);
+        return new ProjectEntity(null, "Созданный проект", PM1, CUSTOMER1, "Созданный комментарий");
     }
 
     public static ProjectEntity getUpdated() {
-        return new ProjectEntity(PROJECT1_ID, "Обновленный проект", PM1, CUSTOMER1);
+        return new ProjectEntity(PROJECT1_ID, "Обновленный проект", PM1, CUSTOMER1, "Обновленный комментарий");
     }
 
     public static void assertMatch(ProjectEntity actual, ProjectEntity expected) {

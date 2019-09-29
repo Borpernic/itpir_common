@@ -63,15 +63,16 @@ public class ProjectEntity extends AbstractBaseWithUserEntity {
 
     }
 
-    public ProjectEntity(String project, PmEntity pm, CustomerEntity customer) {
-        this(null, project, pm, customer);
+    public ProjectEntity(String project, PmEntity pm, CustomerEntity customer, String comments) {
+        this(null, project, pm, customer, comments);
     }
 
-    public ProjectEntity(Integer id, String project, PmEntity pm, CustomerEntity customer) {
+    public ProjectEntity(Integer id, String project, PmEntity pm, CustomerEntity customer, String comments) {
         super(id);
         this.project = project;
         this.pm = pm;
         this.customer = customer;
+        this.comments = comments;
     }
 
     public String getProject() {
