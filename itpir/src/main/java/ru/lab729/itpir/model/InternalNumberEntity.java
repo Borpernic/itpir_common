@@ -21,7 +21,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "internal_number", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"number"}, name = "internal_number_number_idx")})
-public class InternalNumberEntity extends AbstractBaseEntity {
+public class InternalNumberEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "InternalNumberEntity.getAllSorted";
     public static final String ALL = "InternalNumberEntity.getAll";
@@ -40,7 +40,7 @@ public class InternalNumberEntity extends AbstractBaseEntity {
     @NotNull(groups = View.Persist.class)
     private ProjectEntity project;
     @Basic
-    @Size(max = 20)
+    @Size(min = 3, max = 20)
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     @Column(name = "number", nullable = false, length = 20, unique = true)
@@ -48,7 +48,7 @@ public class InternalNumberEntity extends AbstractBaseEntity {
     @Basic
     @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = true, length = 150)
     private String comments;
 
     public InternalNumberEntity() {
