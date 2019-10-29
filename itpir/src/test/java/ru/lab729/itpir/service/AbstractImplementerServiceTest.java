@@ -52,12 +52,12 @@ public abstract class AbstractImplementerServiceTest extends AbstractServiceTest
     void create() {
         ImplementerEntity created = getCreated();
         service.create(created, USER_ID);
-        assertMatch(service.getAll(USER_ID), IMPLEMENTER1, IMPLEMENTER2, created);
+        assertMatch(service.getAll(USER_ID), IMPLEMENTER2, IMPLEMENTER1, created);
     }
 
     @Test
     void createDuplicate() {
-        assertThrows(DataAccessException.class, () -> service.create(new ImplementerEntity(null, "Ершов С. А.", "8-966-100-31-24", "s.e@email.com", STATUS_IMPLEMENTER1, TYPE_IMPLEMENTER1, BigInteger.ONE, "АС, КМ"), USER_ID));
+        assertThrows(DataAccessException.class, () -> service.create(new ImplementerEntity(null, "Ершов С. А.", "8-9661003124", "s.e@email.com", STATUS_IMPLEMENTER1, TYPE_IMPLEMENTER1, BigInteger.ONE, "АС, КМ"), USER_ID));
     }
 
     @Test

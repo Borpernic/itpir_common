@@ -23,11 +23,11 @@ public class ImplementerTestData {
     public static final List<ImplementerEntity> ALL_IMPLEMENTERS = Arrays.asList(ADMIN_IMPLEMENTER3, IMPLEMENTER2, IMPLEMENTER1);
 
     public static ImplementerEntity getCreated() {
-        return new ImplementerEntity(null, "Созданный.", "8-966-100-31-24", "s.e@email.com", STATUS_IMPLEMENTER1, TYPE_IMPLEMENTER1, BigInteger.ONE, "Созданный комментарий");
+        return new ImplementerEntity(null, "Созданный.", "8-9661003124", "s.e@email.com", STATUS_IMPLEMENTER1, TYPE_IMPLEMENTER1, BigInteger.ONE, "Созданный комментарий");
     }
 
     public static ImplementerEntity getUpdated() {
-        return new ImplementerEntity(IMPLEMENTER1_ID, "Ершов С. А.", "8-966-100-31-24", "s.e@email.com", STATUS_IMPLEMENTER1, TYPE_IMPLEMENTER1, BigInteger.ONE, "АС, КМ");
+        return new ImplementerEntity(IMPLEMENTER1_ID, "Ершов С. А.", "8-9661003124", "s.e@email.com", STATUS_IMPLEMENTER1, TYPE_IMPLEMENTER1, BigInteger.ONE, "АС, КМ");
     }
 
     public static void assertMatch(ImplementerEntity actual, ImplementerEntity expected) {
