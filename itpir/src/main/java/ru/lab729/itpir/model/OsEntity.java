@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.time.LocalDateTime.now;
+
 @NamedQueries({
         @NamedQuery(name = OsEntity.ALL_OPERATOR_NUMBER_SORTED, query = "SELECT o FROM OsEntity o JOIN FETCH SiteEntity s ORDER BY s.id, s.number ASC"),
         @NamedQuery(name = OsEntity.ALL, query = "SELECT o FROM OsEntity o ORDER BY o.id ASC"),
@@ -41,7 +43,7 @@ public class OsEntity extends AbstractBaseWithUserEntity {
     @Basic
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDateTime dateTime = now();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "site", nullable = false)
     @NotNull(groups = View.Persist.class)
@@ -117,6 +119,35 @@ public class OsEntity extends AbstractBaseWithUserEntity {
 
     public List<ActivityEntity> getActivityEntities() {
         return activityEntities;
+    }
+
+    public OsEntity() {
+    }
+
+    public OsEntity(SiteEntity site, InternalNumberEntity internalNumber, CuratorEntity curator,
+                    BandEntity band, TypeOsEntity typeOs, TypeBsEntity typeBs, TypeAmsEntity typeAms, TypeAfsEntity typeAfs,
+                    StatusOsEntity statusOs, String comments) {
+        this(null, now(), site, internalNumber, curator,
+                band, typeOs, typeBs, typeAms, typeAfs,
+                statusOs, comments);
+
+    }
+
+    public OsEntity(Integer id, LocalDateTime dateTime, SiteEntity site, InternalNumberEntity internalNumber, CuratorEntity curator,
+                    BandEntity band, TypeOsEntity typeOs, TypeBsEntity typeBs, TypeAmsEntity typeAms, TypeAfsEntity typeAfs,
+                    StatusOsEntity statusOs, String comments) {
+        super(id);
+        this.dateTime = dateTime;
+        this.site = site;
+        this.internalNumber = internalNumber;
+        this.curator = curator;
+        this.band = band;
+        this.typeOs = typeOs;
+        this.typeBs = typeBs;
+        this.typeAms = typeAms;
+        this.typeAfs = typeAfs;
+        this.statusOs = statusOs;
+        this.comments = comments;
     }
 
     public LocalDateTime getDate() {
