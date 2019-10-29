@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.StatusActivityEntity;
 import ru.lab729.itpir.repository.StatusActivityRepository;
-import ru.lab729.itpir.repository.StatusOsRepository;
 
 import javax.sql.DataSource;
 import java.util.List;

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.PmEntity;
-import ru.lab729.itpir.model.StatusContactsEntity;
 
 import java.util.List;
 import java.util.Optional;

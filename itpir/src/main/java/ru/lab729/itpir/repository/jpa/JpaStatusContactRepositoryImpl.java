@@ -2,10 +2,8 @@ package ru.lab729.itpir.repository.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.RegionEntity;
 import ru.lab729.itpir.model.StatusContactsEntity;
 import ru.lab729.itpir.model.User;
-import ru.lab729.itpir.repository.RegionRepository;
 import ru.lab729.itpir.repository.StatusContactRepository;
 
 import javax.persistence.EntityManager;

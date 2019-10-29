@@ -2,15 +2,12 @@ package ru.lab729.itpir.repository.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.Meal;
 import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.model.User;
-import ru.lab729.itpir.repository.MealRepository;
 import ru.lab729.itpir.repository.OperatorRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository

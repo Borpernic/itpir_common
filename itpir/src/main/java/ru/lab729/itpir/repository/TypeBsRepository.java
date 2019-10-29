@@ -1,7 +1,6 @@
 package ru.lab729.itpir.repository;
 
 import ru.lab729.itpir.model.TypeBsEntity;
-import ru.lab729.itpir.model.TypeOsEntity;
 
 import java.util.List;
 

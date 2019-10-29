@@ -4,10 +4,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.AbstractBaseWithUserEntity;
 import ru.lab729.itpir.model.TypeBsEntity;
-import ru.lab729.itpir.model.TypeOsEntity;
 import ru.lab729.itpir.model.User;
 import ru.lab729.itpir.repository.TypeBsRepository;
-import ru.lab729.itpir.repository.TypeOsRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

@@ -1,7 +1,6 @@
 package ru.lab729.itpir.repository;
 
 import ru.lab729.itpir.model.CustomerEntity;
-import ru.lab729.itpir.model.PmEntity;
 
 import java.util.List;
 

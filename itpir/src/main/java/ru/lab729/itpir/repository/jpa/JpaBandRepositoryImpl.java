@@ -3,10 +3,8 @@ package ru.lab729.itpir.repository.jpa;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.BandEntity;
-import ru.lab729.itpir.model.PmEntity;
 import ru.lab729.itpir.model.User;
 import ru.lab729.itpir.repository.BandRepository;
-import ru.lab729.itpir.repository.PmRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

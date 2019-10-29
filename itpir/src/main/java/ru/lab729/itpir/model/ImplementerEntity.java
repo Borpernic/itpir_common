@@ -24,7 +24,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "implementer", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"implementer"}, name = "implementer_implementer_idx")})
-public class ImplementerEntity extends AbstractBaseEntity {
+public class ImplementerEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "ImplementerEntity.getAllSorted";
     public static final String ALL = "ImplementerEntity.getAll";
@@ -79,13 +79,13 @@ public class ImplementerEntity extends AbstractBaseEntity {
     }
 
     public ImplementerEntity(String implementer, String phone, String email, StatusImplementerEntity status,
-                             TypeImplementerEntity type, BigInteger rating) {
+                             TypeImplementerEntity type, BigInteger rating, String comments) {
 
-        this(null, implementer, phone, email, status, type, rating);
+        this(null, implementer, phone, email, status, type, rating, comments);
     }
 
     public ImplementerEntity(Integer id, String implementer, String phone, String email, StatusImplementerEntity status,
-                             TypeImplementerEntity type, BigInteger rating) {
+                             TypeImplementerEntity type, BigInteger rating, String comments) {
         super(id);
         this.implementer = implementer;
         this.phone = phone;

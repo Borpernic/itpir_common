@@ -3,8 +3,8 @@ package ru.lab729.itpir.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.lab729.itpir.model.BandEntity;
-import ru.lab729.itpir.repository.BandRepository;
+import ru.lab729.itpir.model.ImplementerEntity;
+import ru.lab729.itpir.repository.ImplementerRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
 import java.util.List;
@@ -12,55 +12,52 @@ import java.util.List;
 import static ru.lab729.itpir.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class BandServiceImpl implements BandService {
+public class ImplementerServiceImpl implements ImplementerService {
 
-    private final BandRepository repository;
+    private final ImplementerRepository repository;
 
     @Autowired
-    public BandServiceImpl(BandRepository repository) {
+    public ImplementerServiceImpl(ImplementerRepository repository) {
         this.repository = repository;
     }
 
-
     @Override
-    public BandEntity create(BandEntity entity, int userId) {
-        Assert.notNull(entity, "entity must not be null");
+    public ImplementerEntity create(ImplementerEntity entity, int userId) {
+        Assert.notNull(entity, "operator must not be null");
         return repository.save(entity, userId);
     }
 
-
     @Override
-    public BandEntity update(BandEntity entity) throws NotFoundException {
+    public ImplementerEntity update(ImplementerEntity entity) throws NotFoundException {
         Integer userId = get(entity.getId()).getUser().getId();
         return checkNotFoundWithId(repository.save(entity, userId), entity.getId(), "update without id");
     }
 
     @Override
-    public BandEntity update(BandEntity entity, int userId) {
+    public ImplementerEntity update(ImplementerEntity entity, int userId) {
         return checkNotFoundWithId(repository.save(entity, userId), entity.getId());
     }
 
     @Override
-    public BandEntity get(int id) throws NotFoundException {
+    public ImplementerEntity get(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Override
-    public BandEntity get(int id, int userId) {
+    public ImplementerEntity get(int id, int userId) {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     @Override
-    public List<BandEntity> getAll() {
+    public List<ImplementerEntity> getAll() {
 
         return repository.getAll();
     }
 
     @Override
-    public List<BandEntity> getAll(int userId) {
+    public List<ImplementerEntity> getAll(int userId) {
         return repository.getAll(userId);
     }
-
 
     @Override
     public void delete(int id) throws NotFoundException {
@@ -83,9 +80,9 @@ public class BandServiceImpl implements BandService {
         checkNotFoundWithId(repository.deleteAll(), 0);
     }
 
-
     @Override
-    public BandEntity getWithUser(int id, int userId) {
+    public ImplementerEntity getWithUser(int id, int userId) {
         return checkNotFoundWithId(repository.getWithUser(id, userId), id);
     }
+
 }

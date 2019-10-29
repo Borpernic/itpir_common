@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.TypeBsEntity;
-import ru.lab729.itpir.model.TypeOsEntity;
 import ru.lab729.itpir.repository.TypeBsRepository;
-import ru.lab729.itpir.repository.TypeOsRepository;
 
 import java.util.List;
 

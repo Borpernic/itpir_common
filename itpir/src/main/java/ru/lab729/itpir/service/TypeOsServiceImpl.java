@@ -3,9 +3,7 @@ package ru.lab729.itpir.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.lab729.itpir.model.StatusOsEntity;
 import ru.lab729.itpir.model.TypeOsEntity;
-import ru.lab729.itpir.repository.StatusOsRepository;
 import ru.lab729.itpir.repository.TypeOsRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 

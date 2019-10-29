@@ -1,13 +1,13 @@
 package ru.lab729.itpir.repository;
 
-import ru.lab729.itpir.model.TypeOsEntity;
+import ru.lab729.itpir.model.ImplementerEntity;
 
 import java.util.List;
 
-public interface TypeOsRepository {
+public interface ImplementerRepository {
 
     // null if updated operator do not belong to userId
-    TypeOsEntity save(TypeOsEntity entity, int userId);
+    ImplementerEntity save(ImplementerEntity operator, int userId);
 
     // false if not found
     boolean delete(int id);
@@ -22,18 +22,18 @@ public interface TypeOsRepository {
     boolean deleteAll();
 
     // false if not found
-    TypeOsEntity get(int id);
+    ImplementerEntity get(int id);
 
     // null if operator do not belong to userId
-    TypeOsEntity get(int id, int userId);
+    ImplementerEntity get(int id, int userId);
 
     // ORDERED Operator ASC
-    List<TypeOsEntity> getAll(int userId);
+    List<ImplementerEntity> getAll(int userId);
 
     // ORDERED Operator ASC
-    List<TypeOsEntity> getAll();
+    List<ImplementerEntity> getAll();
 
-    default TypeOsEntity getWithUser(int id, int userId) {
+    default ImplementerEntity getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();
     }
 }

@@ -10,9 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.StatusOsEntity;
 import ru.lab729.itpir.model.TypeOsEntity;
-import ru.lab729.itpir.repository.StatusOsRepository;
 import ru.lab729.itpir.repository.TypeOsRepository;
 
 import javax.sql.DataSource;

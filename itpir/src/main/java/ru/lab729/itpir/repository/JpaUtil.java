@@ -2,8 +2,6 @@ package ru.lab729.itpir.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import ru.lab729.itpir.model.AbstractBaseWithUserEntity;
-import ru.lab729.itpir.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

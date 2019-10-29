@@ -1,6 +1,5 @@
 package ru.lab729.itpir.service;
 
-import ru.lab729.itpir.model.StatusContactsEntity;
 import ru.lab729.itpir.model.StatusOsEntity;
 import ru.lab729.itpir.util.exception.NotFoundException;
 

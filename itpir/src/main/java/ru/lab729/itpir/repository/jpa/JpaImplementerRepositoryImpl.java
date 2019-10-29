@@ -2,9 +2,9 @@ package ru.lab729.itpir.repository.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.RegionEntity;
+import ru.lab729.itpir.model.ImplementerEntity;
 import ru.lab729.itpir.model.User;
-import ru.lab729.itpir.repository.RegionRepository;
+import ru.lab729.itpir.repository.ImplementerRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,14 +12,14 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JpaRegionRepositoryImpl implements RegionRepository {
+public class JpaImplementerRepositoryImpl implements ImplementerRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional
-    public RegionEntity save(RegionEntity entity, int userId) {
+    public ImplementerEntity save(ImplementerEntity entity, int userId) {
         if (!entity.isNew() && get(entity.getId(), userId) == null) {
             return null;
         }
@@ -53,28 +53,29 @@ public class JpaRegionRepositoryImpl implements RegionRepository {
         return false;
     }
 
+
     @Override
-    public RegionEntity get(int id) {
+    public ImplementerEntity get(int id) {
         return null;
     }
 
     @Override
-    public RegionEntity get(int id, int userId) {
+    public ImplementerEntity get(int id, int userId) {
         return null;
     }
 
     @Override
-    public List<RegionEntity> getAll(int userId) {
+    public List<ImplementerEntity> getAll(int userId) {
         return null;
     }
 
     @Override
-    public List<RegionEntity> getAll() {
+    public List<ImplementerEntity> getAll() {
         return null;
     }
 
     @Override
-    public RegionEntity getWithUser(int id, int userId) {
+    public ImplementerEntity getWithUser(int id, int userId) {
         return null;
     }
 }

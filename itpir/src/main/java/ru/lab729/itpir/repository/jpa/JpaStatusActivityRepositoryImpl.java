@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.StatusActivityEntity;
 import ru.lab729.itpir.model.User;
 import ru.lab729.itpir.repository.StatusActivityRepository;
-import ru.lab729.itpir.repository.StatusOsRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

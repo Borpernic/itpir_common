@@ -1,6 +1,5 @@
 package ru.lab729.itpir.repository;
 
-import ru.lab729.itpir.model.RegionEntity;
 import ru.lab729.itpir.model.StatusContactsEntity;
 
 import java.util.List;

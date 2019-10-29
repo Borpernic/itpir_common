@@ -10,17 +10,17 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.OperatorEntity;
-import ru.lab729.itpir.repository.OperatorRepository;
+import ru.lab729.itpir.model.ImplementerEntity;
+import ru.lab729.itpir.repository.ImplementerRepository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JdbcOperatorRepositoryImpl implements OperatorRepository {
+public class JdbcImplementerRepositoryImpl implements ImplementerRepository {
 
-    private static final RowMapper<OperatorEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(OperatorEntity.class);
+    private static final RowMapper<ImplementerEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(ImplementerEntity.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -29,9 +29,9 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     private final SimpleJdbcInsert insertOperator;
 
     @Autowired
-    public JdbcOperatorRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcImplementerRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
-                .withTableName("operator")
+                .withTableName("implementer")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
@@ -40,10 +40,15 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
 
     @Override
     @Transactional
-    public OperatorEntity save(OperatorEntity entity, int userId) {
+    public ImplementerEntity save(ImplementerEntity entity, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", entity.getId())
-                .addValue("operator", entity.getOperator())
+                .addValue("implementer", entity.getImplementer())
+                .addValue("phone", entity.getPhone())
+                .addValue("email", entity.getEmail())
+                .addValue("status", entity.getStatus())
+                .addValue("type", entity.getType())
+                .addValue("rating", entity.getRating())
                 .addValue("comments", entity.getComments())
                 .addValue("user_id", userId);
 
@@ -52,8 +57,15 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
             entity.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
-                            "UPDATE operator " +
-                            "   SET operator=:operator, comments=:comments " +
+                            "UPDATE implementer " +
+                            " SET " +
+                            "implementer=:number, " +
+                            "phone=:phone, " +
+                            "email=:email, " +
+                            "status=:status, " +
+                            "type=:type, " +
+                            "rating=:rating, " +
+                            "comments=:comments " +
                             " WHERE id=:id AND user_id=:user_id"
                     , map) == 0) {
                 return null;
@@ -71,7 +83,7 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-        return jdbcTemplate.update("DELETE FROM operator WHERE id=? AND user_id=?", id, userId) != 0;
+        return jdbcTemplate.update("DELETE FROM implementer WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
@@ -84,27 +96,28 @@ public class JdbcOperatorRepositoryImpl implements OperatorRepository {
         return false;
     }
 
+
     @Override
-    public OperatorEntity get(int id) {
+    public ImplementerEntity get(int id) {
         return null;
     }
 
     @Override
-    public OperatorEntity get(int id, int userId) {
-        List<OperatorEntity> meals = jdbcTemplate.query(
-                "SELECT * FROM operator WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
+    public ImplementerEntity get(int id, int userId) {
+        List<ImplementerEntity> meals = jdbcTemplate.query(
+                "SELECT * FROM implementer WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
+
     @Override
-    public List<OperatorEntity> getAll(int userId) {
+    public List<ImplementerEntity> getAll(int userId) {
         return jdbcTemplate.query(
-                "SELECT * FROM operator WHERE user_id=? ORDER BY operator ASC", ROW_MAPPER, userId);
+                "SELECT * FROM implementer WHERE user_id=? ORDER BY number ASC", ROW_MAPPER, userId);
     }
 
     @Override
-    public List<OperatorEntity> getAll() {
+    public List<ImplementerEntity> getAll() {
         return null;
     }
-
 }

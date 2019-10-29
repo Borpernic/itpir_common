@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lab729.itpir.model.TypeBsEntity;
-import ru.lab729.itpir.model.TypeOsEntity;
 
 import java.util.List;
 import java.util.Optional;

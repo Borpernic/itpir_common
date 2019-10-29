@@ -10,9 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.model.RegionEntity;
-import ru.lab729.itpir.repository.OperatorRepository;
 import ru.lab729.itpir.repository.RegionRepository;
 
 import javax.sql.DataSource;

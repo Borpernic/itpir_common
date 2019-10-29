@@ -1,6 +1,5 @@
 package ru.lab729.itpir.repository;
 
-import ru.lab729.itpir.model.OperatorEntity;
 import ru.lab729.itpir.model.RegionEntity;
 
 import java.util.List;

@@ -2,7 +2,6 @@ package ru.lab729.itpir.repository.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.AbstractBaseEntity;
 import ru.lab729.itpir.model.AbstractBaseWithUserEntity;
 import ru.lab729.itpir.model.TypeOsEntity;
 import ru.lab729.itpir.model.User;

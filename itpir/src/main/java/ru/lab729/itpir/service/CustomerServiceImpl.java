@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.lab729.itpir.model.CustomerEntity;
-import ru.lab729.itpir.model.PmEntity;
 import ru.lab729.itpir.repository.CustomerRepository;
-import ru.lab729.itpir.repository.PmRepository;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
 import java.util.List;

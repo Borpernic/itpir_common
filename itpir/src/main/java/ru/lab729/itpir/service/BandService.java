@@ -1,7 +1,6 @@
 package ru.lab729.itpir.service;
 
 import ru.lab729.itpir.model.BandEntity;
-import ru.lab729.itpir.model.CustomerEntity;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
 import java.util.List;

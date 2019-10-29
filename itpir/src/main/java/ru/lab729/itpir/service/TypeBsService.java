@@ -1,7 +1,6 @@
 package ru.lab729.itpir.service;
 
 import ru.lab729.itpir.model.TypeBsEntity;
-import ru.lab729.itpir.model.TypeOsEntity;
 import ru.lab729.itpir.util.exception.NotFoundException;
 
 import java.util.List;

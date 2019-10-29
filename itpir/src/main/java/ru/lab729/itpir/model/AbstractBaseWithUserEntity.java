@@ -2,13 +2,13 @@ package ru.lab729.itpir.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.SafeHtml;
 import ru.lab729.itpir.View;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @MappedSuperclass
 public abstract class AbstractBaseWithUserEntity extends AbstractBaseEntity {
