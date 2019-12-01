@@ -308,10 +308,11 @@ VALUES ('Запрос исходных данных', TRUE, FALSE, FALSE, FALSE,
        ('Согласование с АД', FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, 'Тип активности',
         100001);
 
-INSERT INTO activity (os, implementer, type_activity, date_time, plane_date_time, rating, status_activity, user_id)
-VALUES (100072, 100095, 100180, now(), now(), 1, 100175, 100000),
-       (100073, 100095, 100181, now(), now(), 1, 100176, 100000),
-       (100074, 100095, 100182, now(), now(), 1, 100177, 100001);
+INSERT INTO activity (os, implementer, type_activity, date_time, plane_date_time, rating, status_activity, comments,
+                      user_id)
+VALUES (100072, 100095, 100180, '2019-05-30 10:00:00', '2019-05-30 10:00:00', 1, 100175, 'Задача 1', 100000),
+       (100073, 100095, 100181, '2019-05-30 10:00:00', '2019-05-30 10:00:00', 1, 100176, 'Задача 2', 100000),
+       (100074, 100095, 100182, '2019-05-30 10:00:00', '2019-05-30 10:00:00', 1, 100177, 'Задача 3', 100001);
 
 INSERT INTO date_change_status (activity, date_time, status_activity, user_id)
 VALUES (100191, now(), 100175, 100000),

@@ -95,7 +95,7 @@ public class ActivityEntity extends AbstractBaseWithUserEntity {
     @Column(name = "date_time_change_status", nullable = true)
     @NotNull
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
-    private LocalDateTime dateChangeStatus;
+    private LocalDateTime dateTimeChangeStatus;
 
     @Basic
     @Size(max = 100)
@@ -108,7 +108,8 @@ public class ActivityEntity extends AbstractBaseWithUserEntity {
     }
 
     public ActivityEntity(Integer id, OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
-                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
+                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity,
+                          LocalDateTime dateTimeChangeStatus, String comments) {
         super(id);
         this.os = os;
         this.implementer = implementer;
@@ -117,11 +118,14 @@ public class ActivityEntity extends AbstractBaseWithUserEntity {
         this.planeDateTime = planeDateTime;
         this.rating = rating;
         this.statusActivity = statusActivity;
+        this.dateTimeChangeStatus = dateTimeChangeStatus;
+        this.comments = comments;
     }
 
     public ActivityEntity(OsEntity os, ImplementerEntity implementer, TypeActivityEntity typeActivity,
-                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity) {
-        this(null, os, implementer, typeActivity, dateTime, planeDateTime, rating, statusActivity);
+                          LocalDateTime dateTime, LocalDateTime planeDateTime, BigInteger rating, StatusActivityEntity statusActivity,
+                          LocalDateTime dateTimeChangeStatus, String comments) {
+        this(null, os, implementer, typeActivity, dateTime, planeDateTime, rating, statusActivity, dateTimeChangeStatus, comments);
 
     }
 
@@ -201,12 +205,12 @@ public class ActivityEntity extends AbstractBaseWithUserEntity {
         this.statusActivity = statusActivity;
     }
 
-    public LocalDateTime getDateChangeStatus() {
-        return dateChangeStatus;
+    public LocalDateTime getDateTimeChangeStatus() {
+        return dateTimeChangeStatus;
     }
 
-    public void setDateChangeStatus(LocalDateTime dateChangeStatus) {
-        this.dateChangeStatus = dateChangeStatus;
+    public void setDateTimeChangeStatus(LocalDateTime dateChangeStatus) {
+        this.dateTimeChangeStatus = dateChangeStatus;
     }
 
     public String getComments() {
