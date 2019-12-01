@@ -21,7 +21,7 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "tzp", schema = "public", catalog = "itpirdb", uniqueConstraints = {@UniqueConstraint(columnNames = {"tzp"}, name = "tzp_tzp_idx")})
-public class TzpEntity extends AbstractBaseEntity {
+public class TzpEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "TzpEntity.getAllSorted";
     public static final String ALL = "TzpEntity.getAll";
@@ -31,7 +31,7 @@ public class TzpEntity extends AbstractBaseEntity {
     public static final String GET_BY_TYPE_IMPLEMENTER = "TzpEntity.getByTypeImplementer";
 
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 150)
     @SafeHtml(groups = {View.Web.class})
     @Basic
     @Column(name = "tzp", nullable = false, length = 50, unique = true)
@@ -70,12 +70,12 @@ public class TzpEntity extends AbstractBaseEntity {
 
     }
 
-    public TzpEntity(String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer) {
-        this(null, tzp, razmernost, price, typeOs, typeImplementer);
+    public TzpEntity(String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer, String comments) {
+        this(null, tzp, razmernost, price, typeOs, typeImplementer, comments);
 
     }
 
-    public TzpEntity(Integer id, String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer) {
+    public TzpEntity(Integer id, String tzp, String razmernost, BigInteger price, TypeOsEntity typeOs, TypeImplementerEntity typeImplementer, String comments) {
         super(id);
         this.tzp = tzp;
         this.razmernost = razmernost;
