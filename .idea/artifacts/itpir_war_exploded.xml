@@ -60,8 +60,8 @@
           <element id="library" level="project" name="Maven: org.webjars:popper.js:1.14.1" />
           <element id="library" level="project" name="Maven: org.webjars.bower:bootstrap-social:5.1.1" />
           <element id="library" level="project" name="Maven: org.webjars.bower:bootstrap:4.0.0-beta.3" />
-          <element id="library" level="project" name="Maven: org.webjars.bower:font-awesome:4.7.0" />
-          <element id="library" level="project" name="Maven: org.webjars:font-awesome:4.7.0" />
+          <element id="file-copy" path="$PROJECT_DIR$/../mavenRepo/org/webjars/bower/font-awesome/4.7.0/font-awesome-4.7.0.jar" output-file-name="org.webjars.bower-font-awesome-4.7.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../mavenRepo/org/webjars/font-awesome/4.7.0/font-awesome-4.7.0.jar" output-file-name="org.webjars-font-awesome-4.7.0.jar" />
           <element id="library" level="project" name="Maven: org.webjars:datatables:1.10.16" />
           <element id="library" level="project" name="Maven: org.webjars.bower:datetimepicker:2.5.14" />
           <element id="library" level="project" name="Maven: org.webjars.bower:jquery-mousewheel:3.1.13" />
