@@ -8,7 +8,6 @@ import ru.lab729.itpir.View;
 import ru.lab729.itpir.util.DateTimeUtil;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -51,8 +50,7 @@ public class DateChangeStatusEntity extends AbstractBaseWithUserEntity {
     @Basic
     @Size(max = 100)
     @SafeHtml(groups = {View.Web.class})
-    @NotBlank
-    @Column(name = "comments", nullable = false, length = 150)
+    @Column(name = "comments", nullable = false, length = 100)
     private String comments;
 
     public DateChangeStatusEntity(ActivityEntity activity, LocalDateTime dateTime, StatusActivityEntity statusActivity, String comments) {

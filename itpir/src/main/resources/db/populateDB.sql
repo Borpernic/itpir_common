@@ -14,7 +14,7 @@ DELETE
 FROM contacts_ad;
 
 ALTER SEQUENCE global_seq
-  RESTART WITH 100000;
+    RESTART WITH 100000;
 
 INSERT INTO users (name, email, password, calories_per_day)
 VALUES ('User', 'user@yandex.ru', '{noop}password', 2005),
@@ -314,10 +314,10 @@ VALUES (100072, 100095, 100180, '2019-05-30 10:00:00', '2019-05-30 10:00:00', 1,
        (100073, 100095, 100181, '2019-05-30 10:00:00', '2019-05-30 10:00:00', 1, 100176, 'Задача 2', 100000),
        (100074, 100095, 100182, '2019-05-30 10:00:00', '2019-05-30 10:00:00', 1, 100177, 'Задача 3', 100001);
 
-INSERT INTO date_change_status (activity, date_time, status_activity, user_id)
-VALUES (100191, now(), 100175, 100000),
-       (100191, now(), 100176, 100000),
-       (100191, now(), 100177, 100001);
+INSERT INTO date_change_status (activity, date_time, status_activity, comments, user_id)
+VALUES (100191, '2019-05-30 10:00:00', 100175, 'Задача 1', 100000),
+       (100191, '2019-05-30 10:00:00', 100176, 'Задача 2', 100000),
+       (100191, '2019-05-30 10:00:00', 100177, 'Задача 3', 100001);
 
 INSERT INTO task (activity,
                   date_time,
