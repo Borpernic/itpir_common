@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "date_change_status", schema = "public", catalog = "itpirdb")
-public class DateChangeStatusEntity extends AbstractBaseEntity {
+public class DateChangeStatusEntity extends AbstractBaseWithUserEntity {
     public static final String ALL_SORTED = "DateChangeStatusEntity.getAllSorted";
     public static final String ALL = "DateChangeStatusEntity.getAll";
     public static final String DELETE = "DateChangeStatusEntity.delete";
@@ -55,6 +55,22 @@ public class DateChangeStatusEntity extends AbstractBaseEntity {
     @Column(name = "comments", nullable = false, length = 150)
     private String comments;
 
+    public DateChangeStatusEntity(ActivityEntity activity, LocalDateTime dateTime, StatusActivityEntity statusActivity, String comments) {
+        this(null, activity, dateTime, statusActivity, comments);
+
+    }
+
+    public DateChangeStatusEntity() {
+
+    }
+
+    public DateChangeStatusEntity(Integer id, ActivityEntity activity, LocalDateTime dateTime, StatusActivityEntity statusActivity, String comments) {
+        super(id);
+        this.activity = activity;
+        this.dateTime = dateTime;
+        this.statusActivity = statusActivity;
+        this.comments = comments;
+    }
 
     public ActivityEntity getActivity() {
         return activity;

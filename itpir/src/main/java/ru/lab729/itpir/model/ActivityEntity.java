@@ -93,7 +93,6 @@ public class ActivityEntity extends AbstractBaseWithUserEntity {
     private StatusActivityEntity statusActivity;
 
     @Column(name = "date_time_change_status", nullable = true)
-    @NotNull
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     private LocalDateTime dateTimeChangeStatus;
 
