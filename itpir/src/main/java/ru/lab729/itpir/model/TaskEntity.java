@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "task", schema = "public", catalog = "itpirdb"/*, uniqueConstraints = {@UniqueConstraint(columnNames = {"activity", "type_task", "department"}, name = "task_activity_type_task_department_idx")}*/)
-public class TaskEntity extends AbstractBaseEntity {
+public class TaskEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "TaskEntity.getAllSorted";
     public static final String ALL = "TaskEntity.getAll";
@@ -88,6 +88,34 @@ public class TaskEntity extends AbstractBaseEntity {
     @SafeHtml(groups = {View.Web.class})
     @NotBlank
     private String comments;
+
+    public TaskEntity(ActivityEntity activity, LocalDateTime dateTime, TypeTaskEntity typeTask,
+                      DepartmentEntity department, LocalDateTime planeDateTime, Boolean rightOnTime, Boolean approve,
+                      LocalDateTime approveDateTime, ResultTaskEntity resultTask, String comments) {
+
+        this(null, activity, dateTime, typeTask, department, planeDateTime,
+                rightOnTime, approve, approveDateTime, resultTask, comments);
+    }
+
+    public TaskEntity() {
+
+    }
+
+    public TaskEntity(Integer id, ActivityEntity activity, LocalDateTime dateTime, TypeTaskEntity typeTask,
+                      DepartmentEntity department, LocalDateTime planeDateTime, Boolean rightOnTime, Boolean approve,
+                      LocalDateTime approveDateTime, ResultTaskEntity resultTask, String comments) {
+        super(id);
+        this.activity = activity;
+        this.dateTime = dateTime;
+        this.typeTask = typeTask;
+        this.department = department;
+        this.planeDateTime = planeDateTime;
+        this.rightOnTime = rightOnTime;
+        this.approve = approve;
+        this.approveDateTime = approveDateTime;
+        this.resultTask = resultTask;
+        this.comments = comments;
+    }
 
     public ActivityEntity getActivity() {
         return activity;
