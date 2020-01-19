@@ -10,17 +10,17 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.lab729.itpir.model.TaskEntity;
-import ru.lab729.itpir.repository.TaskRepository;
+import ru.lab729.itpir.model.CommentsEntity;
+import ru.lab729.itpir.repository.CommentsRepository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class JdbcTaskRepositoryImpl implements TaskRepository {
+public class JdbcCommentsRepositoryImpl implements CommentsRepository {
 
-    private static final RowMapper<TaskEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(TaskEntity.class);
+    private static final RowMapper<CommentsEntity> ROW_MAPPER = BeanPropertyRowMapper.newInstance(CommentsEntity.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -29,9 +29,9 @@ public class JdbcTaskRepositoryImpl implements TaskRepository {
     private final SimpleJdbcInsert insertOperator;
 
     @Autowired
-    public JdbcTaskRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcCommentsRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertOperator = new SimpleJdbcInsert(dataSource)
-                .withTableName("task")
+                .withTableName("comments")
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
@@ -40,18 +40,12 @@ public class JdbcTaskRepositoryImpl implements TaskRepository {
 
     @Override
     @Transactional
-    public TaskEntity save(TaskEntity entity, int userId) {
+    public CommentsEntity save(CommentsEntity entity, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", entity.getId())
-                .addValue("department", entity.getDepartment())
-                .addValue("approve", entity.getApprove())
-                .addValue("approve_date_time", entity.getApproveDate())
-                .addValue("activity", entity.getActivity())
-                .addValue("date_time", entity.getDate())
-                .addValue("plane_date_time", entity.getPlaneDate())
-                .addValue("type_task", entity.getTypeTask())
-                .addValue("result_task", entity.getResultTask())
-                .addValue("right_on_time", entity.getRightOnTime())
+                .addValue("os", entity.getOs())
+                .addValue("implementer", entity.getDateTime())
+                .addValue("date_time", entity.getImplementer())
                 .addValue("comments", entity.getComments())
                 .addValue("user_id", userId);
 
@@ -60,17 +54,11 @@ public class JdbcTaskRepositoryImpl implements TaskRepository {
             entity.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
-                            "UPDATE task " +
+                            "UPDATE comments " +
                             "   SET " +
-                            "department=:department, " +
-                            "approve=:approve, " +
-                            "approve_date_time=:approve_date_time, " +
-                            "activity=:activity, " +
+                            "os=:os, " +
+                            "implementer=:implementer, " +
                             "date_time=:date_time, " +
-                            "plane_date_time=:plane_date_time, " +
-                            "type_task=:type_task, " +
-                            "result_task=:result_task, " +
-                            "right_on_time=:right_on_time, " +
                             "comments=:comments " +
                             " WHERE id=:id AND user_id=:user_id"
                     , map) == 0) {
@@ -102,25 +90,25 @@ public class JdbcTaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public TaskEntity get(int id) {
+    public CommentsEntity get(int id) {
         return null;
     }
 
     @Override
-    public TaskEntity get(int id, int userId) {
-        List<TaskEntity> meals = jdbcTemplate.query(
+    public CommentsEntity get(int id, int userId) {
+        List<CommentsEntity> meals = jdbcTemplate.query(
                 "SELECT * FROM activity WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
     @Override
-    public List<TaskEntity> getAll(int userId) {
+    public List<CommentsEntity> getAll(int userId) {
         return jdbcTemplate.query(
                 "SELECT * FROM activity WHERE user_id=? ORDER BY activity.id ASC ", ROW_MAPPER, userId);
     }
 
     @Override
-    public List<TaskEntity> getAll() {
+    public List<CommentsEntity> getAll() {
         return null;
     }
 

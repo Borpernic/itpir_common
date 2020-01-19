@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments", schema = "public", catalog = "itpirdb")
-public class CommentsEntity extends AbstractBaseEntity {
+public class CommentsEntity extends AbstractBaseWithUserEntity {
 
     public static final String ALL_SORTED = "CommentsEntity.getAllSorted";
     public static final String ALL = "CommentsEntity.getAll";
